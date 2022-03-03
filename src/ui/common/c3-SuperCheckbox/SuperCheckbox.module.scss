@@ -1,0 +1,47 @@
+@import './src/styles/sass/variables.scss';
+@import './src/styles/sass/mixins.scss';
+
+
+
+.checkboxLabel input[type='checkbox'] {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+}
+
+.checkboxLabel span {
+  display: flex;
+  align-items: center;
+  //justify-content: center;
+  position: relative;
+  @include text(17px, 500, $primaryColor, 1.2)
+}
+
+.checkboxLabel span::before {
+  content: '';
+  width: 25px;
+  height: 25px;
+  border: 1px solid $primaryColor;
+  display: inline-block;
+  margin-right: 10px;
+  border-radius: 5px;
+}
+
+.checkboxLabel span::after {
+  content: '';
+  position: absolute;
+  left: 1px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 25px;
+  height: 25px;
+  background: url('https://img.icons8.com/material/344/checkmark--v1.png') no-repeat;
+  background-size: 25px 25px;
+  background-color: $primaryColor;
+  opacity: 0;
+}
+
+.checkboxLabel input[type='checkbox']:checked + span::after {
+  opacity: 1;
+}

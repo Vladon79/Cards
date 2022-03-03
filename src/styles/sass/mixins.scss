@@ -1,0 +1,8 @@
+
+@mixin text ($fontSize, $fontWeight, $textColor, $lineHeight){
+    font-family: "Montserrat", sans-serif;
+    color: $textColor;
+    font-size: $fontSize;
+    font-weight: $fontWeight;
+    line-height: $lineHeight;
+}

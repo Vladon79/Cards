@@ -1,0 +1,10 @@
+@import './src/styles/sass/variables';
+@import './src/styles/sass/mixins';
+
+.testContainer {
+  width:500px;
+  align-items: center;
+  .buttonInputBlock{
+    padding: 15px;
+  }
+}

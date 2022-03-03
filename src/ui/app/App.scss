@@ -1,0 +1,25 @@
+@import "./src/styles/sass/variables";
+@import "./src/styles/sass/mixins";
+
+.App {
+  text-align: center;
+  background-color: $bgColor;
+}
+
+h2 {
+  color: #24695c;
+  text-decoration: none;
+  @include text(24px, 600, $headerTextColor, 1.2)
+}
+
+h3 {
+  color: #24695c;
+  text-decoration: none;
+  @include text(18px, 600, $primaryColor, 1.2)
+}
+
+h4 {
+  color: #24695c;
+  text-decoration: none;
+  @include text(18px, 600, $primaryColor, 1.2)
+}
