@@ -1,7 +1,6 @@
 import React from 'react';
 import './App.scss';
 import Header from "../components/Header/Header";
-
 import {Route, Routes} from 'react-router-dom';
 import ErrorPage from "../../features/ErrorPage/ErrorPage";
 import TestPage from "../../features/TestPage/TestPage";
@@ -14,7 +13,6 @@ const App = () => {
     return (
         <div className="App">
             <Header/>
-            <Preloader/>
             <div>
                 <Routes>
                     <Route path="/"/>
