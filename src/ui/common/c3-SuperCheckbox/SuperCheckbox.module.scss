@@ -13,9 +13,8 @@
 .checkboxLabel span {
   display: flex;
   align-items: center;
-  //justify-content: center;
   position: relative;
-  @include text(17px, 500, $primaryColor, 1.2)
+  @include text(17px, 500, $textColor, 1.2)
 }
 
 .checkboxLabel span::before {

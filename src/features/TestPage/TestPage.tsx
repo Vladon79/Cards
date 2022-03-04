@@ -3,6 +3,7 @@ import SuperButton from "../../ui/common/c2-SuperButton/SuperButton";
 import SuperInputText from "../../ui/common/c1-SuperInputText/SuperInputText";
 import s from './TestPage.module.scss'
 import blockStyle from '../../styles/container.module.scss'
+import Preloader from "../../ui/common/Preloader/Preloader";
 
 const TestPage = () => {
     return (

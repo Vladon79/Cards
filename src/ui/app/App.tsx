@@ -8,11 +8,13 @@ import TestPage from "../../features/TestPage/TestPage";
 import ProfilePage from "../components/ProfilePage/ProfilePage";
 import SignIn from "../../features/Login/SignIn";
 import SignUp from "../../features/Login/SignUp";
+import Preloader from "../common/Preloader/Preloader";
 
 const App = () => {
     return (
         <div className="App">
             <Header/>
+            <Preloader/>
             <div>
                 <Routes>
                     <Route path="/"/>
