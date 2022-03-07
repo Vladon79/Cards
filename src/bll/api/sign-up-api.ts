@@ -1,0 +1,14 @@
+import axios from "axios";
+
+const instance = axios.create({
+    withCredentials: true,
+    baseURL: 'https://neko-back.herokuapp.com/2.0/',
+})
+
+
+export const signUpApi = {
+
+    register(email: string, password: string) {
+        return instance.post(`auth/register`, {email, password})
+    }
+}
