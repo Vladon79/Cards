@@ -3,7 +3,10 @@
   height: 500px;
   align-items: center;
 
-  .buttonInputBlock {
-    padding: 15px;
+
+  .userData {
+    display: flex;
+    flex-direction: column;
   }
+
 }

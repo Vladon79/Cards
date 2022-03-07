@@ -7,6 +7,7 @@ import {UserType} from "../../../bll/reducers/profile-reducer";
 import {useDispatch, useSelector} from "react-redux";
 import {AppRootStateType} from "../../../bll/store";
 import {toggleIsFetchingAC} from "../../../bll/reducers/app-reducer";
+import {profileAPI} from "../../../dal/profile-api/profile-api";
 
 const ProfilePage = () => {
     const user = useSelector<AppRootStateType, UserType>(state => state.profile.user)
@@ -15,21 +16,23 @@ const ProfilePage = () => {
         dispatch(toggleIsFetchingAC(true))
     }
     const handler1 = () => {
-        dispatch(toggleIsFetchingAC(false))
+        profileAPI.reg()
     }
     return (
         <div className={`${s.profileContainer} ${blockStyle.container}`}>
             <h2>Personal Information</h2>
             <Ava/>
-            <div className={s.buttonInputBlock}>
-                <SuperInputText></SuperInputText>
+            <div className={s.userData}>
                 <div>
-                    email: {user.email}
-                    public Card Packs Count: {user.publicCardPacksCount}
-                    nik name:{user.name}
+                    <p>email: {user.email}</p>
+                    <p> public Card Packs Count: {user.publicCardPacksCount}</p>
+                    <p>nik name:{user.name}</p>
+                </div>
+                <div>
                     <SuperButton onClick={handler}>button</SuperButton>
                     <SuperButton onClick={handler1}>button1</SuperButton>
                 </div>
+
 
             </div>
 

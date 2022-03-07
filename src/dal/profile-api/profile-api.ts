@@ -18,6 +18,6 @@ export const profileAPI = {
         })
     },
     reg() {
-        return instance.post('auth/login', {email: 'nya-admin@nya.nya', password: '1qazxcvBG', rememberMe: false})
+        return instance.post('auth/login', {email: 'nya-admin@nya.nya', password: '1qazxcvBG', rememberMe: true})
     }
 }
