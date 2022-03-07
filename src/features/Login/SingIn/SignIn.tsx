@@ -19,15 +19,17 @@ const SignIn = () => {
     const dispatch = useDispatch()
 
     const email = useInput('',{isEmpty: true, minLength: 3, isEmail: true})
-    const password = useInput('',{isEmpty: true, minLength: 3, isEmail: true})
+    const password = useInput('',{isEmpty: true, minLength: 3, maxLength: 25, isPassword: true})
     const rememberMe = useCheckBox(false)
 
     const singInData = {email: email.value, password: password.value, rememberMe: rememberMe.isDone}
-
+    console.log(email.isValid)
+    console.log(password.isValid)
     const singIn = () => {
-        console.log(1)
         dispatch(singInTC(singInData))
-    };
+        console.log(1)
+    }
+
     if (isSingIn) {
         return <Navigate to='/profile'/>
     }
@@ -68,7 +70,8 @@ const SignIn = () => {
                             onChangeChecked={(e)=>rememberMe.handleCheckedChange(e)}
                         >Remember me</SuperCheckbox>
                     </div>
-                    <SuperButton disabled={!email.isInputValid || !password.isInputValid} type='submit' onClick={singIn}>Sing In</SuperButton>
+                    <SuperButton disabled={!email.isValid || !password.isValid}
+                                 type='submit' onClick={singIn}>Sing In</SuperButton>
                 </div>
             </div>
         </div>
