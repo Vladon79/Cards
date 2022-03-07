@@ -5,7 +5,7 @@ type ActionType = actionCreateType
 
 
 
-export const reducer = (state: StateType, action: ActionType): StateType => {
+export const reducer = (state: StateType = {}, action: ActionType): StateType => {
     switch (action.type) {
         case "FIRST-ACTION":
             return {...state}

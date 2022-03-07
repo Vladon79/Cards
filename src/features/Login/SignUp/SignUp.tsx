@@ -1,8 +1,24 @@
 import React from 'react'
 import s from './SignUp.module.scss'
+import {ping, register} from "../../../bll/reducers/sign-up-reducer";
+import {useDispatch} from "react-redux";
+
+
+
 
 export const SignUp = () => {
 
+    const dispatch = useDispatch()
+
+
+    const btnClickHandler = () => {
+        dispatch(register("test0703@test.ru", "qwerty123"))
+    }
+
+    const testBtnClickHandler = () => {
+        const time = new Date().getTime()
+        dispatch(ping(time))
+    }
 
     return (
         <section className={s.main_box}>
@@ -36,7 +52,8 @@ export const SignUp = () => {
                     <div className={s.input_box_buttons}>
 
                         <button className={s.btn_cancel}>Cancel</button>
-                        <button className={s.btn_register}>Register</button>
+                        <button className={s.btn_register} onClick={btnClickHandler}>Register</button>
+                        <button className={s.btn_cancel} onClick={testBtnClickHandler}>Test</button>
 
                     </div>
                 </form>
