@@ -2,10 +2,12 @@ import {ActionType} from "../action-dispatchTypes";
 
 type StateType = {
     isFetching: boolean
+
 }
 
 const initialState: StateType = {
-    isFetching: true
+    isFetching: true,
+
 }
 
 export const appReducer = (state: StateType = initialState, action: ActionType): StateType => {
@@ -23,4 +25,5 @@ export const toggleIsFetchingAC = (isFetching: boolean) => {
         isFetching
     } as const
 }
+
 

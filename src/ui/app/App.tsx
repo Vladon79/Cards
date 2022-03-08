@@ -11,7 +11,9 @@ import s from './App.module.scss'
 import Preloader from "../common/Preloader/Preloader";
 import {useDispatch, useSelector} from "react-redux";
 import {AppRootStateType} from "../../bll/store";
-import {authMeTC} from "../../bll/reducers/profile-reducer";
+import {authMeTC} from "../../bll/reducers/auth-reducer";
+
+
 
 const App = () => {
     const isFetching = useSelector<AppRootStateType, boolean>(state => state.app.isFetching)

@@ -1,4 +1,5 @@
 import axios from "axios";
+import {Simulate} from "react-dom/test-utils";
 
 //login: nya-admin@nya.nya
 //pasward: 1qazxcvBG'
@@ -8,16 +9,24 @@ export const instance = axios.create({
     withCredentials: true,
 })
 
-export const profileAPI = {
+export const authApi = {
     authMe() {
-        return instance.post('/auth/me').then(response => response.data)
+        return instance.post('/auth/me')
     },
     ping() {
         return instance.post('/ping/', {frontTime: Date.now()}).then(response => {
-            console.log(response)
         })
     },
-    reg() {
+    log() {
         return instance.post('auth/login', {email: 'nya-admin@nya.nya', password: '1qazxcvBG', rememberMe: true})
+    },
+    changeMe(name: string, avatar: string) {
+        return instance.put('/auth/me', {
+            name: name,
+            avatar: avatar
+        }).then(response => response.data)
+    },
+    delete() {
+        return instance.delete('/auth/me').then(response => response.data)
     }
 }

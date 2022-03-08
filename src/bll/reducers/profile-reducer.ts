@@ -1,64 +1,52 @@
 import {toggleIsFetchingAC} from "./app-reducer";
-import {profileAPI} from "../../dal/profile-api/profile-api";
+import {authApi} from "../../dal/profile-api/auth-api";
 import {ActionType, DispatchType} from "../action-dispatchTypes";
 
 
-export type UserType = {
-    _id: string;
+export type UserProfileType = {
     email: string;
     name: string;
     avatar?: string;
     publicCardPacksCount: number;
-    created: Date;
-    updated: Date;
-    isAdmin: boolean;
-    verified: boolean;
-    rememberMe: boolean;
-    error?: string;
 }
 
 type StateType = {
-    user: UserType
+    user: UserProfileType
 }
 
 const initialState: StateType = {
     user: {
-        _id: "0",
         email: "fake",
         name: "fake",
-        // avatar?: string;
+        avatar: '',
         publicCardPacksCount: 0,
-
-        created: new Date(),
-        updated: new Date(),
-        isAdmin: false,
-        verified: false,
-        rememberMe: false
-
     }
 
 }
 
 export const profileReducer = (state: StateType = initialState, action: ActionType): StateType => {
     switch (action.type) {
-        case "PROFILE/AUTH-ME":
-            return {...state, user: action.user}
+        case "PROFILE/CHANGE-PROFILE":
+            return {...state, user: {...state.user, name: action.name, avatar: action.avatar}}
+
         default:
             return state
     }
 }
 
-export const authMeAC = (user: UserType) => {
+export const changeProfileAC = (name: string, avatar: string) => {
     return {
-        type: "PROFILE/AUTH-ME",
-        user
+        type: "PROFILE/CHANGE-PROFILE",
+        name, avatar
     } as const
 }
 
-export const authMeTC = () => async (dispatch: DispatchType) => {
+
+export const changeProfileTC = (name: string, avatar: string) => async (dispatch: DispatchType) => {
     dispatch(toggleIsFetchingAC(true))
-    const data = await profileAPI.authMe()
+    await authApi.changeMe(name, avatar)
+    changeProfileAC(name, avatar)
     dispatch(toggleIsFetchingAC(false))
-    dispatch(authMeAC(data))
-    console.log(data)
 }
+
+
