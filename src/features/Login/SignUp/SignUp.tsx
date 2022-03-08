@@ -12,7 +12,11 @@ export const SignUp = () => {
     const dispatch = useDispatch()
 
 
-    const btnClickHandler = () => {
+    const cancelBtnClickHandler = () => {
+        console.log('Cancel btn pushed')
+    }
+
+    const registerBtnClickHandler = () => {
         dispatch(register("test0703@test.ru", "qwerty123"))
     }
 
@@ -52,11 +56,8 @@ export const SignUp = () => {
 
                     <div className={s.input_box_buttons}>
 
-                        <SuperButton className={s.btn_cancel} value={'Cancel'}/>
-                        <button className={s.btn_register} onClick={btnClickHandler}>Register</button>
-                        <button className={s.btn_cancel} onClick={testBtnClickHandler}>Test</button>
-
-
+                        <SuperButton className={s.btn_cancel} value={'Cancel'} onClick={cancelBtnClickHandler}/>
+                        <SuperButton className={s.btn_register} value={'Register'} onClick={registerBtnClickHandler}/>
 
                     </div>
                 </form>
