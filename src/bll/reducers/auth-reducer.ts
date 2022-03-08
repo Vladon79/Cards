@@ -2,7 +2,6 @@ import {toggleIsFetchingAC} from "./app-reducer";
 import {authApi} from "../../dal/profile-api/auth-api";
 import {ActionType, DispatchType} from "../action-dispatchTypes";
 
-
 export type UserType = {
     _id: string;
     email: string;
@@ -47,6 +46,8 @@ export const authReducer = (state: StateType = initialState, action: ActionType)
             return {...state, user: action.user, isAuth: true}
         case "AUTH/DELETE-ME":
             return {...state, isAuth: false}
+        case "AUTH/CHANGE-PROFILE":
+            return {...state, user: {...state.user, name: action.name, avatar: action.avatar}}
         default:
             return state
     }
@@ -62,6 +63,13 @@ export const authMeAC = (user: UserType) => {
 export const deleteMeAC = () => {
     return {
         type: "AUTH/DELETE-ME",
+    } as const
+}
+
+export const changeProfileAC = (name: string, avatar: string) => {
+    return {
+        type: "AUTH/CHANGE-PROFILE",
+        name, avatar
     } as const
 }
 
@@ -85,4 +93,10 @@ export const deleteMeTC = () => async (dispatch: DispatchType) => {
     dispatch(toggleIsFetchingAC(false))
 }
 
+export const changeProfileTC = (name: string, avatar: string) => async (dispatch: DispatchType) => {
+    dispatch(toggleIsFetchingAC(true))
+    await authApi.changeMe(name, avatar)
+    dispatch(changeProfileAC(name, avatar))
+    dispatch(toggleIsFetchingAC(false))
+}
 

@@ -1,7 +1,7 @@
 import {Dispatch} from "react";
 import {toggleIsFetchingAC} from "./reducers/app-reducer";
-import {authMeAC, deleteMeAC} from "./reducers/auth-reducer";
-import {changeProfileAC} from "./reducers/profile-reducer";
+import {authMeAC, changeProfileAC, deleteMeAC} from "./reducers/auth-reducer";
+
 
 export type ActionType = ToggleIsFetchingACType
     | authMeACType

@@ -5,8 +5,9 @@ import {authReducer} from "./reducers/auth-reducer";
 import {appReducer} from "./reducers/app-reducer";
 
 const reducers = combineReducers({
-    profile: authReducer,
-    app: appReducer
+    auth: authReducer,
+    app: appReducer,
+
 })
 
 export const store = createStore(reducers, applyMiddleware(thunkMiddleware));

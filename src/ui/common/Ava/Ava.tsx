@@ -8,7 +8,7 @@ type AvaPropsType = {
 }
 
 const Ava = () => {
-    const ava = useSelector<AppRootStateType, string>(state => state.profile.user.avatar ? state.profile.user.avatar : userPhoto)
+    const ava = useSelector<AppRootStateType, string>(state => state.auth.user.avatar ? state.auth.user.avatar : userPhoto)
     return (
         <div className={s.ava}>
             <img src={ava} className={s.ava}/>

@@ -1,8 +1,8 @@
 import SuperInputText from "../../../common/c1-SuperInputText/SuperInputText";
 import SuperButton from "../../../common/c2-SuperButton/SuperButton";
 import {ChangeEvent, useState} from "react";
-import {changeProfileTC} from "../../../../bll/reducers/profile-reducer";
 import {useDispatch} from "react-redux";
+import {changeProfileTC} from "../../../../bll/reducers/auth-reducer";
 
 type ChangeProfilePropsType = {
     userName: string
@@ -10,7 +10,7 @@ type ChangeProfilePropsType = {
 }
 
 const ChangeProfile = ({userName, avatar}: ChangeProfilePropsType) => {
-    const [name, setName] = useState<string>(userName)
+    const [name, setName] = useState<string>('')
     const dispatch = useDispatch()
     const nameOnChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
         setName(e.currentTarget.value)
@@ -21,7 +21,7 @@ const ChangeProfile = ({userName, avatar}: ChangeProfilePropsType) => {
     }
     return (
         <>
-            <SuperInputText value={name} onChange={nameOnChangeHandler}/>
+            <SuperInputText name={'Name'} value={name} onChange={nameOnChangeHandler}/>
             <SuperButton onClick={nameChangeOnClickHandler}>change Name</SuperButton>
 
         </>
