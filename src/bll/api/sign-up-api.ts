@@ -9,10 +9,10 @@ const instance = axios.create({
 export const signUpApi = {
 
     register(email: string, password: string) {
-        return instance.post(`auth/register`, {email, password})
+        return instance.post<any>(`auth/register`, {email, password})
     },
 
     ping(time:number) {
-return instance.post(`ping`,{frontTime: time})
+return instance.post<any>(`ping`,{frontTime: time})
     }
 }

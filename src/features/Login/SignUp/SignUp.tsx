@@ -2,6 +2,7 @@ import React from 'react'
 import s from './SignUp.module.scss'
 import {ping, register} from "../../../bll/reducers/sign-up-reducer";
 import {useDispatch} from "react-redux";
+import SuperButton from "../../../ui/common/c2-SuperButton/SuperButton";
 
 
 
@@ -51,9 +52,11 @@ export const SignUp = () => {
 
                     <div className={s.input_box_buttons}>
 
-                        <button className={s.btn_cancel}>Cancel</button>
+                        <SuperButton className={s.btn_cancel} value={'Cancel'}/>
                         <button className={s.btn_register} onClick={btnClickHandler}>Register</button>
                         <button className={s.btn_cancel} onClick={testBtnClickHandler}>Test</button>
+
+
 
                     </div>
                 </form>
