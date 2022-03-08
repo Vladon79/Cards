@@ -1,30 +1,45 @@
-import React from 'react'
+import React, {useCallback, useState} from 'react'
 import s from './SignUp.module.scss'
-import {ping, register} from "../../../bll/reducers/sign-up-reducer";
+import {register} from "../../../bll/reducers/sign-up-reducer";
 import {useDispatch} from "react-redux";
 import SuperButton from "../../../ui/common/c2-SuperButton/SuperButton";
 import SuperInputText from "../../../ui/common/c1-SuperInputText/SuperInputText";
+import eye from '../../../assets/icons/eyeicon.png'
 
-
-
+type InputFieldType = 'password' | 'text'
 
 export const SignUp = () => {
 
     const dispatch = useDispatch()
 
+    const [email, setEmail] = useState<string>('')
+    const [password, setPassword] = useState<string>('')
+    const [repeatPassword, setRepeatPassword] = useState<string>('')
+    const [isShowPassword, setIsShowPassword] = useState<boolean>(false)
+    const [isShowRepeatPassword, setIsShowRepeatPassword] = useState<boolean>(false)
 
-    const cancelBtnClickHandler = () => {
+
+
+
+    const cancelBtnClickHandler = useCallback(() => {
         console.log('Cancel btn pushed')
-    }
+    }, [dispatch])
 
-    const registerBtnClickHandler = () => {
+    const registerBtnClickHandler = useCallback(() => {
         dispatch(register("test0703@test.ru", "qwerty123"))
-    }
+    }, [dispatch])
 
-    const testBtnClickHandler = () => {
-        const time = new Date().getTime()
-        dispatch(ping(time))
-    }
+
+    const showPassword = useCallback(() => {
+        setIsShowPassword(!isShowPassword)
+    },[isShowPassword])
+
+    const showRepeatPassword = useCallback(() => {
+        setIsShowRepeatPassword(!isShowRepeatPassword)
+    },[isShowRepeatPassword])
+
+    const passwordInputMode:InputFieldType = !isShowPassword ? 'password' : 'text'
+    const repeatPasswordInputMode:InputFieldType = !isShowRepeatPassword ? 'password' : 'text'
 
     return (
         <section className={s.main_box}>
@@ -34,32 +49,53 @@ export const SignUp = () => {
                     <div className={s.logo_text}>It-incubator</div>
                     <div className={s.sign_up_text}>Sign Up</div>
                 </div>
-
-
                 <form>
                     <div className={s.input_box_form}>
 
                         <div className={s.input_box}>
                             <div className={s.input_name}>Email</div>
-                            <SuperInputText type={'email'} className={s.input_box_input_text}/>
+                            <SuperInputText
+                                type={'email'}
+                                className={s.input_box_input_text}
+                                onChangeText={setEmail}
+                                value={email}
+                            />
                         </div>
 
                         <div className={s.input_box}>
                             <div className={s.input_name}>Password</div>
-                            <SuperInputText type={'password'} className={s.input_box_input_text}/>
+                            <SuperInputText
+                                type={passwordInputMode}
+                                className={s.input_box_input_text}
+                                onChangeText={setPassword}
+                                value={password}
+                            />
+                            <img src={eye}
+                                 alt={'show password'}
+                                 className={`${s.eye}  ${isShowPassword && s.eye_opacity}`}
+                                 onClick={showPassword}
+                            />
                         </div>
 
                         <div className={s.input_box}>
                             <div className={s.input_name}>Confirm password</div>
-                            <SuperInputText type={'password'} className={s.input_box_input_text}/>
+                            <SuperInputText
+                                type={repeatPasswordInputMode}
+                                className={s.input_box_input_text}
+                                onChangeText={setRepeatPassword}
+                                value={repeatPassword}
+                            />
+                            <img
+                                src={eye}
+                                alt={'show password'}
+                                className={`${s.eye}  ${isShowRepeatPassword && s.eye_opacity}`}
+                                onClick={showRepeatPassword}
+                            />
                         </div>
                     </div>
-
                     <div className={s.input_box_buttons}>
-
                         <SuperButton className={s.btn_cancel} value={'Cancel'} onClick={cancelBtnClickHandler}/>
                         <SuperButton className={s.btn_register} value={'Register'} onClick={registerBtnClickHandler}/>
-
                     </div>
                 </form>
             </section>
