@@ -3,6 +3,7 @@ import s from './SignUp.module.scss'
 import {ping, register} from "../../../bll/reducers/sign-up-reducer";
 import {useDispatch} from "react-redux";
 import SuperButton from "../../../ui/common/c2-SuperButton/SuperButton";
+import SuperInputText from "../../../ui/common/c1-SuperInputText/SuperInputText";
 
 
 
@@ -40,17 +41,17 @@ export const SignUp = () => {
 
                         <div className={s.input_box}>
                             <div className={s.input_name}>Email</div>
-                            <input type={'email'}/>
+                            <SuperInputText type={'email'} className={s.input_box_input_text}/>
                         </div>
 
                         <div className={s.input_box}>
                             <div className={s.input_name}>Password</div>
-                            <input type={'password'}/>
+                            <SuperInputText type={'password'} className={s.input_box_input_text}/>
                         </div>
 
                         <div className={s.input_box}>
                             <div className={s.input_name}>Confirm password</div>
-                            <input type={'password'}/>
+                            <SuperInputText type={'password'} className={s.input_box_input_text}/>
                         </div>
                     </div>
 
