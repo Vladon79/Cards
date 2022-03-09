@@ -1,8 +1,19 @@
+@mixin text($fontSize, $fontWeight, $textColor, $lineHeight) {
+  font-family: "Montserrat", sans-serif;
+  color: $textColor;
+  font-size: $fontSize;
+  font-weight: $fontWeight;
+  line-height: $lineHeight;
+}
 
-@mixin text ($fontSize, $fontWeight, $textColor, $lineHeight){
-    font-family: "Montserrat", sans-serif;
-    color: $textColor;
-    font-size: $fontSize;
-    font-weight: $fontWeight;
-    line-height: $lineHeight;
+@mixin inputBorderStyle($borderBottomStyle) {
+  border: none;
+  border-bottom: $borderBottomStyle;
+}
+
+@mixin inputBoxStyle($inputWidth, $inputHeight, $inputBgColor) {
+  box-sizing: border-box;
+  height: $inputHeight;
+  width: $inputWidth;
+  background-color: $inputBgColor;
 }
