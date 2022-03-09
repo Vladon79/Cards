@@ -23,16 +23,10 @@ const SignIn = () => {
     const rememberMe = useCheckBox(false)
 
     const singInData = {email: email.value, password: password.value, rememberMe: rememberMe.isDone}
-    console.log(email.isValid)
-    console.log(password.isValid)
-    const singIn = () => {
-        dispatch(singInTC(singInData))
-        console.log(1)
-    }
 
-    if (isSingIn) {
-        return <Navigate to='/profile'/>
-    }
+    const singIn = () => dispatch(singInTC(singInData))
+
+    if (isSingIn) return <Navigate to='/profile'/>
 
     return (
         <div>
