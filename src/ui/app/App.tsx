@@ -12,6 +12,7 @@ import Preloader from "../common/Preloader/Preloader";
 import {useDispatch, useSelector} from "react-redux";
 import {AppRootStateType} from "../../bll/store";
 import {authMeTC} from "../../bll/reducers/auth-reducer";
+import ChangeProfile from "../components/ProfilePage/ChangeProfile/ChangeProfile";
 
 
 
@@ -32,7 +33,8 @@ const App = () => {
                     <Route path="/signup" element={<SignUp/>}/>
                     <Route path="/error" element={<ErrorPage/>}/>
                     <Route path="/profile" element={<ProfilePage/>}/>
-                    <Route path="/test" element={<TestPage/>}/>s
+                    <Route path="/test" element={<TestPage/>}/>
+                    <Route path="/profileSettings" element={<ChangeProfile />}/>
                 </Routes>
             </div>
 

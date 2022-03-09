@@ -29,7 +29,6 @@ const initialState: StateType = {
         name: "fake",
         avatar: '',
         publicCardPacksCount: 0,
-
         created: new Date(),
         updated: new Date(),
         isAdmin: false,
@@ -60,7 +59,7 @@ export const authMeAC = (user: UserType) => {
     } as const
 }
 
-export const deleteMeAC = () => {
+export const signOutAC = () => {
     return {
         type: "AUTH/DELETE-ME",
     } as const
@@ -77,19 +76,17 @@ export const authMeTC = () => async (dispatch: DispatchType) => {
     dispatch(toggleIsFetchingAC(true))
     try {
         const res = await authApi.authMe()
-        console.log(res)
         dispatch(authMeAC(res.data))
     } catch (e: any) {
         const error = e.response ? e.response.data.error : (e.message + ', more details in the console');
-        console.log(error)
     }
     dispatch(toggleIsFetchingAC(false))
 }
 
-export const deleteMeTC = () => async (dispatch: DispatchType) => {
+export const signOutTC = () => async (dispatch: DispatchType) => {
     dispatch(toggleIsFetchingAC(true))
-    await authApi.delete()
-    dispatch(deleteMeAC())
+    await authApi.signOut()
+    dispatch(signOutAC())
     dispatch(toggleIsFetchingAC(false))
 }
 

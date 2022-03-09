@@ -26,7 +26,7 @@ export const authApi = {
             avatar: avatar
         }).then(response => response.data)
     },
-    delete() {
+    signOut() {
         return instance.delete('/auth/me').then(response => response.data)
     }
 }

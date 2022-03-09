@@ -1,17 +1,17 @@
 import {Dispatch} from "react";
 import {toggleIsFetchingAC} from "./reducers/app-reducer";
-import {authMeAC, changeProfileAC, deleteMeAC} from "./reducers/auth-reducer";
+import {authMeAC, changeProfileAC, signOutAC} from "./reducers/auth-reducer";
 
 
 export type ActionType = ToggleIsFetchingACType
     | authMeACType
-    | deleteMeACType
+    | signOutACType
     | changeProfileACType
 
 type ToggleIsFetchingACType = ReturnType<typeof toggleIsFetchingAC>;
 
 type authMeACType = ReturnType<typeof authMeAC>;
-type deleteMeACType = ReturnType<typeof deleteMeAC>;
+type signOutACType = ReturnType<typeof signOutAC>;
 
 type changeProfileACType = ReturnType<typeof changeProfileAC>;
 

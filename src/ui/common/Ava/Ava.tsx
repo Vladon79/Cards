@@ -1,14 +1,11 @@
 import s from './Ava.module.scss'
-import {useSelector} from "react-redux";
-import {AppRootStateType} from "../../../bll/store";
-import userPhoto from '../../../assets/image/img.png'
 
 type AvaPropsType = {
-    logo: string
+    ava: string
 }
 
-const Ava = () => {
-    const ava = useSelector<AppRootStateType, string>(state => state.auth.user.avatar ? state.auth.user.avatar : userPhoto)
+const Ava = ({ava}:AvaPropsType) => {
+    //const ava = useSelector<AppRootStateType, string>(state => state.auth.user.avatar ? state.auth.user.avatar : userPhoto)
     return (
         <div className={s.ava}>
             <img src={ava} className={s.ava}/>
