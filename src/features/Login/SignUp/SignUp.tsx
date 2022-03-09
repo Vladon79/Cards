@@ -21,12 +21,14 @@ export const SignUp = () => {
 
 
 
+
+
     const cancelBtnClickHandler = useCallback(() => {
         console.log('Cancel btn pushed')
     }, [dispatch])
 
     const registerBtnClickHandler = useCallback(() => {
-        dispatch(register("test0703@test.ru", "qwerty123"))
+        dispatch(register(email, password))
     }, [dispatch])
 
 
