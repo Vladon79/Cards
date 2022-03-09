@@ -1,11 +1,11 @@
 import React from 'react';
 import './App.scss';
-import Header from "../components/Header/Header";
+import Header from "../components/Header/MainHeader";
 import {Route, Routes} from 'react-router-dom';
 import ErrorPage from "../../features/ErrorPage/ErrorPage";
 import TestPage from "../../features/TestPage/TestPage";
 import ProfilePage from "../components/ProfilePage/ProfilePage";
-import SignIn from "../../features/Login/SignIn";
+import SignIn from "../../features/Login/SingIn/SignIn";
 import SignUp from "../../features/Login/SignUp";
 import Preloader from "../common/Preloader/Preloader";
 
