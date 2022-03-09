@@ -1,5 +1,4 @@
 import axios from "axios";
-import {Simulate} from "react-dom/test-utils";
 
 //login: nya-admin@nya.nya
 //pasward: 1qazxcvBG'
@@ -22,8 +21,7 @@ export const authApi = {
     },
     changeMe(name: string, avatar: string) {
         return instance.put('/auth/me', {
-            name: name,
-            avatar: avatar
+            name, avatar
         }).then(response => response.data)
     },
     signOut() {
