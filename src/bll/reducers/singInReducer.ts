@@ -31,7 +31,6 @@ export const singInTC = (data: SingInRequestType) =>
         singInAPI.singIn(data)
             .then((res) => {
                 if (res.data._id !== null) {
-                    debugger
                     dispatch(singInAC(true))
                     dispatch(authMeAC(res.data)) // need action for profile
                 }

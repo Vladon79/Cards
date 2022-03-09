@@ -26,5 +26,11 @@ export const authApi = {
     },
     signOut() {
         return instance.delete('/auth/me').then(response => response.data)
-    }
+    },
+    register(email: string, password: string) {
+        const email1 = 'test@test.tes'
+        const password1 = '12345678'
+        //@ts-ignore
+        return instance.post<any>(`auth/register`, {email1, password1})
+    },
 }

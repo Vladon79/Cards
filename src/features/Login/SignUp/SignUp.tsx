@@ -1,10 +1,11 @@
-import React, {useCallback, useState} from 'react'
+import React, {useCallback, useState, MouseEvent} from 'react'
 import s from './SignUp.module.scss'
 import {register} from "../../../bll/reducers/sign-up-reducer";
 import {useDispatch} from "react-redux";
 import SuperButton from "../../../ui/common/c2-SuperButton/SuperButton";
 import SuperInputText from "../../../ui/common/c1-SuperInputText/SuperInputText";
 import eye from '../../../assets/icons/eyeicon.png'
+import {authApi} from '../../../bll/api/auth-api';
 
 type InputFieldType = 'password' | 'text'
 
@@ -29,13 +30,15 @@ export const SignUp = () => {
     }, [dispatch])
 
 
-    const registerBtnClickHandler = () => {
+    const registerBtnClickHandler = (e: MouseEvent ) => {
+
 
         /*  setError(password !== repeatPassword)*/
-
+        e.preventDefault()
+        authApi.register(email, password)
 
         /*dispatch(register(email, password))*/
-        dispatch(register('test@test.test', 'testtesttest'))
+        // dispatch(register('test@test.test', 'testtesttest'))
 
 
     }
@@ -116,7 +119,8 @@ export const SignUp = () => {
                     </div>
                     <div className={s.input_box_buttons}>
                         <SuperButton className={s.btn_cancel} onClick={cancelBtnClickHandler}>Cancel</SuperButton>
-                        <SuperButton className={s.btn_register} onClick={registerBtnClickHandler}>Register</SuperButton>
+                        {/*<SuperButton className={s.btn_register} onClick={(e)=>registerBtnClickHandler(e)}>Register</SuperButton>*/}
+                        <button onClick={(e)=>registerBtnClickHandler(e)}></button>
                     </div>
                 </form>
             </section>

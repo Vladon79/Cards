@@ -1,5 +1,6 @@
 import {Dispatch} from "redux";
-import {signUpApi} from "../api/sign-up-api";
+import { authApi } from "../api/auth-api";
+
 
 
 export const signUpReducer = (state: any = {}, action: any): any => {
@@ -21,7 +22,7 @@ export const signUpReducer = (state: any = {}, action: any): any => {
 export const register = (email: string, password: string) => (dispatch: Dispatch) => {
 
     //dispatch(AppLoader --> loading)
-    signUpApi.register(email, password)
+    authApi.register(email, password)
         .then(res => {
             /*
                 dispatch(setIsLoggedInAC(true)
@@ -35,11 +36,11 @@ export const register = (email: string, password: string) => (dispatch: Dispatch
         })
 
 }
-
-export const ping = (time: number) => (dispatch: Dispatch) => {
-
-    signUpApi.ping(time)
-        .then(res => {
-            console.log(res)
-        })
-}
+//
+// export const ping = (time: number) => (dispatch: Dispatch) => {
+//
+//     signUpApi.ping(time)
+//         .then(res => {
+//             console.log(res)
+//         })
+// }

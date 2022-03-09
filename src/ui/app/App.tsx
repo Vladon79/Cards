@@ -22,9 +22,9 @@ import { SignUp } from '../../features/Login/SignUp/SignUp';
 const App = () => {
     const isFetching = useSelector<AppRootStateType, boolean>(state => state.app.isFetching)
     const dispatch = useDispatch()
-    useEffect(() => {
-        dispatch(authMeTC())
-    }, [dispatch])
+    // useEffect(() => {
+    //     dispatch(authMeTC())
+    // }, [dispatch])
     return (
         <div className="App">
             <Header/>
