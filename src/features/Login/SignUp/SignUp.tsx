@@ -12,26 +12,34 @@ export const SignUp = () => {
 
     const dispatch = useDispatch()
 
-    const [email, setEmail] = useState<string>('')
-    const [password, setPassword] = useState<string>('')
-    const [repeatPassword, setRepeatPassword] = useState<string>('')
+    const [email, setEmail] = useState<string>('test@test.test')
+    const [password, setPassword] = useState<string>('testtesttest')
+    const [repeatPassword, setRepeatPassword] = useState<string>('testtesttest')
     const [isShowPassword, setIsShowPassword] = useState<boolean>(false)
     const [isShowRepeatPassword, setIsShowRepeatPassword] = useState<boolean>(false)
     const [error, setError] = useState<boolean>(false)
 
 
+    console.log(email)
+    console.log(password)
+    console.log(repeatPassword)
+
     const cancelBtnClickHandler = useCallback(() => {
         console.log('Cancel btn pushed')
     }, [dispatch])
 
-    const registerBtnClickHandler = useCallback(() => {
-
-        setError(password !== repeatPassword)
-
-        !error ? dispatch(register(email, password)) : null
 
 
-    }, [dispatch])
+    const registerBtnClickHandler = () => {
+
+      /*  setError(password !== repeatPassword)*/
+
+
+        /*dispatch(register(email, password))*/
+        dispatch(register('test@test.test', 'testtesttest'))
+
+
+    }
 
 
     const showPassword = useCallback(() => {
@@ -62,7 +70,8 @@ export const SignUp = () => {
                                 type={'email'}
                                 required
                                 className={s.input_box_input_text}
-                                onChangeText={setEmail}
+                                /*onChangeText={setEmail}*/
+                                onChange={(e)=>setEmail(e.currentTarget.value)}
                                 value={email}
                             />
                         </div>
@@ -75,7 +84,8 @@ export const SignUp = () => {
                                 minLength={5}
                                 maxLength={32}
                                 className={s.input_box_input_text}
-                                onChangeText={setPassword}
+                               /* onChangeText={setPassword}*/
+                                onChange={(e)=>setPassword(e.currentTarget.value)}
                                 value={password}
                             />
                             <img src={eye}
@@ -93,7 +103,8 @@ export const SignUp = () => {
                                 minLength={5}
                                 maxLength={32}
                                 className={s.input_box_input_text}
-                                onChangeText={setRepeatPassword}
+                              /*  onChangeText={setRepeatPassword}*/
+                                onChange={(e)=> setRepeatPassword(e.currentTarget.value)}
                                 value={repeatPassword}
                             />
                             <img
