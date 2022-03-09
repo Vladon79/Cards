@@ -20,9 +20,10 @@ export const signUpReducer = (state: any = {}, action: any): any => {
 
 export const register = (email: string, password: string) => (dispatch: Dispatch) => {
 
+    //dispatch(AppLoader)
     signUpApi.register(email, password)
         .then(res => {
-            console.log(res)
+
         })
         .catch(err => {
             console.log(err)
