@@ -1,5 +1,7 @@
 import {singInAPI, SingInRequestType} from "../../api/signIn-api";
 import {Dispatch} from "redux";
+import {authMeAC} from "./auth-reducer";
+import {authMeACType} from "../action-dispatchTypes";
 
 const initialState = {
     isSingIn: false
@@ -25,12 +27,13 @@ export const singInAC = (value: boolean) => {
 export type SingInAT = ReturnType<typeof singInAC>
 
 export const singInTC = (data: SingInRequestType) =>
-    (dispatch: Dispatch<SingInAT>) => {
+    (dispatch: Dispatch<SingInAT | authMeACType>) => {
         singInAPI.singIn(data)
             .then((res) => {
                 if (res.data._id !== null) {
+                    debugger
                     dispatch(singInAC(true))
-                    //dispatch() // need action for profile
+                    dispatch(authMeAC(res.data)) // need action for profile
                 }
             })
             .catch((e) => {

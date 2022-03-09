@@ -10,7 +10,7 @@ export type ActionType = ToggleIsFetchingACType
 
 type ToggleIsFetchingACType = ReturnType<typeof toggleIsFetchingAC>;
 
-type authMeACType = ReturnType<typeof authMeAC>;
+export type authMeACType = ReturnType<typeof authMeAC>;
 type signOutACType = ReturnType<typeof signOutAC>;
 
 type changeProfileACType = ReturnType<typeof changeProfileAC>;

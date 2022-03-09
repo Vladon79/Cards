@@ -1,5 +1,5 @@
 
-import './App.scss';
+import './App.module.scss';
 import Header from "../components/Header/MainHeader";
 import React, {useEffect} from 'react';
 import './App.module.scss';

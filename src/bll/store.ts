@@ -1,5 +1,4 @@
 import {applyMiddleware, combineReducers, createStore} from "redux";
-import {reducer} from "./reducers/reducer";
 import thunkMiddleware from 'redux-thunk'
 import {authReducer} from "./reducers/auth-reducer";
 import {appReducer} from "./reducers/app-reducer";
