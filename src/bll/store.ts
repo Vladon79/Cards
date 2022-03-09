@@ -1,11 +1,15 @@
 import {applyMiddleware, combineReducers, createStore} from "redux";
-import {reducer} from "./reducers/reducer";
+
 import thunkMiddleware from 'redux-thunk'
+import {authReducer} from "./reducers/auth-reducer";
+import {appReducer} from "./reducers/app-reducer";
 
 const reducers = combineReducers({
-    reducer:reducer
+    auth: authReducer,
+    app: appReducer,
+
 })
 
 export const store = createStore(reducers, applyMiddleware(thunkMiddleware));
-// определить автоматически тип всего объекта состояния
+
 export type AppRootStateType = ReturnType<typeof reducers>
