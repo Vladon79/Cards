@@ -29,10 +29,9 @@ export const SignUp = () => {
     }, [dispatch])
 
 
-
     const registerBtnClickHandler = () => {
 
-      /*  setError(password !== repeatPassword)*/
+        /*  setError(password !== repeatPassword)*/
 
 
         /*dispatch(register(email, password))*/
@@ -71,7 +70,7 @@ export const SignUp = () => {
                                 required
                                 className={s.input_box_input_text}
                                 /*onChangeText={setEmail}*/
-                                onChange={(e)=>setEmail(e.currentTarget.value)}
+                                onChange={(e) => setEmail(e.currentTarget.value)}
                                 value={email}
                             />
                         </div>
@@ -84,8 +83,8 @@ export const SignUp = () => {
                                 minLength={5}
                                 maxLength={32}
                                 className={s.input_box_input_text}
-                               /* onChangeText={setPassword}*/
-                                onChange={(e)=>setPassword(e.currentTarget.value)}
+                                /* onChangeText={setPassword}*/
+                                onChange={(e) => setPassword(e.currentTarget.value)}
                                 value={password}
                             />
                             <img src={eye}
@@ -103,8 +102,8 @@ export const SignUp = () => {
                                 minLength={5}
                                 maxLength={32}
                                 className={s.input_box_input_text}
-                              /*  onChangeText={setRepeatPassword}*/
-                                onChange={(e)=> setRepeatPassword(e.currentTarget.value)}
+                                /*  onChangeText={setRepeatPassword}*/
+                                onChange={(e) => setRepeatPassword(e.currentTarget.value)}
                                 value={repeatPassword}
                             />
                             <img
@@ -116,8 +115,8 @@ export const SignUp = () => {
                         </div>
                     </div>
                     <div className={s.input_box_buttons}>
-                        <SuperButton className={s.btn_cancel} value={'Cancel'} onClick={cancelBtnClickHandler}/>
-                        <SuperButton className={s.btn_register} value={'Register'} onClick={registerBtnClickHandler}/>
+                        <SuperButton className={s.btn_cancel} onClick={cancelBtnClickHandler}>Cancel</SuperButton>
+                        <SuperButton className={s.btn_register} onClick={registerBtnClickHandler}>Register</SuperButton>
                     </div>
                 </form>
             </section>

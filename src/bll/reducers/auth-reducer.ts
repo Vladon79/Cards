@@ -1,6 +1,7 @@
 import {toggleIsFetchingAC} from "./app-reducer";
-import {authApi} from "../../dal/profile-api/auth-api";
+
 import {ActionType, DispatchType} from "../action-dispatchTypes";
+import { authApi } from "../api/auth-api";
 
 export type UserType = {
     _id: string;

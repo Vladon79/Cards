@@ -8,13 +8,14 @@ import ErrorPage from "../../features/ErrorPage/ErrorPage";
 import TestPage from "../../features/TestPage/TestPage";
 import ProfilePage from "../components/ProfilePage/ProfilePage";
 import SignIn from "../../features/Login/SingIn/SignIn";
-import SignUp from "../../features/Login/SignUp";
+
 import s from './App.module.scss'
 import Preloader from "../common/Preloader/Preloader";
 import {useDispatch, useSelector} from "react-redux";
 import {AppRootStateType} from "../../bll/store";
 import {authMeTC} from "../../bll/reducers/auth-reducer";
 import ChangeProfile from "../components/ProfilePage/ChangeProfile/ChangeProfile";
+import { SignUp } from '../../features/Login/SignUp/SignUp';
 
 
 

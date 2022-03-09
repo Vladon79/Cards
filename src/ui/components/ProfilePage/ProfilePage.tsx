@@ -5,9 +5,10 @@ import Ava from "../../common/Ava/Ava";
 import {UserType} from "../../../bll/reducers/auth-reducer";
 import {useSelector} from "react-redux";
 import {AppRootStateType} from "../../../bll/store";
-import {authApi} from "../../../dal/profile-api/auth-api";
+
 import {useNavigate} from "react-router-dom";
 import image from '../../../assets/image/img.png'
+import { authApi } from '../../../bll/api/auth-api';
 
 
 const ProfilePage = () => {
