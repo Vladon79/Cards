@@ -17,10 +17,7 @@ export const SignUp = () => {
     const [repeatPassword, setRepeatPassword] = useState<string>('')
     const [isShowPassword, setIsShowPassword] = useState<boolean>(false)
     const [isShowRepeatPassword, setIsShowRepeatPassword] = useState<boolean>(false)
-
-
-
-
+    const [error, setError] = useState<boolean>(false)
 
 
     const cancelBtnClickHandler = useCallback(() => {
@@ -28,20 +25,25 @@ export const SignUp = () => {
     }, [dispatch])
 
     const registerBtnClickHandler = useCallback(() => {
-        dispatch(register(email, password))
+
+        setError(password !== repeatPassword)
+
+        !error ? dispatch(register(email, password)) : null
+
+
     }, [dispatch])
 
 
     const showPassword = useCallback(() => {
         setIsShowPassword(!isShowPassword)
-    },[isShowPassword])
+    }, [isShowPassword])
 
     const showRepeatPassword = useCallback(() => {
         setIsShowRepeatPassword(!isShowRepeatPassword)
-    },[isShowRepeatPassword])
+    }, [isShowRepeatPassword])
 
-    const passwordInputMode:InputFieldType = !isShowPassword ? 'password' : 'text'
-    const repeatPasswordInputMode:InputFieldType = !isShowRepeatPassword ? 'password' : 'text'
+    const passwordInputMode: InputFieldType = !isShowPassword ? 'password' : 'text'
+    const repeatPasswordInputMode: InputFieldType = !isShowRepeatPassword ? 'password' : 'text'
 
     return (
         <section className={s.main_box}>
@@ -58,6 +60,7 @@ export const SignUp = () => {
                             <div className={s.input_name}>Email</div>
                             <SuperInputText
                                 type={'email'}
+                                required
                                 className={s.input_box_input_text}
                                 onChangeText={setEmail}
                                 value={email}
@@ -68,6 +71,9 @@ export const SignUp = () => {
                             <div className={s.input_name}>Password</div>
                             <SuperInputText
                                 type={passwordInputMode}
+                                required
+                                minLength={5}
+                                maxLength={32}
                                 className={s.input_box_input_text}
                                 onChangeText={setPassword}
                                 value={password}
@@ -83,6 +89,9 @@ export const SignUp = () => {
                             <div className={s.input_name}>Confirm password</div>
                             <SuperInputText
                                 type={repeatPasswordInputMode}
+                                required
+                                minLength={5}
+                                maxLength={32}
                                 className={s.input_box_input_text}
                                 onChangeText={setRepeatPassword}
                                 value={repeatPassword}
