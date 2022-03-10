@@ -1,4 +1,4 @@
-import {singInAPI, SingInRequestType} from "../../api/signIn-api";
+import {singInAPI, SingInRequestType} from "../api/signIn-api(delete)";
 import {Dispatch} from "redux";
 import {authMeAC} from "./auth-reducer";
 import {authMeACType} from "../action-dispatchTypes";

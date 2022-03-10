@@ -1,16 +1,18 @@
 import React, {MouseEvent, useCallback, useState} from 'react'
 import s from './SignUp.module.scss'
 import {register} from "../../../bll/reducers/sign-up-reducer";
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import SuperButton from "../../../ui/common/c2-SuperButton/SuperButton";
 import SuperInputText from "../../../ui/common/c1-SuperInputText/SuperInputText";
 import eye from '../../../assets/icons/eyeicon.png'
 import {Navigate} from "react-router-dom";
+import {AppRootStateType} from "../../../bll/store";
 
 type InputFieldType = 'password' | 'text'
 
 export const SignUp = () => {
 
+    const isLoggedIn = useSelector<AppRootStateType, boolean>(state => state.auth.isAuth)
     const dispatch = useDispatch()
 
     const [email, setEmail] = useState<string>('')
@@ -19,10 +21,6 @@ export const SignUp = () => {
     const [isShowPassword, setIsShowPassword] = useState<boolean>(false)
     const [isShowRepeatPassword, setIsShowRepeatPassword] = useState<boolean>(false)
     const [error, setError] = useState<boolean>(false)
-
-    console.log(email)
-    console.log(password)
-    console.log(repeatPassword)
 
 
     const cancelBtnClickHandler = useCallback((e: MouseEvent) => {
@@ -46,6 +44,11 @@ export const SignUp = () => {
     const passwordInputMode: InputFieldType = !isShowPassword ? 'password' : 'text'
     const repeatPasswordInputMode: InputFieldType = !isShowRepeatPassword ? 'password' : 'text'
 
+
+    if (isLoggedIn) {
+        return <Navigate to={'/profile'}/>
+    }
+
     return (
         <section className={s.main_box}>
             <section className={s.sign_up_box}>
@@ -59,6 +62,7 @@ export const SignUp = () => {
                             <div className={s.input_name}>Email</div>
                             <SuperInputText
                                 type={'email'}
+                                name={'email'}
                                 required
                                 className={s.input_box_input_text}
                                 onChange={(e) => setEmail(e.currentTarget.value)}
@@ -69,11 +73,11 @@ export const SignUp = () => {
                             <div className={s.input_name}>Password</div>
                             <SuperInputText
                                 type={passwordInputMode}
+                                name={'password'}
                                 required
                                 minLength={5}
                                 maxLength={32}
                                 className={s.input_box_input_text}
-                                /* onChangeText={setPassword}*/
                                 onChange={(e) => setPassword(e.currentTarget.value)}
                                 value={password}
                             />
@@ -87,11 +91,11 @@ export const SignUp = () => {
                             <div className={s.input_name}>Confirm password</div>
                             <SuperInputText
                                 type={repeatPasswordInputMode}
+                                name={'repeatPassword'}
                                 required
                                 minLength={5}
                                 maxLength={32}
                                 className={s.input_box_input_text}
-                                /*  onChangeText={setRepeatPassword}*/
                                 onChange={(e) => setRepeatPassword(e.currentTarget.value)}
                                 value={repeatPassword}
                             />

@@ -1,10 +1,11 @@
 import {Dispatch} from "redux";
 import { authApi } from "../api/auth-api";
 import {toggleIsFetchingAC} from "./app-reducer";
+import {DispatchType} from "../action-dispatchTypes";
 
 
 
-export const register = (email: string, password: string) => (dispatch: Dispatch) => {
+export const register = (email: string, password: string) => (dispatch: DispatchType) => {
 
     dispatch(toggleIsFetchingAC(true))
     authApi.register(email, password)
@@ -18,7 +19,7 @@ export const register = (email: string, password: string) => (dispatch: Dispatch
            /* handleServerNetworkError(dispatch, err.message)*/
         })
         .finally(() => {
-            //dispatch(AppLoader --> idle)
+            dispatch(toggleIsFetchingAC(false))
         })
 
 }

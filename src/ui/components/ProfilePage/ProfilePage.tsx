@@ -2,11 +2,11 @@ import blockStyle from '../../../styles/container.module.scss'
 import s from './ProfilePage.module.scss'
 import SuperButton from "../../common/c2-SuperButton/SuperButton";
 import Ava from "../../common/Ava/Ava";
-import {UserType} from "../../../bll/reducers/auth-reducer";
-import {useSelector} from "react-redux";
+import {signOutTC, UserType} from "../../../bll/reducers/auth-reducer";
+import {useDispatch, useSelector} from "react-redux";
 import {AppRootStateType} from "../../../bll/store";
 
-import {useNavigate} from "react-router-dom";
+import {Navigate, useNavigate} from "react-router-dom";
 import image from '../../../assets/image/img.png'
 import { authApi } from '../../../bll/api/auth-api';
 
@@ -15,17 +15,23 @@ const ProfilePage = () => {
     const user = useSelector<AppRootStateType, UserType>(state => state.auth.user)
     const isAuth = useSelector<AppRootStateType, boolean>(state => state.auth.isAuth)
     const navigate = useNavigate()
+    const dispatch = useDispatch()
 
-    const login = () => {
+   /* const login = () => {
         authApi.log()
-    }
+    }*/
 
     const profileSettings = () => {
         navigate("/profileSettings")
     }
 
+    const signOut = () => {
+        dispatch(signOutTC())
+    }
+
     if (!isAuth) {
-        navigate("/signin")
+        /*navigate("/signin")  --> index.tsx:30 You should call navigate() in a React.useEffect(), not when your component is first rendered.*/
+    return <Navigate to={'/signin'}/>
     }
 
     return (
@@ -40,7 +46,8 @@ const ProfilePage = () => {
                 </div>
                 <div>
                     <SuperButton onClick={profileSettings}>Edit profile</SuperButton>
-                    <SuperButton onClick={login}>login</SuperButton>
+                    {/*<SuperButton onClick={login}>login</SuperButton>*/}
+                    <SuperButton onClick={signOut}>signOut</SuperButton>
                 </div>
             </div>
         </div>

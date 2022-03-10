@@ -1,7 +1,7 @@
 import './App.module.scss';
 import Header from "../components/Header/MainHeader";
 import React, {useEffect} from 'react';
-import {Navigate, Route, Routes} from 'react-router-dom';
+import {Route, Routes} from 'react-router-dom';
 import ErrorPage from "../../features/ErrorPage/ErrorPage";
 import TestPage from "../../features/TestPage/TestPage";
 import ProfilePage from "../components/ProfilePage/ProfilePage";
@@ -18,7 +18,6 @@ import {appInitializeTC} from "../../bll/reducers/app-reducer";
 const App = () => {
     const isInitialized = useSelector<AppRootStateType, boolean>(state => state.app.isInitialized)
     const isFetching = useSelector<AppRootStateType, boolean>(state => state.app.isFetching)
-    const isLoggedIn = useSelector<AppRootStateType, boolean>(state => state.auth.isAuth)
     const dispatch = useDispatch()
 
 
@@ -30,21 +29,14 @@ const App = () => {
         return <Preloader/>
     }
 
-/*
-    if (!isLoggedIn) {
-        return <Navigate to={'/signin'}/>
-    }
-
-    if (!isFetching) {
-        return <Preloader/>
-    }
-*/
 
 
     return (
         <div className="App">
             <Header/>
-            {isFetching && <Preloader/>}
+            {isFetching
+                ? <Preloader/>
+            :
             <div className={s.content}>
                 <Routes>
                     <Route path="/"/>
@@ -56,6 +48,7 @@ const App = () => {
                     <Route path="/profileSettings" element={<ChangeProfile />}/>
                 </Routes>
             </div>
+            }
         </div>
     )
 }
