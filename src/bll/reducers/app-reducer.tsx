@@ -2,12 +2,12 @@ import {ActionType} from "../action-dispatchTypes";
 
 type StateType = {
     isFetching: boolean
-
+    isInitialized: boolean
 }
 
 const initialState: StateType = {
-    isFetching: true,
-
+    isFetching: false,
+    isInitialized: false
 }
 
 export const appReducer = (state: StateType = initialState, action: ActionType): StateType => {

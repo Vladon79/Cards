@@ -20,13 +20,11 @@ const SuperButton: React.FC<SuperButtonPropsType> = (
 
     return (
 
-
         <button
             onClick={restProps.onClick}
             className={finalClassName}
             {...restProps} // отдаём кнопке остальные пропсы если они есть (children там внутри)
         >
-            {/*{value}*/}
         </button>
 
     )

@@ -1,11 +1,11 @@
-import React, {useCallback, useState, MouseEvent} from 'react'
+import React, {MouseEvent, useCallback, useState} from 'react'
 import s from './SignUp.module.scss'
 import {register} from "../../../bll/reducers/sign-up-reducer";
 import {useDispatch} from "react-redux";
 import SuperButton from "../../../ui/common/c2-SuperButton/SuperButton";
 import SuperInputText from "../../../ui/common/c1-SuperInputText/SuperInputText";
 import eye from '../../../assets/icons/eyeicon.png'
-import {authApi} from '../../../bll/api/auth-api';
+import {Navigate} from "react-router-dom";
 
 type InputFieldType = 'password' | 'text'
 
@@ -13,71 +13,58 @@ export const SignUp = () => {
 
     const dispatch = useDispatch()
 
-    const [email, setEmail] = useState<string>('test@test.test')
-    const [password, setPassword] = useState<string>('testtesttest')
-    const [repeatPassword, setRepeatPassword] = useState<string>('testtesttest')
+    const [email, setEmail] = useState<string>('')
+    const [password, setPassword] = useState<string>('')
+    const [repeatPassword, setRepeatPassword] = useState<string>('')
     const [isShowPassword, setIsShowPassword] = useState<boolean>(false)
     const [isShowRepeatPassword, setIsShowRepeatPassword] = useState<boolean>(false)
     const [error, setError] = useState<boolean>(false)
-
 
     console.log(email)
     console.log(password)
     console.log(repeatPassword)
 
-    const cancelBtnClickHandler = useCallback(() => {
-        console.log('Cancel btn pushed')
-    }, [dispatch])
 
-
-    const registerBtnClickHandler = (e: MouseEvent ) => {
-
-
-        /*  setError(password !== repeatPassword)*/
+    const cancelBtnClickHandler = useCallback((e: MouseEvent) => {
         e.preventDefault()
-        authApi.register(email, password)
-
-        /*dispatch(register(email, password))*/
-        // dispatch(register('test@test.test', 'testtesttest'))
+        return <Navigate to='/'/>
+    }, [Navigate])
 
 
-    }
+    const registerBtnClickHandler = useCallback((e: MouseEvent) => {
+        e.preventDefault()
+        dispatch(register(email, password))
+    }, [email, password, repeatPassword, dispatch])
 
 
     const showPassword = useCallback(() => {
         setIsShowPassword(!isShowPassword)
     }, [isShowPassword])
-
     const showRepeatPassword = useCallback(() => {
         setIsShowRepeatPassword(!isShowRepeatPassword)
     }, [isShowRepeatPassword])
-
     const passwordInputMode: InputFieldType = !isShowPassword ? 'password' : 'text'
     const repeatPasswordInputMode: InputFieldType = !isShowRepeatPassword ? 'password' : 'text'
 
     return (
         <section className={s.main_box}>
             <section className={s.sign_up_box}>
-
                 <div className={s.sign_up_box_header}>
                     <div className={s.logo_text}>It-incubator</div>
                     <div className={s.sign_up_text}>Sign Up</div>
                 </div>
                 <form>
                     <div className={s.input_box_form}>
-
                         <div className={s.input_box}>
                             <div className={s.input_name}>Email</div>
                             <SuperInputText
                                 type={'email'}
                                 required
                                 className={s.input_box_input_text}
-                                /*onChangeText={setEmail}*/
                                 onChange={(e) => setEmail(e.currentTarget.value)}
                                 value={email}
                             />
                         </div>
-
                         <div className={s.input_box}>
                             <div className={s.input_name}>Password</div>
                             <SuperInputText
@@ -96,7 +83,6 @@ export const SignUp = () => {
                                  onClick={showPassword}
                             />
                         </div>
-
                         <div className={s.input_box}>
                             <div className={s.input_name}>Confirm password</div>
                             <SuperInputText
@@ -118,9 +104,18 @@ export const SignUp = () => {
                         </div>
                     </div>
                     <div className={s.input_box_buttons}>
-                        <SuperButton className={s.btn_cancel} onClick={cancelBtnClickHandler}>Cancel</SuperButton>
-                        {/*<SuperButton className={s.btn_register} onClick={(e)=>registerBtnClickHandler(e)}>Register</SuperButton>*/}
-                        <button onClick={(e)=>registerBtnClickHandler(e)}></button>
+                        <SuperButton
+                            className={s.btn_cancel}
+                            onClick={(e) => cancelBtnClickHandler(e)}
+                        >
+                            Cancel
+                        </SuperButton>
+                        <SuperButton
+                            className={s.btn_register}
+                            onClick={(e) => registerBtnClickHandler(e)}
+                        >
+                            Register
+                        </SuperButton>
                     </div>
                 </form>
             </section>

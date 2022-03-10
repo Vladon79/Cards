@@ -12,10 +12,6 @@ export const authApi = {
     authMe() {
         return instance.post('/auth/me')
     },
-    ping() {
-        return instance.post('/ping/', {frontTime: Date.now()}).then(response => {
-        })
-    },
     log() {
         return instance.post('auth/login', {email: 'nya-admin@nya.nya', password: '1qazxcvBG', rememberMe: true})
     },
@@ -28,9 +24,30 @@ export const authApi = {
         return instance.delete('/auth/me').then(response => response.data)
     },
     register(email: string, password: string) {
-        const email1 = 'test@test.tes'
-        const password1 = '12345678'
-        //@ts-ignore
-        return instance.post<any>(`auth/register`, {email1, password1})
+        return instance.post<RegisterResponseType>(`auth/register`, {email, password})
     },
 }
+
+
+
+type RegisterResponseType = {
+    addedUser: AddedUserType
+    created:string
+    email: string
+    isAdmin: boolean
+    name: string
+    publicCardPacksCount: number
+    rememberMe: boolean
+    updated: string
+    verified: boolean
+    __v: number
+    _id: string
+}
+
+type AddedUserType = {
+    _id: string
+    email: string
+    rememberMe: boolean
+    isAdmin: boolean
+}
+
