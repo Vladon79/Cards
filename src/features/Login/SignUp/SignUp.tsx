@@ -7,12 +7,14 @@ import SuperInputText from "../../../ui/common/c1-SuperInputText/SuperInputText"
 import {Navigate, useNavigate} from "react-router-dom";
 import eye from '../../../assets/icons/eyeicon.png'
 import {AppRootStateType} from "../../../bll/store";
+import {AuthEmailField} from "../../../ui/common/AuthFields/AuthEmailField/AuthEmailField";
+import {AuthPassField} from "../../../ui/common/AuthFields/AuthPassField/AuthPassField";
 
 type InputFieldType = 'password' | 'text'
 
 export const SignUp = () => {
 
-    let navigate = useNavigate()
+    const navigate = useNavigate()
 
     const isLoggedIn = useSelector<AppRootStateType, boolean>(state => state.auth.isAuth)
     const dispatch = useDispatch()
@@ -53,47 +55,30 @@ export const SignUp = () => {
                 </div>
                 <form>
                     <div className={s.input_box_form}>
-                        <div className={s.input_box}>
-                            <div className={s.input_name}>Email</div>
-                            <SuperInputText
-                                type={'email'}
-                                name={'email'}
-                                className={s.input_box_input_text}
-                                onChange={(e) => setEmail(e.currentTarget.value)}
-                                value={email}
-                            />
-                        </div>
-                        <div className={s.input_box}>
-                            <div className={s.input_name}>Password</div>
-                            <SuperInputText
-                                type={passwordInputMode}
-                                name={'password'}
-                                className={s.input_box_input_text}
-                                onChange={(e) => setPassword(e.currentTarget.value)}
-                                value={password}
-                            />
-                            <img src={eye}
-                                 alt={'show password'}
-                                 className={`${s.eye}  ${isShowPassword && s.eye_opacity}`}
-                                 onClick={showPassword}
-                            />
-                        </div>
-                        <div className={s.input_box}>
-                            <div className={s.input_name}>Confirm password</div>
-                            <SuperInputText
-                                type={repeatPasswordInputMode}
-                                name={'repeatPassword'}
-                                className={s.input_box_input_text}
-                                onChange={(e) => setRepeatPassword(e.currentTarget.value)}
-                                value={repeatPassword}
-                            />
-                            <img
-                                src={eye}
-                                alt={'show password'}
-                                className={`${s.eye}  ${isShowRepeatPassword && s.eye_opacity}`}
-                                onClick={showRepeatPassword}
-                            />
-                        </div>
+
+                        <AuthEmailField
+                            email={email}
+                            setEmail={setEmail}
+                        />
+
+                        <AuthPassField
+                            type={passwordInputMode}
+                            password={password}
+                            isShowPassword={isShowPassword}
+                            setPassword={setPassword}
+                            showPassword={showPassword}
+                            text={'Password'}
+                        />
+
+                        <AuthPassField
+                            type={repeatPasswordInputMode}
+                            password={repeatPassword}
+                            isShowPassword={isShowRepeatPassword}
+                            setPassword={setRepeatPassword}
+                            showPassword={showRepeatPassword}
+                            text={'Confirm password'}
+                        />
+
                     </div>
                     <div className={s.input_box_buttons}>
                         <SuperButton
@@ -102,6 +87,7 @@ export const SignUp = () => {
                         >
                             Cancel
                         </SuperButton>
+
                         <SuperButton
                             className={s.btn_register}
                             onClick={(e) => registerBtnClickHandler(e)}

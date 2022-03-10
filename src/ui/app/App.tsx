@@ -39,7 +39,7 @@ const App = () => {
             :
             <div className={s.content}>
                 <Routes>
-                    <Route path="/" element={<div></div>}/>
+                    <Route path="/"/>
                     <Route path="/signin" element={<SignIn/>}/>
                     <Route path="/signup" element={<SignUp/>}/>
                     <Route path="/error" element={<ErrorPage/>}/>
