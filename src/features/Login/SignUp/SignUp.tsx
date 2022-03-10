@@ -9,7 +9,7 @@ import {AuthEmailField} from "../../../ui/common/AuthFields/AuthEmailField/AuthE
 import {AuthPassField} from "../../../ui/common/AuthFields/AuthPassField/AuthPassField";
 import Preloader from "../../../ui/common/Preloader/Preloader";
 
-type InputFieldType = 'password' | 'text'
+export type InputFieldType = 'password' | 'text'
 
 export const SignUp = () => {
 
@@ -38,8 +38,9 @@ export const SignUp = () => {
     const showRepeatPassword = useCallback(() => {
         setIsShowRepeatPassword(!isShowRepeatPassword)
     }, [isShowRepeatPassword])
-    const passwordInputMode: InputFieldType = !isShowPassword ? 'password' : 'text'
+
     const repeatPasswordInputMode: InputFieldType = !isShowRepeatPassword ? 'password' : 'text'
+    const passwordInputMode: InputFieldType = !isShowPassword ? 'password' : 'text'
 
 
     if (isLoggedIn) {

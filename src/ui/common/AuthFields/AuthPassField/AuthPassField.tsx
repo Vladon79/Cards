@@ -10,11 +10,13 @@ type AuthPassPropsType = {
     setPassword: (e: string) => void
     showPassword: () => void
     text: string
+    placeholder?: string
+    onBlur?: () => void
 }
 
 export const AuthPassField: React.FC<AuthPassPropsType> = (props) => {
 
-    const {type, password, isShowPassword, setPassword, showPassword, text} = props
+    const {type, password, isShowPassword, setPassword, showPassword, text, placeholder, onBlur} = props
 
     return (
         <div className={s.input_box}>
@@ -22,9 +24,11 @@ export const AuthPassField: React.FC<AuthPassPropsType> = (props) => {
             <SuperInputText
                 type={type}
                 name={'password'}
+                placeholder={placeholder}
                 className={s.input_box_input_text}
                 onChange={(e) => setPassword(e.currentTarget.value)}
                 value={password}
+                onBlur={onBlur}
             />
             <img src={eye}
                  alt={'show password'}
