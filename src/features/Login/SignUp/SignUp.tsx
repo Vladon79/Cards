@@ -1,6 +1,6 @@
 import React, {MouseEvent, useCallback, useState} from 'react'
 import s from './SignUp.module.scss'
-import {register} from "../../../bll/reducers/sign-up-reducer";
+import {register, signUpAC} from "../../../bll/reducers/sign-up-reducer";
 import {useDispatch, useSelector} from "react-redux";
 import SuperButton from "../../../ui/common/c2-SuperButton/SuperButton";
 import {Navigate, useNavigate} from "react-router-dom";
@@ -17,6 +17,7 @@ export const SignUp = () => {
 
     const isLoggedIn = useSelector<AppRootStateType, boolean>(state => state.auth.isAuth)
     const isFetching = useSelector<AppRootStateType, boolean>(state => state.app.isFetching)
+    const isRegistered = useSelector<AppRootStateType, boolean>(state => state.signUp.isRegistered)
     const dispatch = useDispatch()
 
     const [email, setEmail] = useState<string>('')
@@ -26,11 +27,16 @@ export const SignUp = () => {
     const [isShowRepeatPassword, setIsShowRepeatPassword] = useState<boolean>(false)
     const [error, setError] = useState<boolean>(false)
 
+
+
     const registerBtnClickHandler = useCallback((e: MouseEvent) => {
         e.preventDefault()
         dispatch(register(email, password))
     }, [email, password, repeatPassword, dispatch])
 
+    const handleCancelbtn = () => {
+        dispatch(signUpAC(true))
+    }
 
     const showPassword = useCallback(() => {
         setIsShowPassword(!isShowPassword)
@@ -46,6 +52,12 @@ export const SignUp = () => {
     if (isLoggedIn) {
         return <Navigate to={'/profile'}/>
     }
+      if (isRegistered) {
+          dispatch(signUpAC(true))
+        return <Navigate to={'/signin'}/>
+    }
+
+
 
     return (
         <section className={s.main_box}>
@@ -57,7 +69,6 @@ export const SignUp = () => {
                         <div className={s.logo_text}>It-incubator</div>
                         <div className={s.sign_up_text}>Sign Up</div>
                     </div>
-                    <form>
                         <div className={s.input_box_form}>
 
                             <AuthEmailField
@@ -87,7 +98,7 @@ export const SignUp = () => {
                         <div className={s.input_box_buttons}>
                             <SuperButton
                                 className={s.btn_cancel}
-                                onClick={() => navigate('/')}
+                                onClick={handleCancelbtn}
                             >
                                 Cancel
                             </SuperButton>
@@ -99,7 +110,6 @@ export const SignUp = () => {
                                 Register
                             </SuperButton>
                         </div>
-                    </form>
                 </section>
             }
         </section>

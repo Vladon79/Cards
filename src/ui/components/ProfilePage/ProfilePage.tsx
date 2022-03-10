@@ -30,7 +30,6 @@ const ProfilePage = () => {
     }
 
     if (!isAuth) {
-        /*navigate("/signin")  --> index.tsx:30 You should call navigate() in a React.useEffect(), not when your component is first rendered.*/
     return <Navigate to={'/signin'}/>
     }
 

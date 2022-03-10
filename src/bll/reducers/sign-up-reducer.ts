@@ -1,8 +1,29 @@
-import {Dispatch} from "redux";
-import { authApi } from "../api/auth-api";
+import {authApi} from "../api/auth-api";
 import {toggleIsFetchingAC} from "./app-reducer";
-import {DispatchType} from "../action-dispatchTypes";
+import {DispatchType, signUpAT} from "../action-dispatchTypes";
 
+
+const initialState = {
+    isRegistered: false
+}
+type InitialStateType = typeof initialState
+
+export const singUpReducer = (state: InitialStateType = initialState, action: signUpAT): InitialStateType => {
+    switch (action.type) {
+        case 'SET-IS-REGISTERED':
+            return {...state, isRegistered: action.value}
+        default:
+            return state
+    }
+}
+
+
+export const signUpAC = (value: boolean) => {
+    return {
+        type: 'SET-IS-REGISTERED',
+        value
+    } as const
+}
 
 
 export const register = (email: string, password: string) => (dispatch: DispatchType) => {
@@ -13,10 +34,10 @@ export const register = (email: string, password: string) => (dispatch: Dispatch
             /*
                 dispatch(setIsLoggedInAC(true)
               */
-            console.log(res)
+            dispatch(signUpAC(true))
         })
         .catch(err => {
-           /* handleServerNetworkError(dispatch, err.message)*/
+            /* handleServerNetworkError(dispatch, err.message)*/
         })
         .finally(() => {
             dispatch(toggleIsFetchingAC(false))

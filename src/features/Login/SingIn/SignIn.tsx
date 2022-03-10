@@ -1,8 +1,8 @@
 import SuperButton from "../../../ui/common/c2-SuperButton/SuperButton";
-import {useDispatch} from "react-redux";
-import {useAppSelector} from "../../../bll/store";
+import {useDispatch, useSelector} from "react-redux";
+import {AppRootStateType, useAppSelector} from "../../../bll/store";
 import {singInTC} from "../../../bll/reducers/singInReducer";
-import {Navigate, NavLink} from "react-router-dom";
+import {Navigate, NavLink, useNavigate} from "react-router-dom";
 import {selectorisFetching, selectorSingIn} from "./selectors";
 import {useInput} from "../../../hooks/useInput";
 import {useCheckBox} from "../../../hooks/useCheckBox";
@@ -12,13 +12,17 @@ import {AuthEmailField} from "../../../ui/common/AuthFields/AuthEmailField/AuthE
 import {AuthPassField} from "../../../ui/common/AuthFields/AuthPassField/AuthPassField";
 import React, {useCallback, useState} from "react";
 import {InputFieldType} from "../SignUp/SignUp";
+import {signUpAC} from "../../../bll/reducers/sign-up-reducer";
 
 
 const SignIn = () => {
 
     const isSingIn = useAppSelector<boolean>(selectorSingIn)
     const isFetching = useAppSelector<boolean>(selectorisFetching)
+    const isLoggedIn = useSelector<AppRootStateType, boolean>(state => state.auth.isAuth)
+    const isRegistered = useSelector<AppRootStateType, boolean>(state => state.signUp.isRegistered)
     const dispatch = useDispatch()
+    const navigate = useNavigate()
 
     const email = useInput('', {isEmpty: true, minLength: 3, isEmail: true})
     const password = useInput('', {isEmpty: true, minLength: 3, maxLength: 25, isPassword: true})
@@ -26,7 +30,9 @@ const SignIn = () => {
 
     const singInData = {email: email.value, password: password.value, rememberMe: rememberMe.isDone}
 
-    const singIn = () => dispatch(singInTC(singInData))
+    const singIn = () => {
+        dispatch(singInTC(singInData))
+    }
 
 
     /*changed by dima start*/
@@ -38,7 +44,18 @@ const SignIn = () => {
     /*changed by dima end*/
 
 
-    if (isSingIn) return <Navigate to='/profile'/>
+    const handleSignUpLink = () => {
+        dispatch(signUpAC(false))
+        /*return <Navigate to={'/signup'}/>*/
+        navigate("/signup")
+    };
+
+
+    /*if (isSingIn) return <Navigate to='/profile'/>*/
+    if (isLoggedIn) return <Navigate to='/profile'/>
+  /*  if (!isRegistered) return <Navigate to='/signup'/>*/
+
+
 
 
     return (
@@ -51,7 +68,6 @@ const SignIn = () => {
                         <div className={s.logo_text}>It-incubator</div>
                         <div className={s.sign_in_text}>Sign In</div>
                     </div>
-                    <form>
 
 
                         <div className={s.input_box_form}>
@@ -101,9 +117,9 @@ const SignIn = () => {
                         </div>
                         <div className={s.account_text}>Don’t have an account?</div>
                         <div className={s.sign_up_text}>
-                            <NavLink className={s.sign_up_link} children={'Sign Up'} to={'/signup'}/>
+                          {/*  <NavLink className={s.sign_up_link} children={'Sign Up'} to={'/signup'}/>*/}
+                            <span onClick={handleSignUpLink} className={s.sign_up_link}>Sign Up</span>
                         </div>
-                    </form>
                 </section>
             }
         </section>

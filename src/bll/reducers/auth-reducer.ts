@@ -2,6 +2,7 @@ import {toggleIsFetchingAC} from "./app-reducer";
 
 import {ActionType, DispatchType} from "../action-dispatchTypes";
 import { authApi } from "../api/auth-api";
+import {signUpAC} from "./sign-up-reducer";
 
 export type UserType = {
     _id: string;
