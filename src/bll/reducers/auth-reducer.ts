@@ -35,9 +35,7 @@ const initialState: StateType = {
         isAdmin: false,
         verified: false,
         rememberMe: false
-
     }
-
 }
 
 export const authReducer = (state: StateType = initialState, action: ActionType): StateType => {

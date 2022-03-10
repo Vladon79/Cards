@@ -1,7 +1,7 @@
 import './App.module.scss';
 import Header from "../components/Header/MainHeader";
-import React from 'react';
-import {Route, Routes} from 'react-router-dom';
+import React, {useEffect} from 'react';
+import {Navigate, Route, Routes} from 'react-router-dom';
 import ErrorPage from "../../features/ErrorPage/ErrorPage";
 import TestPage from "../../features/TestPage/TestPage";
 import ProfilePage from "../components/ProfilePage/ProfilePage";
@@ -12,14 +12,35 @@ import {useDispatch, useSelector} from "react-redux";
 import {AppRootStateType} from "../../bll/store";
 import ChangeProfile from "../components/ProfilePage/ChangeProfile/ChangeProfile";
 import {SignUp} from '../../features/Login/SignUp/SignUp';
+import {appInitializeTC} from "../../bll/reducers/app-reducer";
 
 
 const App = () => {
+    const isInitialized = useSelector<AppRootStateType, boolean>(state => state.app.isInitialized)
     const isFetching = useSelector<AppRootStateType, boolean>(state => state.app.isFetching)
+    const isLoggedIn = useSelector<AppRootStateType, boolean>(state => state.auth.isAuth)
     const dispatch = useDispatch()
-    // useEffect(() => {
-    //     dispatch(authMeTC())
-    // }, [dispatch])
+
+
+    useEffect(() => {
+        dispatch(appInitializeTC())
+    }, [])
+
+    if (!isInitialized) {
+        return <Preloader/>
+    }
+
+/*
+    if (!isLoggedIn) {
+        return <Navigate to={'/signin'}/>
+    }
+
+    if (!isFetching) {
+        return <Preloader/>
+    }
+*/
+
+
     return (
         <div className="App">
             <Header/>

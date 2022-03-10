@@ -1,4 +1,5 @@
 import axios from "axios";
+import {UserType} from "../reducers/auth-reducer";
 
 //login: nya-admin@nya.nya
 //pasward: 1qazxcvBG
