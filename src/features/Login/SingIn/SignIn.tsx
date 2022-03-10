@@ -2,11 +2,11 @@ import SuperButton from "../../../ui/common/c2-SuperButton/SuperButton";
 import {useDispatch} from "react-redux";
 import {useAppSelector} from "../../../bll/store";
 import {singInTC} from "../../../bll/reducers/singInReducer";
-import {Navigate} from "react-router-dom";
+import {Navigate, NavLink} from "react-router-dom";
 import {selectorisFetching, selectorSingIn} from "./selectors";
 import {useInput} from "../../../hooks/useInput";
 import {useCheckBox} from "../../../hooks/useCheckBox";
-import s from "../SignUp/SignUp.module.scss";
+import s from './SignIn.module.scss'
 import Preloader from "../../../ui/common/Preloader/Preloader";
 import {AuthEmailField} from "../../../ui/common/AuthFields/AuthEmailField/AuthEmailField";
 import {AuthPassField} from "../../../ui/common/AuthFields/AuthPassField/AuthPassField";
@@ -46,10 +46,10 @@ const SignIn = () => {
             {isFetching
                 ? <Preloader/>
                 :
-                <section className={s.sign_up_box}>
-                    <div className={s.sign_up_box_header}>
+                <section className={s.sign_in_box}>
+                    <div className={s.sign_in_box_header}>
                         <div className={s.logo_text}>It-incubator</div>
-                        <div className={s.sign_up_text}>Sign In</div>
+                        <div className={s.sign_in_text}>Sign In</div>
                     </div>
                     <form>
 
@@ -84,15 +84,24 @@ const SignIn = () => {
                             <div style={{color: 'red'}}>Password is long</div>}
 
                         </div>
+
+                        <div className={s.forgot}>
+                            <NavLink className={s.forgot_link} children={'Forgot Password'} to={'/signin'}/>
+                        </div>
+
                         <div className={s.input_box_buttons}>
                             <SuperButton
-                                className={s.btn_register}
+                                className={s.btn_login}
                                 disabled={!email.isValid || !password.isValid}
                                 type='submit'
                                 onClick={singIn}
                             >
                                 Sing In
                             </SuperButton>
+                        </div>
+                        <div className={s.account_text}>Don’t have an account?</div>
+                        <div className={s.sign_up_text}>
+                            <NavLink className={s.sign_up_link} children={'Sign Up'} to={'/signup'}/>
                         </div>
                     </form>
                 </section>
