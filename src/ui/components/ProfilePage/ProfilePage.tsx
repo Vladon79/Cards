@@ -5,10 +5,9 @@ import Ava from "../../common/Ava/Ava";
 import {signOutTC, UserType} from "../../../bll/reducers/auth-reducer";
 import {useDispatch, useSelector} from "react-redux";
 import {AppRootStateType} from "../../../bll/store";
-
 import {Navigate, useNavigate} from "react-router-dom";
 import image from '../../../assets/image/img.png'
-import { authApi } from '../../../bll/api/auth-api';
+import {authApi} from '../../../bll/api/auth-api';
 
 
 const ProfilePage = () => {
@@ -17,9 +16,11 @@ const ProfilePage = () => {
     const navigate = useNavigate()
     const dispatch = useDispatch()
 
-   /* const login = () => {
-        authApi.log()
-    }*/
+    /*
+    works without below code
+    const login = () => {
+         authApi.log()
+     }*/
 
     const profileSettings = () => {
         navigate("/profileSettings")
@@ -30,7 +31,7 @@ const ProfilePage = () => {
     }
 
     if (!isAuth) {
-    return <Navigate to={'/signin'}/>
+        return <Navigate to={'/signin'}/>
     }
 
     return (
@@ -45,7 +46,10 @@ const ProfilePage = () => {
                 </div>
                 <div>
                     <SuperButton onClick={profileSettings}>Edit profile</SuperButton>
-                    {/*<SuperButton onClick={login}>login</SuperButton>*/}
+                    {/*
+                    changed Login button to Log out button
+                    <SuperButton onClick={login}>login</SuperButton>
+                    */}
                     <SuperButton onClick={signOut}>signOut</SuperButton>
                 </div>
             </div>

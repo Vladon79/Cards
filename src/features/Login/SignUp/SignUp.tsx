@@ -3,7 +3,7 @@ import s from './SignUp.module.scss'
 import {register, signUpAC} from "../../../bll/reducers/sign-up-reducer";
 import {useDispatch, useSelector} from "react-redux";
 import SuperButton from "../../../ui/common/c2-SuperButton/SuperButton";
-import {Navigate, useNavigate} from "react-router-dom";
+import {Navigate} from "react-router-dom";
 import {AppRootStateType} from "../../../bll/store";
 import {AuthEmailField} from "../../../ui/common/AuthFields/AuthEmailField/AuthEmailField";
 import {AuthPassField} from "../../../ui/common/AuthFields/AuthPassField/AuthPassField";
@@ -13,7 +13,6 @@ export type InputFieldType = 'password' | 'text'
 
 export const SignUp = () => {
 
-    const navigate = useNavigate()
 
     const isLoggedIn = useSelector<AppRootStateType, boolean>(state => state.auth.isAuth)
     const isFetching = useSelector<AppRootStateType, boolean>(state => state.app.isFetching)

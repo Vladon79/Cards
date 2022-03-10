@@ -3,7 +3,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {AppRootStateType, useAppSelector} from "../../../bll/store";
 import {singInTC} from "../../../bll/reducers/singInReducer";
 import {Navigate, NavLink, useNavigate} from "react-router-dom";
-import {selectorisFetching, selectorSingIn} from "./selectors";
+import {selectorisFetching} from "./selectors";
 import {useInput} from "../../../hooks/useInput";
 import {useCheckBox} from "../../../hooks/useCheckBox";
 import s from './SignIn.module.scss'
@@ -17,10 +17,8 @@ import {signUpAC} from "../../../bll/reducers/sign-up-reducer";
 
 const SignIn = () => {
 
-    const isSingIn = useAppSelector<boolean>(selectorSingIn)
     const isFetching = useAppSelector<boolean>(selectorisFetching)
     const isLoggedIn = useSelector<AppRootStateType, boolean>(state => state.auth.isAuth)
-    const isRegistered = useSelector<AppRootStateType, boolean>(state => state.signUp.isRegistered)
     const dispatch = useDispatch()
     const navigate = useNavigate()
 
@@ -51,11 +49,7 @@ const SignIn = () => {
     };
 
 
-    /*if (isSingIn) return <Navigate to='/profile'/>*/
     if (isLoggedIn) return <Navigate to='/profile'/>
-  /*  if (!isRegistered) return <Navigate to='/signup'/>*/
-
-
 
 
     return (
@@ -70,56 +64,55 @@ const SignIn = () => {
                     </div>
 
 
-                        <div className={s.input_box_form}>
+                    <div className={s.input_box_form}>
 
-                            <AuthEmailField
-                                email={email.value}
-                                setEmail={(e) => email.onChange(e)}
-                                onBlur={email.onBlur}
-                            />
-                            {(email.isDirty && email.isEmpty) && <div style={{color: 'red'}}>Field is required</div>}
-                            {(email.isDirty && email.minLengthError) && <div style={{color: 'red'}}>Email is short</div>}
-                            {(email.isDirty && email.emailError) && <div style={{color: 'red'}}>Email is not valid</div>}
+                        <AuthEmailField
+                            email={email.value}
+                            setEmail={(e) => email.onChange(e)}
+                            onBlur={email.onBlur}
+                        />
+                        {(email.isDirty && email.isEmpty) && <div style={{color: 'red'}}>Field is required</div>}
+                        {(email.isDirty && email.minLengthError) && <div style={{color: 'red'}}>Email is short</div>}
+                        {(email.isDirty && email.emailError) && <div style={{color: 'red'}}>Email is not valid</div>}
 
 
+                        <AuthPassField
+                            type={passwordInputMode}
+                            password={password.value}
+                            isShowPassword={isShowPassword}
+                            setPassword={(e) => password.onChange(e)}
+                            showPassword={showPassword}
+                            text={'Password'}
+                            onBlur={password.onBlur}
+                        />
+                        {(password.isDirty && password.isEmpty) &&
+                        <div style={{color: 'red'}}>Field is required</div>}
+                        {(password.isDirty && password.minLengthError) &&
+                        <div style={{color: 'red'}}>Password is short</div>}
+                        {(password.isDirty && password.maxLengthError) &&
+                        <div style={{color: 'red'}}>Password is long</div>}
 
-                            <AuthPassField
-                                type={passwordInputMode}
-                                password={password.value}
-                                isShowPassword={isShowPassword}
-                                setPassword={(e) => password.onChange(e)}
-                                showPassword={showPassword}
-                                text={'Password'}
-                                onBlur={password.onBlur}
-                            />
-                            {(password.isDirty && password.isEmpty) &&
-                            <div style={{color: 'red'}}>Field is required</div>}
-                            {(password.isDirty && password.minLengthError) &&
-                            <div style={{color: 'red'}}>Password is short</div>}
-                            {(password.isDirty && password.maxLengthError) &&
-                            <div style={{color: 'red'}}>Password is long</div>}
+                    </div>
 
-                        </div>
+                    <div className={s.forgot}>
+                        <NavLink className={s.forgot_link} children={'Forgot Password'} to={'/signin'}/>
+                    </div>
 
-                        <div className={s.forgot}>
-                            <NavLink className={s.forgot_link} children={'Forgot Password'} to={'/signin'}/>
-                        </div>
-
-                        <div className={s.input_box_buttons}>
-                            <SuperButton
-                                className={s.btn_login}
-                                disabled={!email.isValid || !password.isValid}
-                                type='submit'
-                                onClick={singIn}
-                            >
-                                Sing In
-                            </SuperButton>
-                        </div>
-                        <div className={s.account_text}>Don’t have an account?</div>
-                        <div className={s.sign_up_text}>
-                          {/*  <NavLink className={s.sign_up_link} children={'Sign Up'} to={'/signup'}/>*/}
-                            <span onClick={handleSignUpLink} className={s.sign_up_link}>Sign Up</span>
-                        </div>
+                    <div className={s.input_box_buttons}>
+                        <SuperButton
+                            className={s.btn_login}
+                            disabled={!email.isValid || !password.isValid}
+                            type='submit'
+                            onClick={singIn}
+                        >
+                            Sing In
+                        </SuperButton>
+                    </div>
+                    <div className={s.account_text}>Don’t have an account?</div>
+                    <div className={s.sign_up_text}>
+                        {/*  <NavLink className={s.sign_up_link} children={'Sign Up'} to={'/signup'}/>*/}
+                        <span onClick={handleSignUpLink} className={s.sign_up_link}>Sign Up</span>
+                    </div>
                 </section>
             }
         </section>
