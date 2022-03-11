@@ -14,6 +14,7 @@ import ProfileSettings from "../components/ProfilePage/ProfileSettings/ProfileSe
 import {SignUp} from '../../features/Login/SignUp/SignUp';
 import {appInitializeTC} from "../../bll/reducers/app-reducer";
 import {ForgotPass} from "../../features/Login/ForgotPass/ForgotPass";
+import {CheckEmail} from "../../features/Login/CheckEmail/CheckEmail";
 
 
 const App = () => {
@@ -44,6 +45,7 @@ const App = () => {
                     <Route path="/signin" element={<SignIn/>}/>
                     <Route path="/signup" element={<SignUp/>}/>
                     <Route path="/forgotPass" element={<ForgotPass/>}/>
+                    <Route path="/checkEmail" element={<CheckEmail/>}/>
                     <Route path="/error" element={<ErrorPage/>}/>
                     <Route path="/profile" element={<ProfilePage/>}/>
                     <Route path="/test" element={<TestPage/>}/>

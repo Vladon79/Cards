@@ -21,7 +21,7 @@ export const ForgotPass = () => {
         <section className={s.main_box}>
             <section className={s.forgot_box}>
 
-                <div className={s.sign_up_box_header}>
+                <div>
                     <div className={s.logo_text}>It-incubator</div>
                     <div className={s.forgot_text}>Forgot your password?</div>
                 </div>
