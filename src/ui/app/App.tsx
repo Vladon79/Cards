@@ -13,6 +13,7 @@ import {AppRootStateType} from "../../bll/store";
 import ChangeProfile from "../components/ProfilePage/ChangeProfile/ChangeProfile";
 import {SignUp} from '../../features/Login/SignUp/SignUp';
 import {appInitializeTC} from "../../bll/reducers/app-reducer";
+import {ForgotPass} from "../../features/Login/ForgotPass/ForgotPass";
 
 
 const App = () => {
@@ -42,6 +43,7 @@ const App = () => {
                     <Route path="/"/>
                     <Route path="/signin" element={<SignIn/>}/>
                     <Route path="/signup" element={<SignUp/>}/>
+                    <Route path="/forgotPass" element={<ForgotPass/>}/>
                     <Route path="/error" element={<ErrorPage/>}/>
                     <Route path="/profile" element={<ProfilePage/>}/>
                     <Route path="/test" element={<TestPage/>}/>
