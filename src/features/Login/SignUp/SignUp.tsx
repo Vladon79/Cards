@@ -98,6 +98,7 @@ export const SignUp = () => {
                         <div className={s.input_box_buttons}>
                             <SuperButton
                                 onClick={handleCancelbtn}
+                                className={s.cancelBtn}
                                 cancele={true}
                             >
                                 Cancel
@@ -105,6 +106,7 @@ export const SignUp = () => {
 
                             <SuperButton
                                 onClick={(e) => registerBtnClickHandler(e)}
+                                className={s.registerBtn}
                             >
                                 Register
                             </SuperButton>

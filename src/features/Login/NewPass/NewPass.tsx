@@ -52,6 +52,7 @@ export const NewPass = () => {
                 <div className={s.input_box_buttons}>
                     <SuperButton
                         onClick={(e)=>handleCreatePassBtn(e)}
+                        className={s.createPassBtn}
                     >
                         Create new password
                     </SuperButton>

@@ -104,8 +104,9 @@ const SignIn = () => {
                             disabled={!email.isValid || !password.isValid}
                             type='submit'
                             onClick={singIn}
+                            className={s.signInBtn}
                         >
-                            Sing In
+                            Login
                         </SuperButton>
                     </div>
                     <div className={s.account_text}>Don’t have an account?</div>
