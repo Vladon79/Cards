@@ -1,6 +1,18 @@
 @import './src/styles/sass/variables';
 @import './src/styles/sass/mixins';
 
+.default {
+  @include inputBorderStyle(2px solid rgba(36, 37, 74, 0.2));
+  @include inputBoxStyle(100%, 27px, $authBlockColor);
+  @include text(16px, 500, #2d2e46, 24px);
+  &:focus {
+    outline: none;
+  }
+}
+
+
+
+
 /*
 .superInput {
   @include text(14px, 400, #898989, 1.5);

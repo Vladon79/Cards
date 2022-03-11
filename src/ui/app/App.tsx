@@ -10,7 +10,7 @@ import s from './App.module.scss'
 import Preloader from "../common/Preloader/Preloader";
 import {useDispatch, useSelector} from "react-redux";
 import {AppRootStateType} from "../../bll/store";
-import ChangeProfile from "../components/ProfilePage/ChangeProfile/ChangeProfile";
+import ProfileSettings from "../components/ProfilePage/ProfileSettings/ProfileSettings";
 import {SignUp} from '../../features/Login/SignUp/SignUp';
 import {appInitializeTC} from "../../bll/reducers/app-reducer";
 
@@ -45,7 +45,7 @@ const App = () => {
                     <Route path="/error" element={<ErrorPage/>}/>
                     <Route path="/profile" element={<ProfilePage/>}/>
                     <Route path="/test" element={<TestPage/>}/>
-                    <Route path="/profileSettings" element={<ChangeProfile />}/>
+                    <Route path="/profileSettings" element={<ProfileSettings />}/>
                 </Routes>
             </div>
             }

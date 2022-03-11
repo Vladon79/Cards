@@ -1,12 +1,27 @@
-.profileContainer {
-  width: 500px;
-  height: 500px;
-  align-items: center;
+@import "./src/styles/sass/mixins";
 
+.box {
+  @include box();
+
+  h3 {
+    @include text(30px, 500, $authTextColor, 1.5);
+  }
 
   .userData {
     display: flex;
     flex-direction: column;
+    margin: 40px 0 20px;
+
+    p {
+      @include text(18px, 500, $authTextColor, 1);
+      margin: 10px;
+    }
+
+    .button_block {
+      display: flex;
+      justify-content: center;
+      margin: 30px;
+    }
   }
 
 }

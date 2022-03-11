@@ -1,5 +1,6 @@
 import React, {ChangeEvent, DetailedHTMLProps, InputHTMLAttributes, KeyboardEvent} from 'react'
 import s from './SuperInputText.module.scss'
+import eye from "../../../assets/icons/eyeicon.png";
 
 
 // тип пропсов обычного инпута
@@ -41,7 +42,7 @@ const SuperInputText: React.FC<SuperInputTextPropsType> = (
     }
 
     const finalSpanClassName = `${s.error} ${spanClassName ? spanClassName : ''}`
-    const finalInputClassName = `${s.superInput} ${error && s.errorInput} ${className}` // need to fix with (?:) and s.superInput
+    const finalInputClassName = `${s.default} ${error && s.errorInput} ${className}` // need to fix with (?:) and s.superInput
 
     return (
         <div>

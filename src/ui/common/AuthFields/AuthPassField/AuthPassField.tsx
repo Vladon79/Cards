@@ -25,7 +25,7 @@ export const AuthPassField: React.FC<AuthPassPropsType> = (props) => {
                 type={type}
                 name={'password'}
                 placeholder={placeholder}
-                className={s.input_box_input_text}
+               // className={s.input_box_input_text}
                 onChange={(e) => setPassword(e.currentTarget.value)}
                 value={password}
                 onBlur={onBlur}

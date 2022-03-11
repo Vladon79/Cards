@@ -100,7 +100,6 @@ const SignIn = () => {
 
                     <div className={s.input_box_buttons}>
                         <SuperButton
-                            className={s.btn_login}
                             disabled={!email.isValid || !password.isValid}
                             type='submit'
                             onClick={singIn}

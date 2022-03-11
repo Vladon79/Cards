@@ -18,7 +18,7 @@ const TestPage = () => {
             </div>
             <div className={s.buttonInputBlock}>
                 <SuperInputText error={'error'}></SuperInputText>
-                <SuperButton red={true}>Red</SuperButton>
+                <SuperButton cancele={true}>Red</SuperButton>
             </div>
         </div>
     )
