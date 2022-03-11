@@ -40,12 +40,11 @@ const ProfileSettings = () => {
                 <SuperInputText className={s.input} name={'Name'} value={name.value}
                                 onChange={e => name.onChange(e.currentTarget.value)}/>
             </div>
-            <div className={s.button_block}>
-                <div className={s.button_cancele_save_block}>
-                    <SuperButton cancele={true} onClick={() => navigate('/profile')}>cancele</SuperButton>
-                    <SuperButton onClick={nameChangeOnClickHandler}>Save</SuperButton>
-                </div>
-
+            <div className={s.button_cancele_save_block}>
+                <SuperButton cancele={true} onClick={() => navigate('/profile')}>cancele</SuperButton>
+                <SuperButton onClick={nameChangeOnClickHandler}>Save</SuperButton>
+            </div>
+            <div className={s.button_signOut_block}>
                 <SuperButton className={s.signOut_button} onClick={signOut}>Sign out</SuperButton>
 
             </div>

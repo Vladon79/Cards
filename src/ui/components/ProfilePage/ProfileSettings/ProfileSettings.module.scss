@@ -16,20 +16,16 @@
     }
   }
 
-  .button_block {
-    width: 90%;
+  button_signOut_block {
+
+  }
+
+  .button_cancele_save_block {
+    width: 100%;
     display: flex;
-    flex-direction: column;
-    align-items: center;
-
-    .button_cancele_save_block {
-      display: flex;
-      margin: 15px;
-    }
-
-    .signOut_button {
-      margin: 10px;
-    }
+    margin: 15px;
+    justify-content: space-around;
+    flex-direction: row;
   }
 
 }
