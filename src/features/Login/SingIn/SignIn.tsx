@@ -68,6 +68,7 @@ const SignIn = () => {
 
                         <AuthEmailField
                             email={email.value}
+                            text={'Email'}
                             setEmail={(e) => email.onChange(e)}
                             onBlur={email.onBlur}
                         />
@@ -95,7 +96,7 @@ const SignIn = () => {
                     </div>
 
                     <div className={s.forgot}>
-                        <NavLink className={s.forgot_link} children={'Forgot Password'} to={'/signin'}/>
+                        <NavLink className={s.forgot_link} children={'Forgot Password'} to={'/forgotPass'}/>
                     </div>
 
                     <div className={s.input_box_buttons}>
@@ -109,7 +110,6 @@ const SignIn = () => {
                     </div>
                     <div className={s.account_text}>Don’t have an account?</div>
                     <div className={s.sign_up_text}>
-                        {/*  <NavLink className={s.sign_up_link} children={'Sign Up'} to={'/signup'}/>*/}
                         <span onClick={handleSignUpLink} className={s.sign_up_link}>Sign Up</span>
                     </div>
                 </section>

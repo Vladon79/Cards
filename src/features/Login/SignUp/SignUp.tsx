@@ -72,6 +72,7 @@ export const SignUp = () => {
 
                             <AuthEmailField
                                 email={email}
+                                text={'Email'}
                                 setEmail={setEmail}
                             />
 
