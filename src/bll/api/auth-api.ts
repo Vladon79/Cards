@@ -4,8 +4,9 @@ import axios, {AxiosResponse} from "axios";
 //password: 1qazxcvBG
 
 export const instance = axios.create({
-    baseURL: process.env.REACT_APP_BACK_URL
-        // || 'http://localhost:7542/2.0/'
+    baseURL:
+        process.env.REACT_APP_BACK_URL
+        //|| 'http://localhost:7542/2.0/'
     ,
     withCredentials: true,
 })
@@ -14,15 +15,15 @@ export const authApi = {
     authMe() {
         return instance.post('/auth/me')
     },
-  /*  log() {
-        return instance.post('auth/login', {email: 'nya-admin@nya.nya', password: '1qazxcvBG', rememberMe: true})
-    },*/
+    /*  log() {
+          return instance.post('auth/login', {email: 'nya-admin@nya.nya', password: '1qazxcvBG', rememberMe: true})
+      },*/
     changeMe(name: string, avatar: string) {
         return instance.put('/auth/me', {
             name, avatar
         }).then(response => response.data)
     },
-    singIn (data:SingInRequestType) {
+    singIn(data: SingInRequestType) {
         return instance.post<SingInRequestType, AxiosResponse<SingInResponseType>>("/auth/login", data)
     },
     signOut() {
@@ -34,10 +35,9 @@ export const authApi = {
 }
 
 
-
 type RegisterResponseType = {
     addedUser: AddedUserType
-    created:string
+    created: string
     email: string
     isAdmin: boolean
     name: string
@@ -59,7 +59,7 @@ type AddedUserType = {
 
 export type SingInRequestType = {
     email: string
-    password:string
+    password: string
     rememberMe: boolean
 }
 

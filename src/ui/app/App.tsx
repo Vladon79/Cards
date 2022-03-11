@@ -32,8 +32,6 @@ const App = () => {
         return <Preloader/>
     }
 
-
-
     return (
         <div className="App">
             <Header/>
