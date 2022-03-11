@@ -15,6 +15,7 @@ import {SignUp} from '../../features/Login/SignUp/SignUp';
 import {appInitializeTC} from "../../bll/reducers/app-reducer";
 import {ForgotPass} from "../../features/Login/ForgotPass/ForgotPass";
 import {CheckEmail} from "../../features/Login/CheckEmail/CheckEmail";
+import {NewPass} from "../../features/Login/NewPass/NewPass";
 
 
 const App = () => {
@@ -46,6 +47,7 @@ const App = () => {
                     <Route path="/signup" element={<SignUp/>}/>
                     <Route path="/forgotPass" element={<ForgotPass/>}/>
                     <Route path="/checkEmail" element={<CheckEmail/>}/>
+                    <Route path="/newPass" element={<NewPass/>}/>
                     <Route path="/error" element={<ErrorPage/>}/>
                     <Route path="/profile" element={<ProfilePage/>}/>
                     <Route path="/test" element={<TestPage/>}/>
