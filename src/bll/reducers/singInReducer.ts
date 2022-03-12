@@ -1,4 +1,4 @@
-import {singInAPI, SingInRequestType} from "../api/signIn-api(delete)";
+import {singInAPI, SingInRequestType} from "../../dal/api/signIn-api(delete)";
 import {Dispatch} from "redux";
 import {authMeAC} from "./auth-reducer";
 import {authMeACType} from "../action-dispatchTypes";
@@ -30,10 +30,8 @@ export const singInTC = (data: SingInRequestType) =>
     (dispatch: Dispatch<SingInAT | authMeACType>) => {
         singInAPI.singIn(data)
             .then((res) => {
-                if (res.data._id !== null) {
-                    dispatch(singInAC(true))
-                    dispatch(authMeAC(res.data)) // need action for profile
-                }
+                dispatch(singInAC(true))
+                dispatch(authMeAC(res.data)) // need action for profile
             })
             .catch((e) => {
                 const error = e.reponse

@@ -1,13 +1,13 @@
 import React, {MouseEvent, useCallback, useState} from 'react'
 import s from './SignUp.module.scss'
-import {register, signUpAC} from "../../../bll/reducers/sign-up-reducer";
+import {register, signUpAC} from "../../../../bll/reducers/sign-up-reducer";
 import {useDispatch, useSelector} from "react-redux";
-import SuperButton from "../../../ui/common/c2-SuperButton/SuperButton";
+import SuperButton from "../../../common/c2-SuperButton/SuperButton";
 import {Navigate} from "react-router-dom";
-import {AppRootStateType} from "../../../bll/store";
-import {AuthEmailField} from "../../../ui/common/AuthFields/AuthEmailField/AuthEmailField";
-import {AuthPassField} from "../../../ui/common/AuthFields/AuthPassField/AuthPassField";
-import Preloader from "../../../ui/common/Preloader/Preloader";
+import {AppRootStateType} from "../../../../bll/store";
+import {AuthEmailField} from "../../../common/AuthFields/AuthEmailField/AuthEmailField";
+import {AuthPassField} from "../../../common/AuthFields/AuthPassField/AuthPassField";
+import Preloader from "../../../common/Preloader/Preloader";
 
 export type InputFieldType = 'password' | 'text'
 

@@ -1,9 +1,9 @@
-import SuperCheckbox from "../../ui/common/c3-SuperCheckbox/SuperCheckbox";
-import SuperButton from "../../ui/common/c2-SuperButton/SuperButton";
-import SuperInputText from "../../ui/common/c1-SuperInputText/SuperInputText";
+import SuperCheckbox from "../../common/c3-SuperCheckbox/SuperCheckbox";
+import SuperButton from "../../common/c2-SuperButton/SuperButton";
+import SuperInputText from "../../common/c1-SuperInputText/SuperInputText";
 import s from './TestPage.module.scss'
-import blockStyle from '../../styles/container.module.scss'
-import Preloader from "../../ui/common/Preloader/Preloader";
+import blockStyle from '../../../styles/container.module.scss'
+import Preloader from "../../common/Preloader/Preloader";
 import React from "react";
 
 const TestPage = () => {

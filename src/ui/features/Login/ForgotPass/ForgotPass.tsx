@@ -1,7 +1,7 @@
 import React, {useState} from "react";
 import s from './ForgotPass.module.scss'
-import SuperButton from "../../../ui/common/c2-SuperButton/SuperButton";
-import {AuthEmailField} from "../../../ui/common/AuthFields/AuthEmailField/AuthEmailField";
+import SuperButton from "../../../common/c2-SuperButton/SuperButton";
+import {AuthEmailField} from "../../../common/AuthFields/AuthEmailField/AuthEmailField";
 
 
 export const ForgotPass = () => {

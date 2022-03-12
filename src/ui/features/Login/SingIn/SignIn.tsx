@@ -1,18 +1,18 @@
-import SuperButton from "../../../ui/common/c2-SuperButton/SuperButton";
+import SuperButton from "../../../common/c2-SuperButton/SuperButton";
 import {useDispatch, useSelector} from "react-redux";
-import {AppRootStateType, useAppSelector} from "../../../bll/store";
-import {singInTC} from "../../../bll/reducers/singInReducer";
+import {AppRootStateType, useAppSelector} from "../../../../bll/store";
+import {singInTC} from "../../../../bll/reducers/singInReducer";
 import {Navigate, NavLink, useNavigate} from "react-router-dom";
 import {selectorisFetching} from "./selectors";
-import {useInput} from "../../../hooks/useInput";
-import {useCheckBox} from "../../../hooks/useCheckBox";
+import {useInput} from "../../../../hooks/useInput";
+import {useCheckBox} from "../../../../hooks/useCheckBox";
 import s from './SignIn.module.scss'
-import Preloader from "../../../ui/common/Preloader/Preloader";
-import {AuthEmailField} from "../../../ui/common/AuthFields/AuthEmailField/AuthEmailField";
-import {AuthPassField} from "../../../ui/common/AuthFields/AuthPassField/AuthPassField";
+import Preloader from "../../../common/Preloader/Preloader";
+import {AuthEmailField} from "../../../common/AuthFields/AuthEmailField/AuthEmailField";
+import {AuthPassField} from "../../../common/AuthFields/AuthPassField/AuthPassField";
 import React, {useCallback, useState} from "react";
 import {InputFieldType} from "../SignUp/SignUp";
-import {signUpAC} from "../../../bll/reducers/sign-up-reducer";
+import {signUpAC} from "../../../../bll/reducers/sign-up-reducer";
 
 
 const SignIn = () => {

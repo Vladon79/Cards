@@ -1,4 +1,4 @@
-import {authApi} from "../api/auth-api";
+import {authApi} from "../../dal/api/auth-api";
 import {toggleIsFetchingAC} from "./app-reducer";
 import {DispatchType, signUpAT} from "../action-dispatchTypes";
 

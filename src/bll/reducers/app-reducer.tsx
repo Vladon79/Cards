@@ -1,6 +1,6 @@
 import {ActionType} from "../action-dispatchTypes";
 import {Dispatch} from "redux";
-import {authApi} from "../api/auth-api";
+import {authApi} from "../../dal/api/auth-api";
 import {authMeAC} from "./auth-reducer";
 
 type StateType = {

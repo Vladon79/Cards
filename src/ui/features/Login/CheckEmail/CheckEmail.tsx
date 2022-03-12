@@ -1,6 +1,6 @@
 import React from 'react';
 import s from './CheckEmail.module.scss'
-import postcard from './../../../assets/image/postcard.png'
+import postcard from '../../../../assets/image/postcard.png'
 
 export const CheckEmail = () => {
     return (
