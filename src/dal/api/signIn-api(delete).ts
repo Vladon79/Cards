@@ -1,19 +1,16 @@
-import axios, {AxiosResponse} from "axios";
+import {AxiosResponse} from "axios";
+import {instance} from "./auth-api";
 
-export const instance = axios.create({
-    baseURL: "http://localhost:7542/2.0/",
-    withCredentials:true,
-})
 
 export const singInAPI = {
-    singIn (data:SingInRequestType) {
+    singIn(data: SingInRequestType) {
         return instance.post<SingInRequestType, AxiosResponse<SingInResponseType>>("/auth/login", data)
     }
 }
 
 export type SingInRequestType = {
     email: string
-    password:string
+    password: string
     rememberMe: boolean
 }
 
