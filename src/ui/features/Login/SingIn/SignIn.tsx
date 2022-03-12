@@ -13,12 +13,15 @@ import {AuthPassField} from "../../../common/AuthFields/AuthPassField/AuthPassFi
 import React, {useCallback, useState} from "react";
 import {InputFieldType} from "../SignUp/SignUp";
 import {signUpAC} from "../../../../bll/reducers/sign-up-reducer";
+import {selectorIsAuth} from "../../../../bll/selectors/selectors";
+import SuperCheckbox from "../../../common/c3-SuperCheckbox/SuperCheckbox";
 
 
 const SignIn = () => {
+    const [isShowPassword, setIsShowPassword] = useState<boolean>(false)
 
     const isFetching = useAppSelector<boolean>(selectorisFetching)
-    const isLoggedIn = useSelector<AppRootStateType, boolean>(state => state.auth.isAuth)
+    const isAuth = useAppSelector<boolean>(selectorIsAuth)
     const dispatch = useDispatch()
     const navigate = useNavigate()
 
@@ -27,94 +30,89 @@ const SignIn = () => {
     const rememberMe = useCheckBox(false)
 
     const singInData = {email: email.value, password: password.value, rememberMe: rememberMe.isDone}
-
+    console.log(singInData)
     const singIn = () => {
         dispatch(singInTC(singInData))
     }
 
-
-    /*changed by dima start*/
-    const [isShowPassword, setIsShowPassword] = useState<boolean>(false)
     const passwordInputMode: InputFieldType = !isShowPassword ? 'password' : 'text'
     const showPassword = useCallback(() => {
         setIsShowPassword(!isShowPassword)
     }, [isShowPassword])
-    /*changed by dima end*/
-
 
     const handleSignUpLink = () => {
         dispatch(signUpAC(false))
-        /*return <Navigate to={'/signup'}/>*/
         navigate("/signup")
     };
 
-
-    if (isLoggedIn) return <Navigate to='/profile'/>
+    if (isAuth) return <Navigate to='/profile'/>
 
 
     return (
         <section className={s.main_box}>
-            {isFetching
-                ? <Preloader/>
-                :
-                <section className={s.sign_in_box}>
-                    <div className={s.sign_in_box_header}>
-                        <div className={s.logo_text}>It-incubator</div>
-                        <div className={s.sign_in_text}>Sign In</div>
-                    </div>
+            {isFetching && <Preloader/>}
+            <section className={s.sign_in_box}>
+                <div className={s.sign_in_box_header}>
+                    <div className={s.logo_text}>It-incubator</div>
+                    <div className={s.sign_in_text}>Sign In</div>
+                </div>
+                <div className={s.input_box_form}>
+
+                    <AuthEmailField
+                        email={email.value}
+                        text={'Email'}
+                        setEmail={(e)=>email.onChange(e)}
+                        onBlur={email.onBlur}
+                    />
+                    {(email.isDirty && email.isEmpty) && <div style={{color: 'red'}}>Field is required</div>}
+                    {(email.isDirty && email.minLengthError) && <div style={{color: 'red'}}>Email is short</div>}
+                    {(email.isDirty && email.emailError) && <div style={{color: 'red'}}>Email is not valid</div>}
+
+                    <AuthPassField
+                        type={passwordInputMode}
+                        password={password.value}
+                        isShowPassword={isShowPassword}
+                        setPassword={(e)=> password.onChange(e)}
+                        showPassword={showPassword}
+                        text={'Password'}
+                        onBlur={password.onBlur}
+                    />
+                    {(password.isDirty && password.isEmpty) &&
+                    <div style={{color: 'red'}}>Field is required</div>}
+                    {(password.isDirty && password.minLengthError) &&
+                    <div style={{color: 'red'}}>Password is short</div>}
+                    {(password.isDirty && password.maxLengthError) &&
+                    <div style={{color: 'red'}}>Password is long</div>}
+
+                </div>
 
 
-                    <div className={s.input_box_form}>
+                <div className={s.forgot}>
+                    <SuperCheckbox
+                        name='rememberMe'
+                        onChangeChecked={rememberMe.handleCheckedChange}
+                    >
+                        Remember Me
+                    </SuperCheckbox>
+                    <NavLink className={s.forgot_link} children={'Forgot Password'} to={'/forgotPass'}/>
+                </div>
 
-                        <AuthEmailField
-                            email={email.value}
-                            text={'Email'}
-                            setEmail={(e) => email.onChange(e)}
-                            onBlur={email.onBlur}
-                        />
-                        {(email.isDirty && email.isEmpty) && <div style={{color: 'red'}}>Field is required</div>}
-                        {(email.isDirty && email.minLengthError) && <div style={{color: 'red'}}>Email is short</div>}
-                        {(email.isDirty && email.emailError) && <div style={{color: 'red'}}>Email is not valid</div>}
+                <div className={s.input_box_buttons}>
+                    <SuperButton
+                        disabled={!email.isValid || !password.isValid}
+                        type='submit'
+                        onClick={singIn}
+                        className={s.signInBtn}
+                    >
+                        Login
+                    </SuperButton>
+                </div>
 
-
-                        <AuthPassField
-                            type={passwordInputMode}
-                            password={password.value}
-                            isShowPassword={isShowPassword}
-                            setPassword={(e) => password.onChange(e)}
-                            showPassword={showPassword}
-                            text={'Password'}
-                            onBlur={password.onBlur}
-                        />
-                        {(password.isDirty && password.isEmpty) &&
-                        <div style={{color: 'red'}}>Field is required</div>}
-                        {(password.isDirty && password.minLengthError) &&
-                        <div style={{color: 'red'}}>Password is short</div>}
-                        {(password.isDirty && password.maxLengthError) &&
-                        <div style={{color: 'red'}}>Password is long</div>}
-
-                    </div>
-
-                    <div className={s.forgot}>
-                        <NavLink className={s.forgot_link} children={'Forgot Password'} to={'/forgotPass'}/>
-                    </div>
-
-                    <div className={s.input_box_buttons}>
-                        <SuperButton
-                            disabled={!email.isValid || !password.isValid}
-                            type='submit'
-                            onClick={singIn}
-                            className={s.signInBtn}
-                        >
-                            Login
-                        </SuperButton>
-                    </div>
-                    <div className={s.account_text}>Don’t have an account?</div>
-                    <div className={s.sign_up_text}>
-                        <span onClick={handleSignUpLink} className={s.sign_up_link}>Sign Up</span>
-                    </div>
-                </section>
-            }
+                <div className={s.account_text}>Don’t have an account?</div>
+                <div className={s.sign_up_text}>
+                    <span onClick={handleSignUpLink} className={s.sign_up_link}>Sign Up</span>
+                </div>
+            </section>
         </section>
     )
 }

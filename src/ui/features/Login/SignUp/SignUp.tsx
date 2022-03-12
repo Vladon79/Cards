@@ -11,7 +11,7 @@ import Preloader from "../../../common/Preloader/Preloader";
 
 export type InputFieldType = 'password' | 'text'
 
-export const SignUp = () => {
+ const SignUp = () => {
 
 
     const isLoggedIn = useSelector<AppRootStateType, boolean>(state => state.auth.isAuth)
@@ -116,4 +116,5 @@ export const SignUp = () => {
         </section>
     )
 }
+export default SignUp
 
