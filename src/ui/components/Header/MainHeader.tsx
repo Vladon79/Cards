@@ -25,7 +25,7 @@ const Header = () => {
                          className={({isActive}) => (isActive ? s.linkActive : s.link)}/>
                 <NavLink children={'Error'} to={'/error'}
                          className={({isActive}) => (isActive ? s.linkActive : s.link)}/>
-                <NavLink children={'Test'} to={'/test'} className={({isActive}) => (isActive ? s.linkActive : s.link)}/>
+                <NavLink children={'Packs List'} to={'/packsList'} className={({isActive}) => (isActive ? s.linkActive : s.link)}/>
 
             </header>
         )

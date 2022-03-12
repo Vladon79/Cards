@@ -14,8 +14,7 @@ export type PackResponseType = {
 
 export type PacksResponseType = {
     cardPacks: PackResponseType []
-    cardPacksTotalCount: number
-    // количество колод
+    cardPacksTotalCount: number// количество колод
     maxCardsCount: number
     minCardsCount: number
     page: number// выбранная страница
@@ -36,7 +35,7 @@ const initialState = {
     ],
     cardPacksTotalCount: 14,
     // количество колод
-    maxCardsCount: 4,
+    maxCardsCount: 100,
     minCardsCount: 0,
     page: 1,// выбранная страница
     pageCount: 4,
@@ -47,9 +46,11 @@ export const packsReducer = (state: PacksResponseType = initialState, action: Ac
         case "PACKS/GET-PACKS":
             return action.packs
         case "PACKS/CHANGE-NUMBER-PACKS":
-            console.log(action.numberPage)
-            return {...state, page:action.numberPage}
-
+            return {...state, page: action.numberPage}
+        case "PACKS/SET-MAX-MIN-CARDS":
+            return {...state, minCardsCount: action.min, maxCardsCount: action.max}
+        case "PACKS/SET-PAGE-COUNT":
+            return {...state, pageCount: action.pageCount}
         default:
             return state
     }
@@ -69,10 +70,21 @@ export const changeNumberPageAC = (numberPage: number) => {
     } as const
 }
 
+export const setMaxMinNumberCardsAC = (min: number, max: number) => {
+    return {
+        type: "PACKS/SET-MAX-MIN-CARDS",
+        max, min
+    } as const
+}
+export const setPageCountAC = (pageCount: number) => {
+    return {
+        type: "PACKS/SET-PAGE-COUNT",
+        pageCount
+    } as const
+}
 
-export const getCardsTC = (cardsPerPage: number, min: number, max: number, page:number) => (dispatch: Dispatch) => {
-    // dispatch(toggleIsFetchingAC(true))
-    packsApi.getCards(cardsPerPage, min, max, page )
+export const getCardsTC = (cardPacksTotalCount: number, min: number, max: number, page: number) => (dispatch: Dispatch) => {
+    packsApi.getCards(cardPacksTotalCount, min, max, page)
         .then(res => {
             dispatch(getPacksAC(res.data))
         })
