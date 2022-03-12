@@ -6,7 +6,6 @@ import {useSelector} from "react-redux";
 import {AppRootStateType} from "../../../bll/store";
 import {Navigate, useNavigate} from "react-router-dom";
 import image from '../../../assets/image/img.png'
-import {authApi} from "../../../dal/api/auth-api";
 
 
 const ProfilePage = () => {
@@ -14,9 +13,7 @@ const ProfilePage = () => {
     const isAuth = useSelector<AppRootStateType, boolean>(state => state.auth.isAuth)
     const navigate = useNavigate()
 
-    const getCards = () => {
-         authApi.getCards()
-    }
+
 
     const profileSettings = () => {
         navigate("/profileSettings")
@@ -37,7 +34,6 @@ const ProfilePage = () => {
                 <p>nik name:{user.name}</p>
                 <div className={s.button_block}>
                     <SuperButton onClick={profileSettings}>Edit profile</SuperButton>
-                    <SuperButton onClick={getCards}>getCards</SuperButton>
                 </div>
             </div>
         </section>

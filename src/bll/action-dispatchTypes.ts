@@ -2,6 +2,7 @@ import {Dispatch} from "react";
 import {setAppInitializeAC, toggleIsFetchingAC} from "./reducers/app-reducer";
 import {authMeAC, changeProfileAC, signOutAC} from "./reducers/auth-reducer";
 import {signUpAC} from "./reducers/sign-up-reducer";
+import {changeNumberPageAC, getPacksAC} from "./reducers/packs-reducer";
 
 
 export type ActionType = ToggleIsFetchingACType
@@ -10,6 +11,8 @@ export type ActionType = ToggleIsFetchingACType
     | changeProfileACType
     | setAppInitializeAT
     | signUpAT
+    | getPacksAT
+    | changeNumberPageAT
 
 type ToggleIsFetchingACType = ReturnType<typeof toggleIsFetchingAC>;
 
@@ -21,5 +24,9 @@ type changeProfileACType = ReturnType<typeof changeProfileAC>;
 export type setAppInitializeAT = ReturnType<typeof setAppInitializeAC>
 
 export type signUpAT = ReturnType<typeof signUpAC>
+
+
+export type getPacksAT = ReturnType<typeof getPacksAC>
+export type changeNumberPageAT = ReturnType<typeof changeNumberPageAC>
 
 export type DispatchType = Dispatch<ActionType>

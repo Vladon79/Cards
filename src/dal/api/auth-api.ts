@@ -29,9 +29,6 @@ export const authApi = {
     register(email: string, password: string) {
         return instance.post<RegisterResponseType>(`auth/register`, {email, password})
     },
-    getCards() {
-        return instance.get(`cards/pack`)
-    },
 }
 
 
