@@ -8,12 +8,13 @@ type AuthEmailPropsType = {
     text:string
     placeholder?: string
     onBlur?: () => void
+    onFocus?: () => void
     name?:string
 }
 
 export const AuthEmailField: React.FC<AuthEmailPropsType> = (props) => {
 
-    const {email, setEmail, placeholder, onBlur, text, name} = props
+    const {email, setEmail, placeholder, onBlur,onFocus, text, name} = props
 
 
     return (
@@ -27,6 +28,7 @@ export const AuthEmailField: React.FC<AuthEmailPropsType> = (props) => {
                 onChange={(e) => setEmail(e.currentTarget.value)}
                 value={email}
                 onBlur={onBlur}
+                onFocus={onFocus}
             />
         </div>
     );

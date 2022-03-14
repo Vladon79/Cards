@@ -8,7 +8,8 @@ import {AppRootStateType} from "../../../../bll/store";
 import {AuthEmailField} from "../../../common/AuthFields/AuthEmailField/AuthEmailField";
 import {AuthPassField} from "../../../common/AuthFields/AuthPassField/AuthPassField";
 import Preloader from "../../../common/Preloader/Preloader";
-import {log} from "util";
+import ErrorBar from "../../../common/ErrorBar/ErrorBar";
+import {setAppErrorAC} from "../../../../bll/reducers/app-reducer";
 
 export type InputFieldType = 'password' | 'text'
 
@@ -21,6 +22,7 @@ export const SignUp = () => {
     const isLoggedIn = useSelector<AppRootStateType, boolean>(state => state.auth.isAuth)
     const isFetching = useSelector<AppRootStateType, boolean>(state => state.app.isFetching)
     const isRegistered = useSelector<AppRootStateType, boolean>(state => state.signUp.isRegistered)
+    const responseError = useSelector<AppRootStateType, null | string>(state=> state.app.error)
     const dispatch = useDispatch()
 
     const [email, setEmail] = useState<string>('')
@@ -43,6 +45,8 @@ export const SignUp = () => {
         }
     }, [password, repeatPassword])
 
+
+
     const registerBtnClickHandler = useCallback(() => {
         dispatch(register(email, password))
     }, [email, password, repeatPassword, dispatch])
@@ -51,8 +55,14 @@ export const SignUp = () => {
         setEmailIsTouched(true)
     }
 
+    const onFocusHandler = () => {
+        dispatch(setAppErrorAC(null))
+    }
+
+
     const onBlurPasswordHandler = () => {
         setPasswordIsTouched(true)
+
     }
 
     const onBlurRepeatPasswordHandler = () => {
@@ -62,7 +72,6 @@ export const SignUp = () => {
     const cancelBtnHandler = () => {
         dispatch(signUpAC(true))
     }
-
 
     const setEmailHandler = (value: string) => {
         setEmailIsTouched(false)
@@ -130,7 +139,9 @@ export const SignUp = () => {
                         <div className={s.logo_text}>It-incubator</div>
                         <div className={s.sign_up_text}>Sign Up</div>
                     </div>
+
                     <div className={s.input_box_form}>
+                        {responseError && <ErrorBar/>}
 
                         <AuthEmailField
                             email={email}
@@ -138,6 +149,7 @@ export const SignUp = () => {
                             setEmail={setEmailHandler}
                             name={'email'}
                             onBlur={onBlurEmailHandler}
+                            onFocus={onFocusHandler}
                         />
                         {(emailIsTouched && emailError) && <div className={s.input_error}>{emailError}</div>}
 
