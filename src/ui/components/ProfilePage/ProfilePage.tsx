@@ -1,4 +1,3 @@
-import blockStyle from '../../../styles/container.module.scss'
 import s from './ProfilePage.module.scss'
 import SuperButton from "../../common/c2-SuperButton/SuperButton";
 import Ava from "../../common/Ava/Ava";
@@ -14,6 +13,8 @@ const ProfilePage = () => {
     const isAuth = useSelector<AppRootStateType, boolean>(state => state.auth.isAuth)
     const navigate = useNavigate()
 
+
+
     const profileSettings = () => {
         navigate("/profileSettings")
     }
@@ -28,9 +29,9 @@ const ProfilePage = () => {
             <h3>Personal Information</h3>
             <Ava ava={user.avatar || image}/>
             <div className={s.userData}>
-                    <p>email: {user.email}</p>
-                    <p> public Card Packs Count: {user.publicCardPacksCount}</p>
-                    <p>nik name:{user.name}</p>
+                <p>email: {user.email}</p>
+                <p> public Card Packs Count: {user.publicCardPacksCount}</p>
+                <p>nik name:{user.name}</p>
                 <div className={s.button_block}>
                     <SuperButton onClick={profileSettings}>Edit profile</SuperButton>
                 </div>
