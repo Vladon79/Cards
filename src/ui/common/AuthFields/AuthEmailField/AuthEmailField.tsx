@@ -8,19 +8,20 @@ type AuthEmailPropsType = {
     text:string
     placeholder?: string
     onBlur?: () => void
-
+    name?:string
 }
 
 export const AuthEmailField: React.FC<AuthEmailPropsType> = (props) => {
 
-    const {email, setEmail, placeholder, onBlur, text} = props
+    const {email, setEmail, placeholder, onBlur, text, name} = props
+
 
     return (
         <div className={s.input_box}>
             <div className={s.input_name}>{text}</div>
             <SuperInputText
                 type={'email'}
-                name={'email'}
+                name={name}
                 placeholder={placeholder}
                 className={s.input_box_input_text}
                 onChange={(e) => setEmail(e.currentTarget.value)}

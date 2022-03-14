@@ -8,7 +8,7 @@
 }
 
 .sign_up_box {
-  border: 1px solid #000;
+  border: 1px solid #969292;
   margin-top: 84px;
   width: 413px;
   background-color: $authBlockColor;
@@ -47,4 +47,13 @@
 
 .cancelBtn {
   width: 124px;
+}
+
+.btn_not_allowed:hover {
+  cursor: not-allowed;
+}
+
+.input_error {
+  margin-left: 33px;
+  color:red;
 }

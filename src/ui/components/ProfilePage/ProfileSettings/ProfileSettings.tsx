@@ -41,7 +41,7 @@ const ProfileSettings = () => {
                                 onChange={e => name.onChange(e.currentTarget.value)}/>
             </div>
             <div className={s.button_cancele_save_block}>
-                <SuperButton cancele={true} onClick={() => navigate('/profile')}>cancele</SuperButton>
+                <SuperButton cancel={true} onClick={() => navigate('/profile')}>cancele</SuperButton>
                 <SuperButton onClick={nameChangeOnClickHandler}>Save</SuperButton>
             </div>
             <div className={s.button_signOut_block}>

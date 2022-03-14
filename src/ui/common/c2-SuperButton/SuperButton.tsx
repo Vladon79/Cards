@@ -2,21 +2,20 @@ import React, {ButtonHTMLAttributes, DetailedHTMLProps} from 'react'
 import s from './SuperButton.module.scss'
 
 
-// тип пропсов обычной кнопки, children в котором храниться название кнопки там уже описан
 type DefaultButtonPropsType = DetailedHTMLProps<ButtonHTMLAttributes<HTMLButtonElement>, HTMLButtonElement>
 
 type SuperButtonPropsType = DefaultButtonPropsType & {
-    cancele?: boolean
+    cancel?: boolean
 }
 
 const SuperButton: React.FC<SuperButtonPropsType> = (
     {
-        cancele, className,
-        ...restProps// все остальные пропсы попадут в объект restProps, там же будет children
+        cancel, className,
+        ...restProps
     }
 ) => {
 
-    const finalClassName = `${s.default} ${cancele && s.cancele} ${className}`
+    const finalClassName = `${s.default} ${cancel && s.cancel} ${className}`
 
     return (
 
