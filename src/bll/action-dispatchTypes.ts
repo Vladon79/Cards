@@ -3,6 +3,7 @@ import {setAppInitializeAC, toggleIsFetchingAC} from "./reducers/app-reducer";
 import {authMeAC, changeProfileAC, signOutAC} from "./reducers/auth-reducer";
 import {signUpAC} from "./reducers/sign-up-reducer";
 import {changeNumberPageAC, getPacksAC, setMaxMinNumberCardsAC, setPageCountAC} from "./reducers/packs-reducer";
+import {getPackItemAC} from "./reducers/packItem-reducer";
 
 
 export type ActionType = ToggleIsFetchingACType
@@ -15,6 +16,7 @@ export type ActionType = ToggleIsFetchingACType
     | changeNumberPageAT
     | setMaxMinNumberCardsAT
     | setPageCountAT
+    | GetPackItemAT
 
 type ToggleIsFetchingACType = ReturnType<typeof toggleIsFetchingAC>;
 
@@ -34,3 +36,5 @@ export type setMaxMinNumberCardsAT = ReturnType<typeof setMaxMinNumberCardsAC>
 export type setPageCountAT = ReturnType<typeof setPageCountAC>
 
 export type DispatchType = Dispatch<ActionType>
+
+export type GetPackItemAT = ReturnType<typeof getPackItemAC>

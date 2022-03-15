@@ -11,12 +11,13 @@ import Preloader from "../common/Preloader/Preloader";
 import {useDispatch, useSelector} from "react-redux";
 import {AppRootStateType} from "../../bll/store";
 import ProfileSettings from "../components/ProfilePage/ProfileSettings/ProfileSettings";
-import {SignUp} from '../features/Login/SignUp/SignUp';
 import {appInitializeTC} from "../../bll/reducers/app-reducer";
 import {ForgotPass} from "../features/Login/ForgotPass/ForgotPass";
 import {CheckEmail} from "../features/Login/CheckEmail/CheckEmail";
 import {NewPass} from "../features/Login/NewPass/NewPass";
 import PacksListPage from "../components/PacksListPage/PacksListPage";
+import SignUp from '../features/Login/SignUp/SignUp';
+import PackItem from "../components/PackItemPage/PackItem";
 
 
 const App = () => {
@@ -53,6 +54,7 @@ const App = () => {
                         <Route path="/test" element={<TestPage/>}/>
                         <Route path="/profileSettings" element={<ProfileSettings/>}/>
                         <Route path="/packsList" element={<PacksListPage/>}/>
+                        <Route path="/packItem" element={<PackItem/>}/>
                     </Routes>
                 </div>
             }

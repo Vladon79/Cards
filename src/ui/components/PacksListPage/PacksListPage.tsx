@@ -13,6 +13,8 @@ import Table from "./Table/Table";
 import SuperSelect from "./Pack/SuperComponents/SuperSelect";
 import SuperDoubleRange from "./Pack/SuperComponents/SuperDoubleRange";
 import Paginator from "./Paginator/Paginator";
+import {getPackItemTC} from "../../../bll/reducers/packItem-reducer";
+import {useNavigate} from "react-router-dom";
 
 
 const PacksListPage = () => {
@@ -23,6 +25,8 @@ const PacksListPage = () => {
     const page = useAppSelector<number>(state => state.packs.page)
     const minCardsCount = useAppSelector<number>(state => state.packs.minCardsCount)
     const maxCardsCount = useAppSelector<number>(state => state.packs.maxCardsCount)
+
+    const navigate = useNavigate()
 
     const setValuesOnSlider = (value: number[]) => {
         dispatch(setMaxMinNumberCardsAC(value[0], value[1]))
@@ -42,11 +46,16 @@ const PacksListPage = () => {
         dispatch(setPageCountAC(e))
     }
 
+    const handleOnClick = (_id:string) => {
+        dispatch(getPackItemTC(_id))
+        navigate('/packItem')
+    };
+
     return (
         <div>
             <Table/>
             {cardPacks.map(p => <Pack key={p._id} name={p.name} cardsCount={p.cardsCount} user_name={p.user_name}
-                                      updated={p.updated}/>)}
+                                      updated={p.updated} onClick={()=>handleOnClick(p._id)}/>)}
             <SuperButton onClick={getCards}>getCards</SuperButton>
             <SuperSelect options={numbers}
                          value={pageCount}

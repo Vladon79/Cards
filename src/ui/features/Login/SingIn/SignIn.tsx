@@ -18,6 +18,7 @@ import SuperCheckbox from "../../../common/c3-SuperCheckbox/SuperCheckbox";
 
 
 const SignIn = () => {
+
     const [isShowPassword, setIsShowPassword] = useState<boolean>(false)
 
     const isFetching = useAppSelector<boolean>(selectorisFetching)
@@ -47,7 +48,6 @@ const SignIn = () => {
 
     if (isAuth) return <Navigate to='/profile'/>
 
-
     return (
         <section className={s.main_box}>
             {isFetching && <Preloader/>}
@@ -61,7 +61,7 @@ const SignIn = () => {
                     <AuthEmailField
                         email={email.value}
                         text={'Email'}
-                        setEmail={(e)=>email.onChange(e)}
+                        setEmail={(e) => email.onChange(e)}
                         onBlur={email.onBlur}
                     />
                     {(email.isDirty && email.isEmpty) && <div style={{color: 'red'}}>Field is required</div>}
@@ -72,7 +72,7 @@ const SignIn = () => {
                         type={passwordInputMode}
                         password={password.value}
                         isShowPassword={isShowPassword}
-                        setPassword={(e)=> password.onChange(e)}
+                        setPassword={(e) => password.onChange(e)}
                         showPassword={showPassword}
                         text={'Password'}
                         onBlur={password.onBlur}

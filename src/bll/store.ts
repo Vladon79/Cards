@@ -6,13 +6,15 @@ import {singInReducer} from "./reducers/singInReducer";
 import {TypedUseSelectorHook, useSelector} from "react-redux";
 import {singUpReducer} from "./reducers/sign-up-reducer";
 import {packsReducer} from "./reducers/packs-reducer";
+import {packItemReducer} from "./reducers/packItem-reducer";
 
 const reducers = combineReducers({
     auth: authReducer,
     app: appReducer,
     singIn: singInReducer,
     signUp: singUpReducer,
-    packs: packsReducer
+    packs: packsReducer,
+    packItem:packItemReducer
 })
 
 export const store = createStore(reducers, applyMiddleware(thunkMiddleware));
