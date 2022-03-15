@@ -1,4 +1,4 @@
-import s from '../Pack/Pack.module.scss'
+import s from '../TablePack/TablePack.module.scss'
 
 
 

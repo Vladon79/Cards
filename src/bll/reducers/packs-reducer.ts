@@ -44,7 +44,7 @@ const initialState = {
 export const packsReducer = (state: PacksResponseType = initialState, action: ActionType): PacksResponseType => {
     switch (action.type) {
         case "PACKS/GET-PACKS":
-            return action.packs
+            return {...state, cardPacks: action.cardPacks, cardPacksTotalCount: action.totalCount}
         case "PACKS/CHANGE-NUMBER-PACKS":
             return {...state, page: action.numberPage}
         case "PACKS/SET-MAX-MIN-CARDS":
@@ -56,10 +56,10 @@ export const packsReducer = (state: PacksResponseType = initialState, action: Ac
     }
 }
 
-export const getPacksAC = (packs: PacksResponseType) => {
+export const getPacksAC = (cardPacks: PackResponseType [], totalCount: number) => {
     return {
         type: "PACKS/GET-PACKS",
-        packs
+        cardPacks, totalCount
     } as const
 }
 
@@ -83,10 +83,25 @@ export const setPageCountAC = (pageCount: number) => {
     } as const
 }
 
-export const getCardsTC = (cardPacksTotalCount: number, min: number, max: number, page: number) => (dispatch: Dispatch) => {
-    packsApi.getCards(cardPacksTotalCount, min, max, page)
+export const addNewPackTC = (name: string, privateBoolean: boolean) => (dispatch: Dispatch) => {
+    packsApi.addPack(name, privateBoolean)
         .then(res => {
-            dispatch(getPacksAC(res.data))
+
+        })
+        .catch(() => {
+            return
+        })
+        .finally(() => {
+            // dispatch(setAppInitializeAC(true))
+            // dispatch(toggleIsFetchingAC(false))
+        })
+}
+
+
+export const getCardsTC = (cardPacksTotalCount?: number, min?: number, max?: number, page?: number, user_id?: string) => (dispatch: Dispatch) => {
+    packsApi.getCards(cardPacksTotalCount, min, max, page, user_id)
+        .then(res => {
+            dispatch(getPacksAC(res.data.cardPacks, res.data.cardPacksTotalCount))
         })
         .catch(() => {
             return
