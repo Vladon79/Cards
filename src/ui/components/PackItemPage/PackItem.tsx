@@ -1,8 +1,9 @@
 import React from 'react';
 import {useAppSelector} from "../../../bll/store";
 import {PackItemResponseType, PackItemType} from "../../../bll/reducers/packItem-reducer";
-import TablePackItem from "./TablePackItem/Table";
+
 import Card from './Card/Card';
+import TablePackItem from './TablePackItem/TablePackItem';
 
 type ResponsePackItem = {
     carts: CardsType[],
@@ -14,7 +15,7 @@ type ResponsePackItem = {
     packUserId: string
 }
 
-type CardsType =  [
+type CardsType = [
     {
         answer: string
         question: string
@@ -30,20 +31,17 @@ type CardsType =  [
 
 
 const PackItem = () => {
-    const card = useAppSelector<PackItemResponseType>(state => state.packItem)
-    const card1 = useAppSelector<PackItemType[]>(state => state.packItem.cards)
-    console.log(card)
-
-    function onClick() {
-
-    }
+    const packItem = useAppSelector<PackItemResponseType>(state => state.packItem)
+    const card = useAppSelector<PackItemType[]>(state => state.packItem.cards)
+    const nuller = card.length === 0
 
     return (
         <div>
+            {nuller && <h1>Not found cards</h1>}
             <div>
                 <TablePackItem/>
-                {card1.map(p => <Card key={p._id} question={p.question} answer={p.answer}
-                                          updated={p.updated} create={p.created} grade={p.grade} />)}
+                {card.map(p => <Card key={p._id} question={p.question} answer={p.answer}
+                                     updated={p.updated} create={p.created} grade={p.grade}/>)}
                 {/*<SuperButton onClick={getCards}>getCards</SuperButton>*/}
                 {/*<SuperSelect options={numbers}*/}
                 {/*             value={pageCount}*/}
@@ -56,6 +54,7 @@ const PackItem = () => {
                 {/*<Paginator totalUsersCount={cardPacksTotalCount} pageSize={pageCount}*/}
                 {/*           currentPage={page} onPageChange={changeNumberPage}/>*/}
             </div>
+
         </div>
     );
 };
