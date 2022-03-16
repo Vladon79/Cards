@@ -1,6 +1,6 @@
 import SuperButton from "../../../common/c2-SuperButton/SuperButton";
-import {useDispatch, useSelector} from "react-redux";
-import {AppRootStateType, useAppSelector} from "../../../../bll/store";
+import {useDispatch} from "react-redux";
+import {useAppSelector} from "../../../../bll/store";
 import {singInTC} from "../../../../bll/reducers/singInReducer";
 import {Navigate, NavLink, useNavigate} from "react-router-dom";
 import {selectorisFetching} from "./selectors";

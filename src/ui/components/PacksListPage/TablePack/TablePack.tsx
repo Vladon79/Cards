@@ -4,6 +4,9 @@ import RefactorMyPack from "./RefactorMyPack/RefactorMyPack";
 import {useState} from "react";
 import SuperInputText from "../../../common/c1-SuperInputText/SuperInputText";
 import {useInput} from "../../../../hooks/useInput";
+import {useDispatch} from "react-redux";
+import {getPackItemTC} from "../../../../bll/reducers/packItem-reducer";
+import {useNavigate} from "react-router-dom";
 
 type PackType = {
     id: string
@@ -16,8 +19,15 @@ type PackType = {
 }
 
 const TablePack = ({id, user_id, name, cardsCount, user_name, updated, myUserID}: PackType) => {
+    const dispatch = useDispatch()
+    const navigate = useNavigate()
     const [update, setUpdate] = useState<boolean>(false)
     const newName = useInput(name, {minLength: 2})
+
+    const handleClickLearn = (id:string) => {
+        dispatch(getPackItemTC(id))
+        navigate('/packItem')
+    };
 
     return (
         <div className={s.pack}>
@@ -30,8 +40,8 @@ const TablePack = ({id, user_id, name, cardsCount, user_name, updated, myUserID}
             <p className={s.pack_block_update}>{updated}</p>
             <p className={s.pack_block_createdBy}>{user_name}</p>
             {user_id === myUserID
-                && <RefactorMyPack id={id} newName={newName.value} setUpdate={setUpdate}/>}
-            <SuperButton className={s.button}>learn</SuperButton>
+            && <RefactorMyPack id={id} newName={newName.value} setUpdate={setUpdate}/>}
+            <SuperButton className={s.button} onClick={()=>handleClickLearn(id)}>learn</SuperButton>
         </div>
     )
 }

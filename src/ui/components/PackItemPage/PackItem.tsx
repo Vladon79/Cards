@@ -1,9 +1,10 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {useAppSelector} from "../../../bll/store";
 import {PackItemResponseType, PackItemType} from "../../../bll/reducers/packItem-reducer";
-
 import Card from './Card/Card';
 import TablePackItem from './TablePackItem/TablePackItem';
+import {useNavigate} from "react-router-dom";
+import SuperButton from "../../common/c2-SuperButton/SuperButton";
 
 type ResponsePackItem = {
     carts: CardsType[],
@@ -31,14 +32,22 @@ type CardsType = [
 
 
 const PackItem = () => {
+
     const packItem = useAppSelector<PackItemResponseType>(state => state.packItem)
     const card = useAppSelector<PackItemType[]>(state => state.packItem.cards)
+    const navigate = useNavigate()
     const nuller = card.length === 0
+
+    const handleBackToPackList = () => {
+        navigate('/packsList')
+    };
+
 
     return (
         <div>
+            <SuperButton onClick={handleBackToPackList}>Back to Pack List</SuperButton>
             {nuller && <h1>Not found cards</h1>}
-            <div>
+            {!nuller && <div>
                 <TablePackItem/>
                 {card.map(p => <Card key={p._id} question={p.question} answer={p.answer}
                                      updated={p.updated} create={p.created} grade={p.grade}/>)}
@@ -53,7 +62,8 @@ const PackItem = () => {
                 {/*/>*/}
                 {/*<Paginator totalUsersCount={cardPacksTotalCount} pageSize={pageCount}*/}
                 {/*           currentPage={page} onPageChange={changeNumberPage}/>*/}
-            </div>
+            </div>}
+
 
         </div>
     );

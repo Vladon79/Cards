@@ -5,12 +5,12 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  border: 2px solid black;
+  border: 2px solid $primaryColor;
   width: 800px;
   @include text(16px, 500, $authTextColor, 1.2);
 
   .pack_block_name {
-    padding: 20px;
+    padding: 15px;
     width: 20%;
   }
   .pack_block_answer{

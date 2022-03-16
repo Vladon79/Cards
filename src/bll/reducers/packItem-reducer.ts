@@ -1,6 +1,7 @@
 import {ActionType} from "../action-dispatchTypes";
 import {Dispatch} from "redux";
 import {packItemApi} from "../../dal/api/packItem-api";
+import {toggleIsFetchingAC} from "./app-reducer";
 
 export type PackItemType = {
     answer: string
@@ -22,6 +23,7 @@ export type PackItemResponseType = {
     page: number
     pageCount: number
     packUserId: string
+    preLoader: boolean
 }
 
 const initialState: PackItemResponseType = {
@@ -44,6 +46,8 @@ const initialState: PackItemResponseType = {
     page: 1,
     pageCount: 4,
     packUserId: "5eecf82a3ed8f700042f1186",
+    preLoader: false
+
 }
 
 
@@ -64,7 +68,9 @@ export const getPackItemAC = (packItem: PackItemResponseType) => {
     } as const
 }
 
+
 export const getPackItemTC = ( cardsPack_id:string) => (dispatch: Dispatch) => {
+    dispatch(toggleIsFetchingAC(true))
     packItemApi.getCard( cardsPack_id )
         .then(res => {
             dispatch(getPackItemAC(res.data))
@@ -73,7 +79,6 @@ export const getPackItemTC = ( cardsPack_id:string) => (dispatch: Dispatch) => {
             return
         })
         .finally(() => {
-            // dispatch(setAppInitializeAC(true))
-            // dispatch(toggleIsFetchingAC(false))
+            dispatch(toggleIsFetchingAC(false))
         })
 }
