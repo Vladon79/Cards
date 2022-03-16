@@ -1,6 +1,7 @@
 import {ActionType, DispatchType} from "../action-dispatchTypes";
 import {packsApi} from "../../dal/api/packs-api";
 import {getCardsTC, PackResponseType} from "./packs-reducer";
+import {Dispatch} from "redux";
 
 
 export type PacksResponseType = {
@@ -26,6 +27,10 @@ export const myPacksReducer = (state: PacksResponseType = initialState, action: 
     switch (action.type) {
         case "MY-PACKS/DELETE-PACK":
             return {...state, cardPacks: state.cardPacks.filter(c => c._id !== action.id && c)}
+        case "MY-PACKS/ADD-PACK":
+            return {...state, cardPacks: [...state.cardPacks, action.newPack]}
+        case "MY-PACKS/UPDATE-PACK":
+            return {...state, cardPacks: state.cardPacks.filter(c => action.id === c._id && action.updatePack)}
 
         default:
             return state
@@ -39,23 +44,32 @@ export const deletePackAC = (id: string) => {
     } as const
 }
 
-export const updatePackAC = (id: string, newName:string) => {
+export const addPacksAC = (newPack: PackResponseType) => {
     return {
-        type: "MY-PACKS/DELETE-PACK",
-        id
+        type: "MY-PACKS/ADD-PACK",
+        newPack
+    } as const
+}
+
+export const updatePackAC = (id: string, updatePack: PackResponseType) => {
+    return {
+        type: "MY-PACKS/UPDATE-PACK",
+        id, updatePack
     } as const
 }
 
 export const deletePackTC = (id: string) => async (dispatch: DispatchType) => {
     await packsApi.deletePack(id)
-    //dispatch(deletePackAC(id))
-    // @ts-ignore
-    dispatch(getCardsTC())
+    dispatch(deletePackAC(id))
 }
 
-export const updatePackTC = (id: string, newName:string) => async (dispatch: DispatchType) => {
-    await packsApi.updatePack(id, newName)
-    //dispatch(deletePackAC(id))
-    // @ts-ignore
-    dispatch(getCardsTC())
+export const addNewPackTC = (name: string, privateBoolean: boolean) => async (dispatch: DispatchType) => {
+    const res = await packsApi.addPack(name, privateBoolean)
+    dispatch(addPacksAC(res.data.newCardsPack))
+}
+
+
+export const updatePackTC = (id: string, newName: string) => async (dispatch: DispatchType) => {
+    const res = await packsApi.updatePack(id, newName)
+    dispatch(updatePackAC(id, res.data.updatedCardsPack))
 }

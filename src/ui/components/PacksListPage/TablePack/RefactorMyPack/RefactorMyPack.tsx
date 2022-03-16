@@ -1,7 +1,7 @@
 import SuperButton from "../../../../common/c2-SuperButton/SuperButton";
-import {packsApi} from "../../../../../dal/api/packs-api";
 import {deletePackTC, updatePackTC} from "../../../../../bll/reducers/myPacks-reducer";
 import {useDispatch} from "react-redux";
+import s from '../TablePack.module.scss'
 
 type RefactorMyPackPropsType = {
     id: string
@@ -12,7 +12,6 @@ type RefactorMyPackPropsType = {
 
 const RefactorMyPack = (props: RefactorMyPackPropsType) => {
 
-
     const dispatch = useDispatch()
 
     const deletePack = () => {
@@ -20,12 +19,12 @@ const RefactorMyPack = (props: RefactorMyPackPropsType) => {
     }
     const updatePack = () => {
         dispatch(updatePackTC(props.id, props.newName))
-         props.setUpdate(false)
+        props.setUpdate(false)
     }
     return (
         <div>
-            <SuperButton onClick={deletePack}>delete</SuperButton>
-            <SuperButton onClick={updatePack}>edit</SuperButton>
+            <SuperButton className={` ${s.button} ${s.delete}`} onClick={deletePack}>Delete</SuperButton>
+            <SuperButton className={s.button} onClick={updatePack}>Edit</SuperButton>
         </div>
     )
 }

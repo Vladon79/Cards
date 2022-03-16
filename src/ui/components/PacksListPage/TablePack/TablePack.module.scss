@@ -1,29 +1,22 @@
 @import "./src/styles/sass/variables";
 @import "./src/styles/sass/mixins";
 
+
 .pack {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border: 2px solid black;
-  width: 800px;
-  @include text(16px, 500, $authTextColor, 1.2);
+  @include tableBlock();
 
-  .pack_block_name {
-    padding: 20px;
-    width: 30%;
-  }
-  .pack_block_cards{
-    width: 10%;
-  }
-  .pack_block_update{
-    width: 20%;
-  }
-  .pack_block_createdBy{
-    width: 20%;
-  }
-  .pack_block_action{
-    width: 20%;
+  .button {
+    @include text(12px, 400, $primaryColor, 1px);
+    background-color: #D7D8EF;
+    box-shadow: none;
+    border-radius: 2px;
+    padding: 0 10px;
+    margin: 0 5px;
+    height: 32px;
   }
 
+  .delete {
+    background-color: #F1453D;
+    color: $authBlockColor;
+  }
 }

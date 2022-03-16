@@ -7,7 +7,7 @@ type PaginatorPropsType = {
     totalCount: number
     pageSize: number
     currentPage: number
-    onPageChange: (p: number) => void
+    changeNumberPage: (p: number) => void
     portionSize: number
 }
 
@@ -15,7 +15,7 @@ const Paginator = React.memo(({
                                   totalCount,
                                   pageSize,
                                   currentPage,
-                                  onPageChange,
+                                  changeNumberPage,
                                   portionSize
                               }: PaginatorPropsType) => {
 
@@ -41,7 +41,7 @@ const Paginator = React.memo(({
                 .filter(p => p >= leftPortionPageNumber && p <= rightPortionPageNumber)
                 .map(p => <span key={p}
                                 className={currentPage === p ? s.selectedPage : s.notselectpage}
-                                onClick={() => onPageChange(p)}>{p}</span>
+                                onClick={() => changeNumberPage(p)}>{p}</span>
                 )}
 
             <SuperButton cancele={portionCount == portionNumber} disabled={portionCount == portionNumber} className={s.button}

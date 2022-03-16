@@ -36,3 +36,32 @@
   background-color: $authBlockColor;
   border-radius: $authBorderRadius;
 }
+
+
+@mixin tableBlock() {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 2px solid black;
+  width: 100%;
+  height: 50px;
+  @include text(16px, 500, $authTextColor, 1.2);
+
+  .pack_block_name {
+    padding-left: 15px;
+    width: 30%;
+  }
+  .pack_block_cards {
+    width: 10%;
+  }
+  .pack_block_update {
+    width: 20%;
+  }
+  .pack_block_createdBy {
+    width: 20%;
+  }
+  .pack_block_action {
+    width: 20%;
+  }
+
+}
