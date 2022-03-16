@@ -1,3 +1,41 @@
 @import "src/styles/sass/mixins";
 @import "src/styles/sass/variables";
 
+.packsListPageContainer {
+  display: flex;
+  width: 80%;
+  margin-top: 84px;
+  border: $authTextColor solid 1px;
+  border-radius: 8px;
+
+  .leftBlock {
+    display: flex;
+    flex-direction: column;
+    padding: 15px;
+    background-color: #ECECF9;
+
+    h6 {
+      margin: 20px 0 20px;
+      @include text(16px, 600, $authTextColor, 1.2)
+    }
+
+    .buttonSection {
+      display: flex;
+
+      .button {
+        width: 50%;
+        height: 40px;
+        border-radius: 2px;
+      }
+    }
+  }
+
+  .rightBlock {
+    padding: 20px;
+    width: 100%;
+
+    .table {
+      width: 100%;
+    }
+  }
+}

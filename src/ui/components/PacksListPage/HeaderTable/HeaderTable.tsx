@@ -1,8 +1,8 @@
-import s from '../Pack/Pack.module.scss'
+import s from '../TablePack/TablePack.module.scss'
 
 
 
-const Table = () => {
+const HeaderTable = () => {
     return (
         <div className={s.pack}>
             <p className={s.pack_block_name}>Name</p>
@@ -13,4 +13,4 @@ const Table = () => {
         </div>
     )
 }
-export default Table
+export default HeaderTable
