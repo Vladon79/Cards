@@ -35,10 +35,9 @@ const initialState = {
         },
     ],
     cardPacksTotalCount: 14,
-    // количество колод
     maxCardsCount: 100,
     minCardsCount: 0,
-    page: 1,// выбранная страница
+    page: 1,
     pageCount: 4,
 }
 
@@ -87,12 +86,28 @@ export const setPageCountAC = (pageCount: number) => {
 
 export const getCardsTC = (pack: 'myPack' | 'allPack', cardPacksTotalCount?: number, min?: number, max?: number, page?: number, user_id?: string) => async (dispatch: Dispatch) => {
     if (pack === 'myPack') {
+      //  dispatch(toggleIsFetchingAC(true))
         const res = await packsApi.getCards(cardPacksTotalCount, min, max, page, user_id)
-        dispatch(getPacksAC(res.data.cardPacks, res.data.cardPacksTotalCount))
+        try {
+            dispatch(getPacksAC(res.data.cardPacks, res.data.cardPacksTotalCount))
+        } catch (e) {
+
+        } finally {
+      //      dispatch(toggleIsFetchingAC(false))
+        }
+
 
     } else if (pack === 'allPack') {
+      //  dispatch(toggleIsFetchingAC(true))
         const res = await packsApi.getCards(cardPacksTotalCount, min, max, page)
-        dispatch(getPacksAC(res.data.cardPacks, res.data.cardPacksTotalCount))
+        try {
+            dispatch(getPacksAC(res.data.cardPacks, res.data.cardPacksTotalCount))
+        }catch (e){
+
+        }finally {
+      //      dispatch(toggleIsFetchingAC(false))
+        }
+
     }
 
 }
