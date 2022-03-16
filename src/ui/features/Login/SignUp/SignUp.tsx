@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect, useState} from 'react'
+import React, {useEffect, useState} from 'react'
 import s from './SignUp.module.scss'
 import {register, signUpAC} from "../../../../bll/reducers/sign-up-reducer";
 import {useDispatch, useSelector} from "react-redux";
@@ -9,116 +9,114 @@ import {AuthEmailField} from "../../../common/AuthFields/AuthEmailField/AuthEmai
 import {AuthPassField} from "../../../common/AuthFields/AuthPassField/AuthPassField";
 import Preloader from "../../../common/Preloader/Preloader";
 import ErrorBar from "../../../common/ErrorBar/ErrorBar";
-import {setAppErrorAC} from "../../../../bll/reducers/app-reducer";
 
 export type InputFieldType = 'password' | 'text'
 
-const passMinLength = 8
-const passMaxLength = 32
+type UseInputInitialType = {
+    initValue?: string
+    isShow?: boolean
+    isTouched?: boolean
+    error?: string
+}
+
+const useFormValid = (value: string | '', isTouched: boolean, validations: string[]) => {
+
+    const [error, setError] = useState<string>('')
+
+    const minLength = 6
+    const maxLength = 32
+
+    useEffect(() => {
+
+        for (const validation of validations) {
+            switch (validation) {
+                case 'minLength':
+                    value.length < minLength
+                    && isTouched
+                    && setError(`Password should be from ${minLength} to ${maxLength} symbols`)
+                    break
+                case 'maxLength':
+                    value.length > maxLength
+                    && isTouched
+                    && setError(`Password should be from ${minLength} to ${maxLength} symbols`)
+                    break
+                case 'isEmail': {
+                    const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+                    value
+                    && isTouched
+                    && !re.test(String(value).toLowerCase())
+                    && setError('Email is not correct')
+                    break
+                }
+                case 'isEmpty': {
+                    !value
+                    && isTouched
+                    && setError('Field could not be empty')
+                    break
+                }
+                default:
+                    break
+            }
+        }
+        if (!isTouched) setError('')
+    }, [value, isTouched])
+
+    return {error, setError}
+}
+
+const useInput = (initValue: string, validations: string[]) => {
+    const [value, setValue] = useState<string | ''>(initValue)
+    const [isShow, setIsShow] = useState<boolean>(false)
+    const [isTouched, setIsTouched] = useState<boolean>(false)
+    const valid = useFormValid(value, isTouched, validations)
+
+    const valueChange = (value: string) => {
+        setValue(value)
+    }
+    const isShowChange = () => {
+        setIsShow(!isShow)
+    }
+    const isTouchedOn = () => {
+        setIsTouched(true)
+    }
+    const isTouchedOff = () => {
+        setIsTouched(false)
+    }
+
+    return {value, isShow, isTouched, valueChange, isShowChange, isTouchedOn, isTouchedOff, ...valid}
+}
 
 export const SignUp = () => {
 
-
+    const dispatch = useDispatch()
     const isLoggedIn = useSelector<AppRootStateType, boolean>(state => state.auth.isAuth)
     const isFetching = useSelector<AppRootStateType, boolean>(state => state.app.isFetching)
     const isRegistered = useSelector<AppRootStateType, boolean>(state => state.signUp.isRegistered)
-    const responseError = useSelector<AppRootStateType, null | string>(state=> state.app.error)
-    const dispatch = useDispatch()
+    const responseError = useSelector<AppRootStateType, null | string>(state => state.app.error)
 
-    const [email, setEmail] = useState<string>('')
-    const [password, setPassword] = useState<string>('')
-    const [repeatPassword, setRepeatPassword] = useState<string>('')
-    const [isShowPassword, setIsShowPassword] = useState<boolean>(false)
-    const [isShowRepeatPassword, setIsShowRepeatPassword] = useState<boolean>(false)
-    const [emailIsTouched, setEmailIsTouched] = useState<boolean>(false)
-    const [passwordIsTouched, setPasswordIsTouched] = useState<boolean>(false)
-    const [repeatPasswordIsTouched, setRepeatPasswordIsTouched] = useState<boolean>(false)
-    const [emailError, setEmailError] = useState<string>('Field could not be empty')
-    const [passwordError, setPasswordError] = useState<string>('Field could not be empty')
-    const [repeatPasswordError, setRepeatPasswordError] = useState<string>('Field could not be empty')
+    const email = useInput('', ['isEmail', 'isEmpty'])
+    const password = useInput('', ['minLength', 'maxLength', 'isEmpty'])
+    const repeatPassword = useInput('', ['isEmpty'])
 
     useEffect(() => {
-        if (password === repeatPassword) {
-            setRepeatPasswordError('')
+        if (password.value === repeatPassword.value) {
+            repeatPassword.setError('')
         } else {
-            setRepeatPasswordError('Passwords are not exactly same')
+            repeatPassword.setError('Passwords are not exactly same')
         }
-    }, [password, repeatPassword])
+    }, [password.value, repeatPassword.value])
 
 
-
-    const registerBtnClickHandler = useCallback(() => {
-        dispatch(register(email, password))
-    }, [email, password, repeatPassword, dispatch])
-
-    const onBlurEmailHandler = () => {
-        setEmailIsTouched(true)
+    const registerBtnClickHandler = () => {
+        email.value && password.value && dispatch(register(email.value, password.value))
     }
-
-    const onFocusHandler = () => {
-        dispatch(setAppErrorAC(null))
-    }
-
-
-    const onBlurPasswordHandler = () => {
-        setPasswordIsTouched(true)
-
-    }
-
-    const onBlurRepeatPasswordHandler = () => {
-        setRepeatPasswordIsTouched(true)
-    }
-
     const cancelBtnHandler = () => {
         dispatch(signUpAC(true))
     }
-
-    const setEmailHandler = (value: string) => {
-        setEmailIsTouched(false)
-        setEmail(value)
-        if (value) {
-            const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-            re.test(String(value).toLowerCase()) ? setEmailError('') : setEmailError('Email is not correct')
-        } else {
-            setEmailError('Field could not be empty')
-        }
-    }
-
-    const setPasswordHandler = (value: string) => {
-        setPasswordIsTouched(false)
-        setPassword(value)
-
-        if (value) {
-
-            (value.length < passMinLength || value.length > passMaxLength) ? setPasswordError('Password should be from 8 to 32 symbols') : setPasswordError('')
-
-        } else {
-            setPasswordError('Field could not be empty')
-        }
-    }
-
-    const setRepeatPasswordHandler = (value: string) => {
-        setRepeatPasswordIsTouched(false)
-        setRepeatPassword(value)
-    }
-
-    const showPassword = useCallback(() => {
-        setIsShowPassword(!isShowPassword)
-    }, [isShowPassword])
-
-    const showRepeatPassword = useCallback(() => {
-        setIsShowRepeatPassword(!isShowRepeatPassword)
-    }, [isShowRepeatPassword])
-
-
-    const repeatPasswordInputMode: InputFieldType = !isShowRepeatPassword ? 'password' : 'text'
-    const passwordInputMode: InputFieldType = !isShowPassword ? 'password' : 'text'
-    const formIsValid = !emailError && !passwordError && !repeatPasswordError
-
-
-
+    const passwordInputMode: InputFieldType = !password.isShow ? 'password' : 'text'
+    const repeatPasswordInputMode: InputFieldType = !repeatPassword.isShow ? 'password' : 'text'
+    const formIsValid = !email.error && !password.error && !repeatPassword.error
     const registerBtnClass = `${s.registerBtn} ${!formIsValid && s.btn_not_allowed}`
-
 
     if (isLoggedIn) {
         return <Navigate to={'/profile'}/>
@@ -127,7 +125,6 @@ export const SignUp = () => {
         dispatch(signUpAC(true))
         return <Navigate to={'/signin'}/>
     }
-
 
     return (
         <section className={s.main_box}>
@@ -144,39 +141,40 @@ export const SignUp = () => {
                         {responseError && <ErrorBar/>}
 
                         <AuthEmailField
-                            email={email}
+                            email={email.value}
                             text={'Email'}
-                            setEmail={setEmailHandler}
+                            setEmail={email.valueChange}
                             name={'email'}
-                            onBlur={onBlurEmailHandler}
-                            onFocus={onFocusHandler}
+                            onBlur={email.isTouchedOn}
+                            onFocus={email.isTouchedOff}
                         />
-                        {(emailIsTouched && emailError) && <div className={s.input_error}>{emailError}</div>}
+                        {email.error && <div className={s.input_error}>{email.error}</div>}
 
                         <AuthPassField
                             type={passwordInputMode}
-                            password={password}
-                            isShowPassword={isShowPassword}
-                            setPassword={setPasswordHandler}
-                            showPassword={showPassword}
+                            password={password.value}
+                            isShowPassword={password.isShow}
+                            setPassword={password.valueChange}
+                            showPassword={password.isShowChange}
                             text={'Password'}
                             name={'password'}
-                            onBlur={onBlurPasswordHandler}
+                            onBlur={password.isTouchedOn}
+                            onFocus={password.isTouchedOff}
                         />
-                        {(passwordIsTouched && passwordError) && <div className={s.input_error}>{passwordError}</div>}
+                        {password.error && <div className={s.input_error}>{password.error}</div>}
 
                         <AuthPassField
                             type={repeatPasswordInputMode}
-                            password={repeatPassword}
-                            isShowPassword={isShowRepeatPassword}
-                            setPassword={setRepeatPasswordHandler}
-                            showPassword={showRepeatPassword}
+                            password={repeatPassword.value}
+                            isShowPassword={repeatPassword.isShow}
+                            setPassword={repeatPassword.valueChange}
+                            showPassword={repeatPassword.isShowChange}
                             text={'Confirm password'}
                             name={'repeatPassword'}
-                            onBlur={onBlurRepeatPasswordHandler}
+                            onBlur={repeatPassword.isTouchedOn}
+                            onFocus={repeatPassword.isTouchedOff}
                         />
-                        {(repeatPasswordIsTouched && repeatPasswordError) &&
-                        <div className={s.input_error}>{repeatPasswordError}</div>}
+                        {repeatPassword.error && <div className={s.input_error}>{repeatPassword.error}</div>}
 
                     </div>
                     <div className={s.input_box_buttons}>

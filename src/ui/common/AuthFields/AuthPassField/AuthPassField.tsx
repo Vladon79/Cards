@@ -5,19 +5,20 @@ import eye from './../../../../assets/icons/eyeicon.png'
 
 type AuthPassPropsType = {
     type: string
-    password: string
-    isShowPassword: boolean
+    password?: string
+    isShowPassword?: boolean
     setPassword: (e: string) => void
     showPassword: () => void
     text: string
     placeholder?: string
     onBlur?: () => void
-    name?:string
+    onFocus?: () => void
+    name?: string
 }
 
 export const AuthPassField: React.FC<AuthPassPropsType> = (props) => {
 
-    const {type, password, isShowPassword, setPassword, showPassword, text, placeholder, onBlur, name} = props
+    const {type, password, isShowPassword, setPassword, showPassword, text, placeholder, onBlur, name, onFocus} = props
 
     return (
         <div className={s.input_box}>
@@ -26,10 +27,10 @@ export const AuthPassField: React.FC<AuthPassPropsType> = (props) => {
                 type={type}
                 name={name}
                 placeholder={placeholder}
-               // className={s.input_box_input_text}
                 onChange={(e) => setPassword(e.currentTarget.value)}
                 value={password}
                 onBlur={onBlur}
+                onFocus={onFocus}
             />
             <img src={eye}
                  alt={'show password'}

@@ -80,6 +80,7 @@ const SignIn = () => {
                         <AuthPassField
                             type={passwordInputMode}
                             password={password.value}
+                           /* password = password(value)*/
                             isShowPassword={isShowPassword}
                             setPassword={(e) => password.onChange(e)}
                             showPassword={showPassword}

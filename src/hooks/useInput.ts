@@ -16,7 +16,6 @@ export const useInput = (initialValue: string, validations:any) => {
      const onBlur = (e: FocusEvent<HTMLInputElement>) => {
         setIsDirty(true)
     }
-
     */
 
     /*changed by dima*/

@@ -3,7 +3,7 @@ import s from './AuthEmailField.module.scss'
 import SuperInputText from "../../c1-SuperInputText/SuperInputText";
 
 type AuthEmailPropsType = {
-    email: string
+    email?: string
     setEmail: (e: string) => void
     text:string
     placeholder?: string
