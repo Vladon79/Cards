@@ -1,5 +1,5 @@
 import React, {ChangeEvent, useState} from 'react'
-import s from './SuperDoubleRange.module.css'
+import s from './SuperDoubleRange.module.scss'
 
 
 type SuperDoubleRangePropsType = {

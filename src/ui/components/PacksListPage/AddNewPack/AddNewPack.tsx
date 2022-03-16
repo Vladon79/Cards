@@ -5,6 +5,7 @@ import SuperCheckbox from "../../../common/c3-SuperCheckbox/SuperCheckbox";
 import {useState} from "react";
 import {addNewPackTC} from "../../../../bll/reducers/packs-reducer";
 import {useDispatch} from "react-redux";
+import s from './AddNewPack.module.scss'
 
 const AddNewPack = () => {
     const [privateBoolean, setPrivateBoolean] = useState<boolean>(false)
@@ -16,9 +17,15 @@ const AddNewPack = () => {
     }
 
     return (
-        <div>
-            <SuperInputText name={'Name'} value={name.value} onChange={e => name.onChange(e.currentTarget.value)}/>
-            <SuperButton onClick={addNewPack}>Add new pack</SuperButton>
+
+        <div className={s.addNewPackContainer}>
+            <h2>Packs list</h2>
+            <section className={s.input_button}>
+                <SuperInputText className={s.input} name={'Name'} value={name.value}
+                                onChange={e => name.onChange(e.currentTarget.value)}/>
+                <SuperButton onClick={addNewPack}>Add new pack</SuperButton>
+            </section>
+
             <div>
                 <SuperCheckbox children={'Private'} checked={privateBoolean}
                                onChange={(e) => setPrivateBoolean(e.currentTarget.checked)}/>

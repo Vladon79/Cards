@@ -11,13 +11,13 @@ type PaginatorPropsType = {
     portionSize: number
 }
 
-const Paginator1 = React.memo(({
-                                   totalCount,
-                                   pageSize,
-                                   currentPage,
-                                   onPageChange,
-                                   portionSize
-                               }: PaginatorPropsType) => {
+const Paginator = React.memo(({
+                                  totalCount,
+                                  pageSize,
+                                  currentPage,
+                                  onPageChange,
+                                  portionSize
+                              }: PaginatorPropsType) => {
 
 
     const pagesCount = Math.ceil(totalCount / pageSize)
@@ -32,21 +32,23 @@ const Paginator1 = React.memo(({
     const rightPortionPageNumber = portionNumber * portionSize
 
     return (
-        <div className={s.pageNumber}>
-            {portionNumber > 1 &&
-                <SuperButton onClick={() => setPortionNumber(portionNumber - 1)}>prev</SuperButton>
-            }
+        <div className={s.paginatorContainer}>
+
+            <SuperButton cancele={portionNumber < 2} disabled={portionNumber < 2} className={s.button}
+                         onClick={() => setPortionNumber(portionNumber - 1)}>prev</SuperButton>
+
             {pages
                 .filter(p => p >= leftPortionPageNumber && p <= rightPortionPageNumber)
                 .map(p => <span key={p}
                                 className={currentPage === p ? s.selectedPage : s.notselectpage}
                                 onClick={() => onPageChange(p)}>{p}</span>
                 )}
-            {portionCount - portionNumber > 1 &&
-                <SuperButton onClick={() => setPortionNumber(portionNumber + 1)}>next</SuperButton>
-            }
+
+            <SuperButton cancele={portionCount == portionNumber} disabled={portionCount == portionNumber} className={s.button}
+                         onClick={() => setPortionNumber(portionNumber + 1)}>next</SuperButton>
+
         </div>
     )
 })
 
-export default Paginator1
+export default Paginator

@@ -1,0 +1,17 @@
+@import "src/styles/sass/mixins";
+@import "src/styles/sass/variables";
+
+.addNewPackContainer {
+  display: flex;
+  flex-direction: column;
+
+  .input_button {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    .input {
+      width: 500px;
+    }
+  }
+
+}
