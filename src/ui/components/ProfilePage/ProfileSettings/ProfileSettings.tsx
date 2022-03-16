@@ -14,8 +14,10 @@ const ProfileSettings = () => {
     const userName = useAppSelector<string>(state => state.auth.user.name)
     const userAva = useAppSelector<string>(state => state.auth.user.avatar ? state.auth.user.avatar : image)
 
-    const name = useInput(userName, {isEmpty: true, minLength: 2})
-    const ava = useInput(userAva, {isEmpty: true, minLength: 2})
+/*    const name = useInput(userName, ['isEmpty', 'minLength': 2])
+    const ava = useInput(userAva, ['isEmpty', 'minLength': 2]) */
+    const name = useInput(userName, ['isEmpty', 'minLength'])
+    const ava = useInput(userAva, ['isEmpty', 'minLength'])
 
     const navigate = useNavigate()
     const dispatch = useDispatch()
@@ -36,9 +38,9 @@ const ProfileSettings = () => {
             <Ava ava={ava.value}/>
             <div className={s.input_block}>
                 <SuperInputText className={s.input} name={'Ava'} value={ava.value}
-                                onChange={e => ava.onChange(e.currentTarget.value)}/>
+                                onChange={e => ava.valueChange(e.currentTarget.value)}/>
                 <SuperInputText className={s.input} name={'Name'} value={name.value}
-                                onChange={e => name.onChange(e.currentTarget.value)}/>
+                                onChange={e => name.valueChange(e.currentTarget.value)}/>
             </div>
             <div className={s.button_cancele_save_block}>
                 <SuperButton cancel={true} onClick={() => navigate('/profile')}>cancele</SuperButton>

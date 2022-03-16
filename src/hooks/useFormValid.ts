@@ -1,42 +1,44 @@
 import {useEffect, useState} from "react";
+import {maxLength, minLength} from "../ui/features/Login/login-constants";
 
+export const useFormValid = (value: string | '', isTouched: boolean, validations: string[]) => {
 
-export const useFormValid = (value: string, validations: any) => {
-
-    const [isEmpty, setIsEmpty] = useState(true)
-    const [minLengthError, setMinLengthError] = useState(false)
-    const [maxLengthError, setMaxLengthError] = useState(false)
-    const [emailError, setEmailError] = useState(false)
-    const [isInputValid, setIsInputValid] = useState(false)
-
+    const [error, setError] = useState<string>('')
 
     useEffect(() => {
-        for (const validation in validations) {
+
+        for (const validation of validations) {
             switch (validation) {
                 case 'minLength':
-                    value.length < validations[validation] ? setMinLengthError(true) : setMinLengthError(false)
-                    break
-                case 'isEmpty':
-                    value ? setIsEmpty(false) : setIsEmpty(true)
+                    value.length < minLength
+                    && isTouched
+                    && setError(`Password should be from ${minLength} to ${maxLength} symbols`)
                     break
                 case 'maxLength':
-                    value.length > validations[validation] ? setMaxLengthError(true) : setMaxLengthError(false)
+                    value.length > maxLength
+                    && isTouched
+                    && setError(`Password should be from ${minLength} to ${maxLength} symbols`)
                     break
-                case 'isEmail':
+                case 'isEmail': {
                     const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-                    re.test(String(value).toLowerCase()) ? setEmailError(false) : setEmailError(true)
+                    value
+                    && isTouched
+                    && !re.test(String(value).toLowerCase())
+                    && setError('Email is not correct')
+                    break
+                }
+                case 'isEmpty': {
+                    !value
+                    && isTouched
+                    && setError('Field could not be empty')
+                    break
+                }
+                default:
                     break
             }
         }
-    }, [value])
+        if (!isTouched) setError('')
+    }, [value, isTouched])
 
-    useEffect(() => {
-        if (isEmpty || minLengthError || emailError || maxLengthError) {
-            setIsInputValid(false)
-        }else {
-            setIsInputValid(true)
-        }
-    }, [isEmpty, minLengthError, emailError, maxLengthError])
-
-    return {isEmpty, minLengthError, emailError, maxLengthError,  isValid: isInputValid}
-};
+    return {error, setError}
+}
