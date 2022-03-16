@@ -21,7 +21,7 @@
   content: '';
   width: 25px;
   height: 25px;
-  border: 1px solid $primaryColor;
+  border: 1px solid #21268f;
   display: inline-block;
   margin-right: 10px;
   border-radius: 5px;
@@ -35,10 +35,9 @@
   transform: translateY(-50%);
   width: 25px;
   height: 25px;
-  background: url('https://img.icons8.com/material/344/checkmark--v1.png') no-repeat;
-  border-radius: 2px;
+  background: url('../../../assets/image/check.svg') no-repeat;
   background-size: 25px 25px;
-  background-color: $primaryColor;
+  background-color: #21268f;
   opacity: 0;
 }
 

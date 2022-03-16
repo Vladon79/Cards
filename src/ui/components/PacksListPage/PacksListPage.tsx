@@ -1,72 +1,85 @@
 import SuperButton from "../../common/c2-SuperButton/SuperButton";
-import Pack from "./Pack/Pack";
-import {
-    changeNumberPageAC,
-    getCardsTC,
-    PackResponseType,
-    setMaxMinNumberCardsAC,
-    setPageCountAC,
-} from "../../../bll/reducers/packs-reducer";
-import {useDispatch} from "react-redux";
-import {useAppSelector} from "../../../bll/store";
-import Table from "./Table/Table";
-import SuperSelect from "./Pack/SuperComponents/SuperSelect";
-import SuperDoubleRange from "./Pack/SuperComponents/SuperDoubleRange";
-import Paginator from "./Paginator/Paginator";
-import {getPackItemTC} from "../../../bll/reducers/packItem-reducer";
-import {useNavigate} from "react-router-dom";
+import {PackResponseType,} from "../../../bll/reducers/packs-reducer";
+import HeaderTable from "./HeaderTable/HeaderTable";
+import SuperSelect from "../../common/SuperComponents/SuperSelect";
+import SuperDoubleRange from "../../common/SuperComponents/SuperDoubleRange";
+import AddNewPack from "./AddNewPack/AddNewPack";
+import TablePack from "./TablePack/TablePack";
+import Paginator from "../../common/Paginator/Paginator";
+import s from './PacksListPage.module.scss'
+
+type PacksListPagePropsType = {
+    pageCount: number
+    cardPacks: PackResponseType[]
+    cardPacksTotalCount: number
+    page: number
+    minCardsCount: number
+    maxCardsCount: number
+    arrayNumbers: number[]
+    getMyPacks: () => void
+    getAllPacks: () => void
+    changeNumberPage: (numberPage: number) => void
+    setPageCount: (n: number) => void
+    setValuesOnSlider: (value: number[]) => void
+    pack: 'allPack' | 'myPack'
+    myUserID: string
+}
 
 
-const PacksListPage = () => {
-    const numbers = [4, 5, 6, 7, 8, 9, 10]
-    const pageCount = useAppSelector<number>(state => state.packs.pageCount)
-    const cardPacks = useAppSelector<PackResponseType[]>(state => state.packs.cardPacks)
-    const cardPacksTotalCount = useAppSelector<number>(state => state.packs.cardPacksTotalCount)
-    const page = useAppSelector<number>(state => state.packs.page)
-    const minCardsCount = useAppSelector<number>(state => state.packs.minCardsCount)
-    const maxCardsCount = useAppSelector<number>(state => state.packs.maxCardsCount)
-
-    const navigate = useNavigate()
-
-    const setValuesOnSlider = (value: number[]) => {
-        dispatch(setMaxMinNumberCardsAC(value[0], value[1]))
-
-    }
-    const dispatch = useDispatch()
-
-    const getCards = () => {
-        dispatch(getCardsTC(pageCount, minCardsCount, maxCardsCount, page))
-    }
-
-    const changeNumberPage = (numberPage: number) => {
-        dispatch(changeNumberPageAC(numberPage))
-        dispatch(getCardsTC(pageCount, minCardsCount, maxCardsCount, numberPage))
-    }
-    const setPageCount = (e: number) => {
-        dispatch(setPageCountAC(e))
-    }
-
-    const handleOnClick = (_id:string) => {
-        dispatch(getPackItemTC(_id))
-        navigate('/packItem')
-    };
+const PacksListPage = ({
+                           pageCount,
+                           cardPacks,
+                           cardPacksTotalCount,
+                           page,
+                           minCardsCount,
+                           maxCardsCount,
+                           arrayNumbers,
+                           getMyPacks,
+                           getAllPacks,
+                           changeNumberPage,
+                           setPageCount,
+                           setValuesOnSlider,
+                           pack, myUserID
+                       }: PacksListPagePropsType) => {
 
     return (
-        <div>
-            <Table/>
-            {cardPacks.map(p => <Pack key={p._id} name={p.name} cardsCount={p.cardsCount} user_name={p.user_name}
-                                      updated={p.updated} onClick={()=>handleOnClick(p._id)}/>)}
-            <SuperButton onClick={getCards}>getCards</SuperButton>
-            <SuperSelect options={numbers}
-                         value={pageCount}
-                         onChangeOption={setPageCount}/>
-            <SuperDoubleRange onChangeRange={setValuesOnSlider}
-                              value={[minCardsCount, maxCardsCount]}
-                              min={minCardsCount}
-                              max={maxCardsCount}
-            />
-            <Paginator totalUsersCount={cardPacksTotalCount} pageSize={pageCount}
-                       currentPage={page} onPageChange={changeNumberPage}/>
+        <div className={s.packsListPageContainer}>
+            <div className={s.leftBlock}>
+                <h6>Show packs cards</h6>
+                <section className={s.buttonSection}>
+                    <SuperButton disabled={pack === 'myPack'} cancele={pack === 'myPack'} className={s.button}
+                                 onClick={getMyPacks}>My</SuperButton>
+                    <SuperButton disabled={pack === 'allPack'} cancele={pack === 'allPack'} className={s.button}
+                                 onClick={getAllPacks}>All</SuperButton>
+                </section>
+                <h6>Number of cards</h6>
+                <SuperDoubleRange onChangeRange={setValuesOnSlider}
+                                  value={[minCardsCount, maxCardsCount]}
+                                  min={minCardsCount}
+                                  max={maxCardsCount}
+                />
+            </div>
+
+            <div className={s.rightBlock}>
+
+                <AddNewPack/>
+                <section className={s.table}>
+                    <HeaderTable/>
+                    {cardPacks.map(p => <TablePack key={p._id} id={p._id} myUserID={myUserID} user_id={p.user_id}
+                                                   name={p.name}
+                                                   cardsCount={p.cardsCount} user_name={p.user_name}
+                                                   updated={p.updated}/>)}
+
+                </section>
+
+                <SuperSelect options={arrayNumbers}
+                             value={pageCount}
+                             onChangeOption={setPageCount}/>
+
+                <Paginator totalCount={cardPacksTotalCount} pageSize={pageCount} currentPage={page}
+                           changeNumberPage={changeNumberPage} portionSize={10}/>
+
+            </div>
         </div>
     )
 }

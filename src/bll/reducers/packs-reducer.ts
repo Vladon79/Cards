@@ -1,6 +1,7 @@
 import {ActionType} from "../action-dispatchTypes";
 import {Dispatch} from "redux";
 import {packsApi} from "../../dal/api/packs-api";
+import {toggleIsFetchingAC} from "./app-reducer";
 
 export type PackResponseType = {
     _id: string
@@ -34,17 +35,16 @@ const initialState = {
         },
     ],
     cardPacksTotalCount: 14,
-    // количество колод
     maxCardsCount: 100,
     minCardsCount: 0,
-    page: 1,// выбранная страница
+    page: 1,
     pageCount: 4,
 }
 
 export const packsReducer = (state: PacksResponseType = initialState, action: ActionType): PacksResponseType => {
     switch (action.type) {
         case "PACKS/GET-PACKS":
-            return action.packs
+            return {...state, cardPacks: action.cardPacks, cardPacksTotalCount: action.totalCount}
         case "PACKS/CHANGE-NUMBER-PACKS":
             return {...state, page: action.numberPage}
         case "PACKS/SET-MAX-MIN-CARDS":
@@ -56,10 +56,10 @@ export const packsReducer = (state: PacksResponseType = initialState, action: Ac
     }
 }
 
-export const getPacksAC = (packs: PacksResponseType) => {
+export const getPacksAC = (cardPacks: PackResponseType [], totalCount: number) => {
     return {
         type: "PACKS/GET-PACKS",
-        packs
+        cardPacks, totalCount
     } as const
 }
 
@@ -83,16 +83,31 @@ export const setPageCountAC = (pageCount: number) => {
     } as const
 }
 
-export const getCardsTC = (cardPacksTotalCount: number, min: number, max: number, page: number) => (dispatch: Dispatch) => {
-    packsApi.getCards(cardPacksTotalCount, min, max, page)
-        .then(res => {
-            dispatch(getPacksAC(res.data))
-        })
-        .catch(() => {
-            return
-        })
-        .finally(() => {
-            // dispatch(setAppInitializeAC(true))
-            // dispatch(toggleIsFetchingAC(false))
-        })
+
+export const getCardsTC = (pack: 'myPack' | 'allPack', cardPacksTotalCount?: number, min?: number, max?: number, page?: number, user_id?: string) => async (dispatch: Dispatch) => {
+    if (pack === 'myPack') {
+      //  dispatch(toggleIsFetchingAC(true))
+        const res = await packsApi.getCards(cardPacksTotalCount, min, max, page, user_id)
+        try {
+            dispatch(getPacksAC(res.data.cardPacks, res.data.cardPacksTotalCount))
+        } catch (e) {
+
+        } finally {
+      //      dispatch(toggleIsFetchingAC(false))
+        }
+
+
+    } else if (pack === 'allPack') {
+      //  dispatch(toggleIsFetchingAC(true))
+        const res = await packsApi.getCards(cardPacksTotalCount, min, max, page)
+        try {
+            dispatch(getPacksAC(res.data.cardPacks, res.data.cardPacksTotalCount))
+        }catch (e){
+
+        }finally {
+      //      dispatch(toggleIsFetchingAC(false))
+        }
+
+    }
+
 }
