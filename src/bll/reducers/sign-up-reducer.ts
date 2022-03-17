@@ -26,7 +26,6 @@ export const signUpAC = (value: boolean) => {
     } as const
 }
 
-
 export const register = (email: string, password: string) => (dispatch: DispatchType) => {
 
     dispatch(toggleIsFetchingAC(true))
@@ -40,5 +39,4 @@ export const register = (email: string, password: string) => (dispatch: Dispatch
         .finally(() => {
             dispatch(toggleIsFetchingAC(false))
         })
-
 }

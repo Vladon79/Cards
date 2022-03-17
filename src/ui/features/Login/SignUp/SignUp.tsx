@@ -15,19 +15,17 @@ export type InputFieldType = 'password' | 'text'
 
 const SignUp = () => {
 
-    const dispatch = useDispatch()
     const isLoggedIn = useAppSelector<boolean>(state => state.auth.isAuth)
     const isFetching = useAppSelector<boolean>(state => state.app.isFetching)
     const isRegistered = useAppSelector<boolean>(state => state.signUp.isRegistered)
     const responseError = useAppSelector<null | string>(state => state.app.error)
-
+    const dispatch = useDispatch()
     const email = useInput('', ['isEmail', 'isEmpty'])
     const password = useInput('', ['minLength', 'maxLength', 'isEmpty'])
     const repeatPassword = useInput('', ['isEmpty'])
-
     const passwordInputMode: InputFieldType = !password.isShow ? 'password' : 'text'
     const repeatPasswordInputMode: InputFieldType = !repeatPassword.isShow ? 'password' : 'text'
-    const formIsValid = email.value && !email.error && !password.error && !repeatPassword.error
+    const formIsValid = !!(email.value && !email.error && !password.error && !repeatPassword.error)
     const registerBtnClass = `${s.registerBtn} ${!formIsValid && s.btn_not_allowed}`
 
     useEffect(() => {

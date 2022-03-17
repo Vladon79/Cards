@@ -18,9 +18,9 @@
 
 .checkboxLabel span::before {
   content: '';
-  width: 17px;
-  height: 17px;
-  border: 1px solid $primaryColor;
+  width: 16px;
+  height: 16px;
+  border: 1px solid $authTextColor;
   display: inline-block;
   margin-right: 10px;
   border-radius: 5px;
@@ -32,8 +32,8 @@
   left: 1px;
   top: 50%;
   transform: translateY(-50%);
-  width: 17px;
-  height: 17px;
+  width: 16px;
+  height: 16px;
   background: url('https://img.icons8.com/material/344/checkmark--v1.png') no-repeat;
   background-size: 17px 17px;
   opacity: 0;

@@ -2,10 +2,10 @@ import {applyMiddleware, combineReducers, createStore} from "redux";
 import thunkMiddleware from 'redux-thunk'
 import {authReducer} from "./reducers/auth-reducer";
 import {appReducer} from "./reducers/app-reducer";
-import {singInReducer} from "./reducers/singInReducer";
 import {TypedUseSelectorHook, useSelector} from "react-redux";
 import {singUpReducer} from "./reducers/sign-up-reducer";
 import {packsReducer} from "./reducers/packs-reducer";
+import {singInReducer} from "./reducers/sing-in-reducer";
 
 const reducers = combineReducers({
     auth: authReducer,

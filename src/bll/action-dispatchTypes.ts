@@ -1,6 +1,6 @@
 import {Dispatch} from "redux";
 import {setAppErrorAC, setAppInitializeAC, toggleIsFetchingAC} from "./reducers/app-reducer";
-import {authMeAC, changeProfileAC, signOutAC} from "./reducers/auth-reducer";
+import {authMeAC, changeProfileAC, setTokenAC, setTokenIsSentAC, signOutAC} from "./reducers/auth-reducer";
 import {signUpAC} from "./reducers/sign-up-reducer";
 import {changeNumberPageAC, getPacksAC, setMaxMinNumberCardsAC, setPageCountAC} from "./reducers/packs-reducer";
 
@@ -17,6 +17,8 @@ export type ActionType =
     | setMaxMinNumberCardsAT
     | setPageCountAT
     | setAppErrorAT
+    | setTokenAT
+    | setTokenIsSentAT
 
 export type ToggleIsFetchingACType = ReturnType<typeof toggleIsFetchingAC>;
 export type authMeACType = ReturnType<typeof authMeAC>;
@@ -29,5 +31,8 @@ export type getPacksAT = ReturnType<typeof getPacksAC>
 export type changeNumberPageAT = ReturnType<typeof changeNumberPageAC>
 export type setMaxMinNumberCardsAT = ReturnType<typeof setMaxMinNumberCardsAC>
 export type setPageCountAT = ReturnType<typeof setPageCountAC>
+export type setTokenAT = ReturnType<typeof setTokenAC>
+export type setTokenIsSentAT = ReturnType<typeof setTokenIsSentAC>
+
 
 export type DispatchType = Dispatch<ActionType>

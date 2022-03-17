@@ -1,7 +1,6 @@
 @import "../../../../styles/sass/variables";
 @import "../../../../styles/sass/mixins";
 
-
 .main_box {
   display: flex;
   justify-content: center;
@@ -94,7 +93,7 @@
   cursor: pointer;
 }
 
-.btn_not_allowed {
+.btn_not_allowed:hover {
   cursor: not-allowed;
 }
 

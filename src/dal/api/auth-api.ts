@@ -25,8 +25,10 @@ export const authApi = {
     register(email: string, password: string) {
         return instance.post<RegisterResponseType>(`auth/register`, {email, password})
     },
+    forgot(email: string, fromEmail: string, message: string) {
+        return instance.post<RegisterResponseType>(`auth/forgot`, {email, fromEmail, message})
+    }
 }
-
 
 type RegisterResponseType = {
     addedUser: AddedUserType
@@ -49,7 +51,6 @@ type AddedUserType = {
     isAdmin: boolean
 }
 
-
 export type SingInRequestType = {
     email: string
     password: string
@@ -62,12 +63,10 @@ export type SingInResponseType = {
     name: string;
     avatar?: string;
     publicCardPacksCount: number;
-
     created: Date;
     updated: Date;
     isAdmin: boolean;
     verified: boolean;
     rememberMe: boolean;
-
     error?: string;
 }

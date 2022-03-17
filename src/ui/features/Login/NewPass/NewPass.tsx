@@ -1,6 +1,5 @@
 import React, {MouseEvent, useCallback, useState} from 'react';
 import s from './NewPass.module.scss'
-import {AuthEmailField} from "../../../common/AuthFields/AuthEmailField/AuthEmailField";
 import {AuthPassField} from "../../../common/AuthFields/AuthPassField/AuthPassField";
 import {InputFieldType} from "../SignUp/SignUp";
 import SuperButton from "../../../common/c2-SuperButton/SuperButton";
