@@ -125,6 +125,7 @@ export const setNewPass = (password: string, token: string) => async (dispatch: 
     dispatch(toggleIsFetchingAC(true))
     try {
         await authApi.newPass(password, token)
+        dispatch(setTokenIsSentAC(true))
     } catch (err) {
     } finally {
         dispatch(toggleIsFetchingAC(false))

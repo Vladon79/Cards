@@ -9,7 +9,7 @@ import {useInput} from "../../../../hooks/useInput";
 import {Navigate, useParams} from "react-router-dom";
 import Preloader from "../../../common/Preloader/Preloader";
 import ErrorBar from "../../../common/ErrorBar/ErrorBar";
-import {setNewPass} from "../../../../bll/reducers/auth-reducer";
+import {setNewPass, setTokenIsSentAC} from "../../../../bll/reducers/auth-reducer";
 
 
 export const NewPass = () => {
@@ -17,6 +17,7 @@ export const NewPass = () => {
     const isLoggedIn = useAppSelector<boolean>(state => state.auth.isAuth)
     const isFetching = useAppSelector<boolean>(state => state.app.isFetching)
     const responseError = useAppSelector<null | string>(state => state.app.error)
+    const tokenIsSet = useAppSelector<boolean>(state => state.auth.tokenIsSent)
     const dispatch = useDispatch()
     const params = useParams()
     const password = useInput('', ['minLength', 'maxLength', 'isEmpty'])
@@ -25,15 +26,21 @@ export const NewPass = () => {
     const createPassBtnClass = `${s.createPassBtn} ${!formIsValid ? s.btn_not_allowed : null}`
     const token = params.token ? params.token: ''
 
-
-
     const handleCreatePassBtn = () => {
     dispatch(setNewPass(password.value, token))
+    }
+
+    if (!token) {
+        dispatch(setTokenIsSentAC(false))
     }
 
     if (isLoggedIn) {
         return <Navigate to={'/profile'}/>
     }
+    if (tokenIsSet) {
+        return <Navigate to={'/signin'}/>
+    }
+
 
     return (
         <section className={s.main_box}>
