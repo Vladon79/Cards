@@ -3,9 +3,10 @@ import {instance} from "./auth-api";
 //myID : 622b914d6f9c0c17a38dfe09
 
 export const packsApi = {
-    getCards(cardPacksTotalCount?: number, min?: number, max?: number, page?: number, user_id?:string) {
+    getCards(cardPacksTotalCount?: number, packName?: string, min?: number, max?: number, page?: number, user_id?: string) {
         return instance.get<any>(`cards/pack`, {
             params: {
+                packName,
                 min,
                 max,
                 page,

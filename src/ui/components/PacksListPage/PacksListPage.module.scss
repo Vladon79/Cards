@@ -11,8 +11,10 @@
   .leftBlock {
     display: flex;
     flex-direction: column;
+    width: 30%;
     padding: 15px;
     background-color: #ECECF9;
+    border-radius: 8px;
 
     h6 {
       margin: 20px 0 20px;
@@ -28,11 +30,31 @@
         border-radius: 2px;
       }
     }
+
+    .superRange_span_block {
+      span {
+        color: $primaryColor;
+      }
+
+      .span {
+        @include text(16px, 600, $authTextColor, 1.2)
+      }
+
+      .superRange {
+        width: 60%;
+      }
+    }
   }
 
   .rightBlock {
     padding: 20px;
     width: 100%;
+
+    .input_button {
+      display: flex;
+      width: 100%;
+      justify-content: space-between;
+    }
 
     .table {
       width: 100%;
