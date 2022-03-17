@@ -46,50 +46,41 @@
     /*Styling the Thumb*/
     .super_range::-webkit-slider-thumb {
       -webkit-appearance: none;
-     // border: 1px solid #000000;
       height: 20px;
       width: 20px;
       border-radius: 50%;
       background: #ffffff;
       cursor: pointer;
-      margin-top: -6px; /* You need to specify a margin in Chrome, but in Firefox and IE it is automatic */
-     // box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d; /* Add cool effects to your sliders! */
+      margin-top: -8px; /* You need to specify a margin in Chrome, but in Firefox and IE it is automatic */
       position: relative;
       z-index: 99;
     }
 
     /* All the same stuff for Firefox */
     .super_range::-moz-range-thumb {
-     // box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
-      //border: 1px solid #000000;
       height: 36px;
       width: 16px;
       border-radius: 3px;
-     // background: #ffffff;
       cursor: pointer;
     }
 
     /* All the same stuff for IE */
-    .super_range::-ms-thumb {
-     // box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
-    //  border: 1px solid #000000;
-      height: 36px;
-      width: 16px;
-      border-radius: 3px;
-      background: #ffffff;
-      cursor: pointer;
-    }
+    //.super_range::-ms-thumb {
+    //  height: 36px;
+    //  width: 16px;
+    //  border-radius: 3px;
+    //  background: #ffffff;
+    //  cursor: pointer;
+    //}
 
 
     /*Styling the Track*/
     .super_range::-webkit-slider-runnable-track {
       width: 100%;
-      height: 8.4px;
+      height: 3px;
       cursor: pointer;
-     // box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
       background: #21268F;
       border-radius: 1.3px;
-      //border: 0.2px solid #010101;
     }
 
     .super_range:focus::-webkit-slider-runnable-track {
@@ -98,17 +89,15 @@
 
     .super_range::-moz-range-track {
       width: 100%;
-      height: 8.4px;
+      height: 3px;
       cursor: pointer;
-      //box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
       background: #21268F;
       border-radius: 1.3px;
-    //  border: 0.2px solid #010101;
     }
 
     .super_range::-ms-track {
       width: 100%;
-      height: 8.4px;
+      height: 3px;
       cursor: pointer;
       background: transparent;
       border-color: transparent;
@@ -118,9 +107,7 @@
 
     .super_range::-ms-fill-lower {
       background: #21268F;
-      //border: 0.2px solid #010101;
       border-radius: 2.6px;
-      //box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
     }
 
     .super_range:focus::-ms-fill-lower {
@@ -129,9 +116,7 @@
 
     .super_range::-ms-fill-upper {
       background: #21268F;
-    //  border: 0.2px solid #010101;
       border-radius: 2.6px;
-     // box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
     }
 
     .super_range:focus::-ms-fill-upper {

@@ -51,6 +51,11 @@ export const packsReducer = (state: PacksResponseType = initialState, action: Ac
             return {...state, minCardsCount: action.min, maxCardsCount: action.max}
         case "PACKS/SET-PAGE-COUNT":
             return {...state, pageCount: action.pageCount}
+        case "PACKS/SEARCH-PACK":
+            return {
+                ...state, cardPacks: state.cardPacks.filter(c => c.name.includes(action.value) && c
+                )
+            }
         default:
             return state
     }
@@ -83,29 +88,37 @@ export const setPageCountAC = (pageCount: number) => {
     } as const
 }
 
+export const searchPackAC = (value: string) => {
+    return {
+        type: "PACKS/SEARCH-PACK",
+        value
+    } as const
+}
 
-export const getCardsTC = (pack: 'myPack' | 'allPack', cardPacksTotalCount?: number, min?: number, max?: number, page?: number, user_id?: string) => async (dispatch: Dispatch) => {
+
+export const getCardsTC = (pack: 'myPack' | 'allPack', packName?: string, cardPacksTotalCount?: number, min?: number, max?: number, page?: number, user_id?: string) => async (dispatch: Dispatch) => {
     if (pack === 'myPack') {
-      //  dispatch(toggleIsFetchingAC(true))
-        const res = await packsApi.getCards(cardPacksTotalCount, min, max, page, user_id)
+        //  dispatch(toggleIsFetchingAC(true))
+        const res = await packsApi.getCards(cardPacksTotalCount, packName, min, max, page, user_id)
         try {
             dispatch(getPacksAC(res.data.cardPacks, res.data.cardPacksTotalCount))
         } catch (e) {
 
         } finally {
-      //      dispatch(toggleIsFetchingAC(false))
+            //      dispatch(toggleIsFetchingAC(false))
         }
 
 
     } else if (pack === 'allPack') {
-      //  dispatch(toggleIsFetchingAC(true))
-        const res = await packsApi.getCards(cardPacksTotalCount, min, max, page)
+        //  dispatch(toggleIsFetchingAC(true))
+        const res = await packsApi.getCards(cardPacksTotalCount, packName, min, max, page)
         try {
             dispatch(getPacksAC(res.data.cardPacks, res.data.cardPacksTotalCount))
-        }catch (e){
 
-        }finally {
-      //      dispatch(toggleIsFetchingAC(false))
+        } catch (e) {
+
+        } finally {
+            //      dispatch(toggleIsFetchingAC(false))
         }
 
     }

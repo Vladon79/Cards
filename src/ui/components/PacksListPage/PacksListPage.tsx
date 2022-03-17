@@ -3,10 +3,10 @@ import {PackResponseType,} from "../../../bll/reducers/packs-reducer";
 import HeaderTable from "./HeaderTable/HeaderTable";
 import SuperSelect from "../../common/SuperComponents/SuperSelect";
 import SuperDoubleRange from "../../common/SuperComponents/SuperDoubleRange";
-import AddNewPack from "./AddNewPack/AddNewPack";
 import TablePack from "./TablePack/TablePack";
 import Paginator from "../../common/Paginator/Paginator";
 import s from './PacksListPage.module.scss'
+import Search from "./Search/SearchInput";
 
 type PacksListPagePropsType = {
     pageCount: number
@@ -23,6 +23,10 @@ type PacksListPagePropsType = {
     setValuesOnSlider: (value: number[]) => void
     pack: 'allPack' | 'myPack'
     myUserID: string
+    addNewPack: () => void
+    searchOnChange: (e: string) => void
+    searchValue: string
+
 }
 
 
@@ -39,8 +43,9 @@ const PacksListPage = ({
                            changeNumberPage,
                            setPageCount,
                            setValuesOnSlider,
-                           pack, myUserID
+                           pack, myUserID, addNewPack, searchOnChange, searchValue
                        }: PacksListPagePropsType) => {
+
 
     return (
         <div className={s.packsListPageContainer}>
@@ -61,8 +66,11 @@ const PacksListPage = ({
             </div>
 
             <div className={s.rightBlock}>
-
-                <AddNewPack/>
+                <h2>Packs list</h2>
+                <section className={s.input_button}>
+                    <Search searchOnChange={searchOnChange} searchValue={searchValue}/>
+                    <SuperButton onClick={addNewPack}>Add new pack</SuperButton>
+                </section>
                 <section className={s.table}>
                     <HeaderTable/>
                     {cardPacks.map(p => <TablePack key={p._id} id={p._id} myUserID={myUserID} user_id={p.user_id}

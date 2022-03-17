@@ -1,7 +1,7 @@
 import {
     changeNumberPageAC,
     getCardsTC,
-    PackResponseType,
+    PackResponseType, searchPackAC,
     setMaxMinNumberCardsAC,
     setPageCountAC,
 } from "../../../bll/reducers/packs-reducer";
@@ -10,9 +10,13 @@ import {useAppSelector} from "../../../bll/store";
 import PacksListPage from "./PacksListPage";
 import {useEffect, useState} from "react";
 import {useDebounce} from "../../../hooks/useDebounce";
+import {addNewPackTC} from "../../../bll/reducers/myPacks-reducer";
+import {useInput} from "../../../hooks/useInput";
 
 
 const PacksListPageContainer = () => {
+
+    const dispatch = useDispatch()
 
     const arrayNumbers = [4, 5, 6, 7, 8, 9, 10]
     const pageCount = useAppSelector<number>(state => state.packs.pageCount)
@@ -26,19 +30,20 @@ const PacksListPageContainer = () => {
 
     const [pack, setPack] = useState<'myPack' | 'allPack'>('myPack')
 
+    const search = useInput('', {minLength: 1})
+
+    const searchDebounce = useDebounce(search.value, 1500)
     const minDebounce = useDebounce(minCardsCount, 1000)
     const maxDebounce = useDebounce(maxCardsCount, 1000)
 
-
     useEffect(() => {
-        dispatch(getCardsTC(pack, pageCount, minCardsCount, maxCardsCount, page, myUserID))
-    }, [pageCount, minDebounce, maxDebounce, pack, page, myCardPacks])
+        dispatch(getCardsTC(pack, String(searchDebounce), pageCount, minCardsCount, maxCardsCount, page, myUserID))
+    }, [pageCount, minDebounce, maxDebounce, pack, page, myCardPacks, searchDebounce])
 
     const setValuesOnSlider = (value: number[]) => {
         dispatch(setMaxMinNumberCardsAC(value[0], value[1]))
-
     }
-    const dispatch = useDispatch()
+
 
     const changeNumberPage = (numberPage: number) => {
         dispatch(changeNumberPageAC(numberPage))
@@ -55,11 +60,18 @@ const PacksListPageContainer = () => {
         setPack('allPack')
     }
 
+    const addNewPack = () => {
+        dispatch(addNewPackTC('new Pack', false))
+    }
 
-    return <PacksListPage myUserID={myUserID} page={page} getMyPacks={getMyPacks} cardPacks={cardPacks} getAllPacks={getALlPacks}
+
+    return <PacksListPage myUserID={myUserID} page={page} getMyPacks={getMyPacks} cardPacks={cardPacks}
+                          getAllPacks={getALlPacks}
                           setPageCount={setPageCount} pageCount={pageCount} cardPacksTotalCount={cardPacksTotalCount}
                           maxCardsCount={maxCardsCount} minCardsCount={minCardsCount} arrayNumbers={arrayNumbers}
-                          changeNumberPage={changeNumberPage} setValuesOnSlider={setValuesOnSlider} pack={pack}/>
+                          changeNumberPage={changeNumberPage} setValuesOnSlider={setValuesOnSlider} pack={pack}
+                          addNewPack={addNewPack}
+                          searchValue={search.value} searchOnChange={search.onChange}/>
 }
 
 export default PacksListPageContainer

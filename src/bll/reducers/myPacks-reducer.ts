@@ -2,6 +2,7 @@ import {ActionType, DispatchType} from "../action-dispatchTypes";
 import {packsApi} from "../../dal/api/packs-api";
 import {getCardsTC, PackResponseType} from "./packs-reducer";
 import {Dispatch} from "redux";
+import {log} from "util";
 
 
 export type PacksResponseType = {
@@ -32,6 +33,7 @@ export const myPacksReducer = (state: PacksResponseType = initialState, action: 
         case "MY-PACKS/UPDATE-PACK":
             return {...state, cardPacks: state.cardPacks.filter(c => action.id === c._id && action.updatePack)}
 
+
         default:
             return state
     }
@@ -57,6 +59,8 @@ export const updatePackAC = (id: string, updatePack: PackResponseType) => {
         id, updatePack
     } as const
 }
+
+
 
 export const deletePackTC = (id: string) => async (dispatch: DispatchType) => {
     await packsApi.deletePack(id)

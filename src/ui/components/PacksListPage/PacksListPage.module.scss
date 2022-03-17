@@ -34,6 +34,12 @@
     padding: 20px;
     width: 100%;
 
+    .input_button {
+      display: flex;
+      width: 100%;
+      justify-content: space-between;
+    }
+
     .table {
       width: 100%;
     }
