@@ -26,7 +26,7 @@ const SignUp = () => {
     const passwordInputMode: InputFieldType = !password.isShow ? 'password' : 'text'
     const repeatPasswordInputMode: InputFieldType = !repeatPassword.isShow ? 'password' : 'text'
     const formIsValid = !!(email.value && !email.error && !password.error && !repeatPassword.error)
-    const registerBtnClass = `${s.registerBtn} ${!formIsValid && s.btn_not_allowed}`
+    const registerBtnClass = `${s.registerBtn} ${!formIsValid ? s.btn_not_allowed : null}`
 
     useEffect(() => {
         if (password.value === repeatPassword.value) {

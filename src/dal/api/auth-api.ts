@@ -26,7 +26,10 @@ export const authApi = {
         return instance.post<RegisterResponseType>(`auth/register`, {email, password})
     },
     forgot(email: string, fromEmail: string, message: string) {
-        return instance.post<RegisterResponseType>(`auth/forgot`, {email, fromEmail, message})
+        return instance.post<ForgotResponseType>(`auth/forgot`, {email, fromEmail, message})
+    },
+    newPass(password: string, token: string) {
+        return instance.post<newPassResponseType>(`auth/set-new-password`, {password, resetPasswordToken: token})
     }
 }
 
@@ -70,3 +73,11 @@ export type SingInResponseType = {
     rememberMe: boolean;
     error?: string;
 }
+
+type ForgotResponseType = {
+    info: string
+    error: string
+    in: string
+}
+
+type newPassResponseType = {}

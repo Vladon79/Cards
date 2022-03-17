@@ -23,6 +23,8 @@ const Header = () => {
                          className={({isActive}) => (isActive ? s.linkActive : s.link)}/>
                 <NavLink children={'Forgot pass'} to={'/forgotPass'}
                          className={({isActive}) => (isActive ? s.linkActive : s.link)}/>
+                <NavLink children={'New pass'} to={'/newPass'}
+                        className={({isActive}) => (isActive ? s.linkActive : s.link)}/>
                 <NavLink children={'Profile'} to={'/profile'}
                          className={({isActive}) => (isActive ? s.linkActive : s.link)}/>
                 <NavLink children={'Error'} to={'/error'}

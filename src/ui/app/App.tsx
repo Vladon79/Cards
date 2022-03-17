@@ -48,7 +48,9 @@ const App = () => {
                         <Route path="/signup" element={<SignUp/>}/>
                         <Route path="/forgotPass" element={<ForgotPass/>}/>
                         <Route path="/checkEmail" element={<CheckEmail/>}/>
-                        <Route path="/newPass" element={<NewPass/>}/>
+                        <Route path="/newPass" element={<NewPass/>}>
+                            <Route path=":token" element={<NewPass/>}/>
+                        </Route>
                         <Route path="/error" element={<ErrorPage/>}/>
                         <Route path="/profile" element={<ProfilePage/>}/>
                         <Route path="/test" element={<TestPage/>}/>

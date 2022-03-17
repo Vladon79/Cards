@@ -20,13 +20,11 @@ export type UserType = {
 type StateType = {
     isAuth: boolean
     user: UserType
-    resetPasswordToken: string
-    tokenIsSent:boolean
+    tokenIsSent: boolean
 }
 
 const initialState: StateType = {
     isAuth: false,
-    resetPasswordToken: '',
     tokenIsSent: false,
     user: {
         _id: "0",
@@ -50,8 +48,6 @@ export const authReducer = (state: StateType = initialState, action: ActionType)
             return {...state, isAuth: false}
         case "AUTH/CHANGE-PROFILE":
             return {...state, user: {...state.user, name: action.name, avatar: action.avatar}}
-        case "AUTH/SET-TOKEN":
-            return {...state, resetPasswordToken: action.value}
         case "AUTH/SET-TOKEN-IS-SENT":
             return {...state, tokenIsSent: action.value}
         default:
@@ -79,12 +75,7 @@ export const changeProfileAC = (name: string, avatar: string) => {
     } as const
 }
 
-export const setTokenAC = (value: string) => {
-    return {
-        type: "AUTH/SET-TOKEN",
-        value
-    } as const
-}
+
 export const setTokenIsSentAC = (value: boolean) => {
     return {
         type: "AUTH/SET-TOKEN-IS-SENT",
@@ -120,16 +111,22 @@ export const changeProfileTC = (name: string, avatar: string) => async (dispatch
 export const setTokenTC = (email: string) => async (dispatch: DispatchType) => {
     const message = "\n<div style=\"background-color: lime; padding: 15px\">\npassword recovery link: \n<a href='http://localhost:3000/#/set-new-password/$token$'>link</a>\n</div>\n"
     try {
-        dispatch(toggleIsFetchingAC(true))
         await authApi.forgot(email, 'Password reset', message)
         dispatch(setTokenIsSentAC(true))
-    }
-    catch (err) {
+    } catch (err) {
         handleServerAppError(dispatch, err)
-    }
-    finally {
+    } finally {
         dispatch(toggleIsFetchingAC(false))
     }
+}
 
 
+export const setNewPass = (password: string, token: string) => async (dispatch: DispatchType) => {
+    dispatch(toggleIsFetchingAC(true))
+    try {
+        await authApi.newPass(password, token)
+    } catch (err) {
+    } finally {
+        dispatch(toggleIsFetchingAC(false))
+    }
 }

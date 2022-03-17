@@ -28,7 +28,7 @@ const SignIn = () => {
     const singInData = {email: email.value, password: password.value, rememberMe: rememberMe.isChecked}
     const passwordInputMode: InputFieldType = !password.isShow ? 'password' : 'text'
     const formIsValid = !!(email.value && !email.error && !password.error)
-    const signInBtnClass = `${s.sign_in_btn} ${!formIsValid && s.btn_not_allowed}`
+    const signInBtnClass = `${s.sign_in_btn} ${!formIsValid ? s.btn_not_allowed : null}`
 
     const signInBtnClickHandler = () => {
         dispatch(singInTC(singInData))
