@@ -1,6 +1,4 @@
-import s from '../TablePack/TablePack.module.scss'
-
-
+import s from './HeaderTable.module.scss'
 
 const HeaderTable = () => {
     return (

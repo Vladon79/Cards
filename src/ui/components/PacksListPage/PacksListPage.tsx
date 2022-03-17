@@ -60,13 +60,21 @@ const PacksListPage = ({
                                  onClick={getAllPacks}>All</SuperButton>
                 </section>
                 <h6>Number of cards</h6>
-                <span>{minCardsCount}</span>
-                <SuperDoubleRange onChangeRange={setValuesOnSlider}
-                                  value={[minCardsCount, maxCardsCount]}
-                                  min={minCardsCount}
-                                  max={100}
-                />
-                <span>{maxCardsCount}</span>
+                <div className={s.superRange_span_block}>
+                    <span className={s.span}>{minCardsCount}</span>
+                    <div className={s.superRange}>
+                        <SuperDoubleRange
+                            onChangeRange={setValuesOnSlider}
+                            value={[minCardsCount, maxCardsCount]}
+                            min={minCardsCount}
+                            max={100}
+
+                        />
+                    </div>
+
+                    <span className={s.span}>{maxCardsCount}</span>
+                </div>
+
             </div>
 
             <div className={s.rightBlock}>
