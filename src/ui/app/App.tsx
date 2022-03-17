@@ -17,6 +17,7 @@ import {CheckEmail} from "../features/Login/CheckEmail/CheckEmail";
 import {NewPass} from "../features/Login/NewPass/NewPass";
 import PacksListPage from "../components/PacksListPage/PacksListPage";
 import ForgotPass from "../features/Login/ForgotPass/ForgotPass";
+import PacksListPageContainer from "../components/PacksListPage/PacksListPageContainer";
 
 
 const App = () => {
@@ -52,7 +53,7 @@ const App = () => {
                         <Route path="/profile" element={<ProfilePage/>}/>
                         <Route path="/test" element={<TestPage/>}/>
                         <Route path="/profileSettings" element={<ProfileSettings/>}/>
-                        <Route path="/packsList" element={<PacksListPage/>}/>
+                        <Route path="/packsList" element={<PacksListPageContainer/>}/>
                     </Routes>
                 </div>
             }

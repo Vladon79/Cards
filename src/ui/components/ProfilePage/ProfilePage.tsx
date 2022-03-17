@@ -14,7 +14,6 @@ const ProfilePage = () => {
     const navigate = useNavigate()
 
 
-
     const profileSettings = () => {
         navigate("/profileSettings")
     }
@@ -32,9 +31,10 @@ const ProfilePage = () => {
                 <p>email: {user.email}</p>
                 <p> public Card Packs Count: {user.publicCardPacksCount}</p>
                 <p>nik name:{user.name}</p>
-                <div className={s.button_block}>
-                    <SuperButton onClick={profileSettings}>Edit profile</SuperButton>
-                </div>
+            </div>
+            <div className={s.button_block}>
+                <SuperButton onClick={profileSettings}>Edit profile</SuperButton>
+                <SuperButton onClick={() => navigate('/packsList')}>Packs list</SuperButton>
             </div>
         </section>
     )

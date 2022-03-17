@@ -1,0 +1,6 @@
+@import "./src/styles/sass/variables";
+@import "./src/styles/sass/mixins";
+
+.pack {
+    @include tableBlock()
+}
