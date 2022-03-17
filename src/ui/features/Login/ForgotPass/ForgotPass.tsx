@@ -8,7 +8,7 @@ import ErrorBar from "../../../common/ErrorBar/ErrorBar";
 import {useAppSelector} from "../../../../bll/store";
 import {useDispatch} from "react-redux";
 import Preloader from "../../../common/Preloader/Preloader";
-import {setTokenTC} from "../../../../bll/reducers/auth-reducer";
+import {sendTokenTC} from "../../../../bll/reducers/auth-reducer";
 
 
 const ForgotPass = () => {
@@ -16,16 +16,15 @@ const ForgotPass = () => {
     const responseError = useAppSelector<null | string>(state => state.app.error)
     const isLoggedIn = useAppSelector<boolean>(state => state.auth.isAuth)
     const isFetching = useAppSelector<boolean>(state => state.app.isFetching)
-    const tokenIsSent = useAppSelector<boolean>(state => state.auth.tokenIsSent)
+    const sentPassword = useAppSelector<string>(state => state.auth.sentPassword)
     const dispatch = useDispatch()
     const navigate = useNavigate()
     const email = useInput('', ['isEmail', 'isEmpty'])
     const formIsValid = email.value && !email.error
     const sendInstructionsBtnClass = `${s.btn_send_instructions} ${!formIsValid && s.btn_not_allowed}`
 
-
     const handleForgotBtn = () => {
-        dispatch(setTokenTC(email.value))
+        dispatch(sendTokenTC(email.value))
     }
     const handleForgotLink = () => {
         navigate('/signin')
@@ -34,8 +33,8 @@ const ForgotPass = () => {
     if (isLoggedIn) {
         return <Navigate to={'/profile'}/>
     }
-    if (tokenIsSent) {
-        return <Navigate to={'/newPass'}/>
+    if (sentPassword) {
+        return <Navigate to={'/checkEmail'}/>
     }
 
     return (

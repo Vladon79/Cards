@@ -28,11 +28,10 @@ export const authApi = {
     forgot(email: string, fromEmail: string, message: string) {
         return instance.post<ForgotResponseType>(`auth/forgot`, {email, fromEmail, message})
     },
-    newPass(password: string, token: string) {
+    newPass(password: string, token: string | undefined) {
         return instance.post<newPassResponseType>(`auth/set-new-password`, {password, resetPasswordToken: token})
     }
 }
-
 type RegisterResponseType = {
     addedUser: AddedUserType
     created: string

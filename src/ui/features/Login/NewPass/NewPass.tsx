@@ -24,7 +24,9 @@ export const NewPass = () => {
     const passwordInputMode: InputFieldType = !password.isShow ? 'password' : 'text'
     const formIsValid = !!(password.value && !password.error)
     const createPassBtnClass = `${s.createPassBtn} ${!formIsValid ? s.btn_not_allowed : null}`
-    const token = params.token ? params.token: ''
+    const token = params.token
+
+    console.log(token)
 
     const handleCreatePassBtn = () => {
     dispatch(setNewPass(password.value, token))
@@ -41,7 +43,6 @@ export const NewPass = () => {
         return <Navigate to={'/signin'}/>
     }
 
-
     return (
         <section className={s.main_box}>
             {isFetching
@@ -53,8 +54,6 @@ export const NewPass = () => {
                     <div className={s.logo_text}>It-incubator</div>
                     <div className={s.create_pass_text}>Create new password</div>
                 </div>
-
-
                 <div className={s.input_box_form}>
                     {responseError && <ErrorBar/>}
                     <AuthPassField
