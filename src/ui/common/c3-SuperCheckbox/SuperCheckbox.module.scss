@@ -2,7 +2,6 @@
 @import './src/styles/sass/mixins.scss';
 
 
-
 .checkboxLabel input[type='checkbox'] {
   position: absolute;
   width: 1px;
@@ -14,13 +13,13 @@
   display: flex;
   align-items: center;
   position: relative;
-  @include text(17px, 500, $textColor, 1.2)
+  @include text(14px, 500, $authTextColor, 1.2)
 }
 
 .checkboxLabel span::before {
   content: '';
-  width: 25px;
-  height: 25px;
+  width: 17px;
+  height: 17px;
   border: 1px solid $primaryColor;
   display: inline-block;
   margin-right: 10px;
@@ -33,11 +32,10 @@
   left: 1px;
   top: 50%;
   transform: translateY(-50%);
-  width: 25px;
-  height: 25px;
+  width: 17px;
+  height: 17px;
   background: url('https://img.icons8.com/material/344/checkmark--v1.png') no-repeat;
-  background-size: 25px 25px;
-  background-color: $primaryColor;
+  background-size: 17px 17px;
   opacity: 0;
 }
 

@@ -2,10 +2,10 @@ import {useState} from "react";
 
 export const useCheckBox = (initialValue: boolean) => {
 
-    const [isDone, setIsDone] = useState(initialValue)
+    const [isChecked, setIsChecked] = useState(initialValue)
 
-    const handleCheckedChange = (e: boolean) => {
-        setIsDone(e)
+    const toggleChecked = () => {
+        setIsChecked(!isChecked)
     }
-    return {isDone, handleCheckedChange}
+    return {isChecked, toggleChecked}
 }

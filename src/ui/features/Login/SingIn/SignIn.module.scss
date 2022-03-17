@@ -89,6 +89,7 @@
 .sign_in_btn {
   width: 266px;
 }
+
 .sign_in_btn:hover {
   cursor: pointer;
 }
@@ -99,5 +100,13 @@
 
 .input_error {
   margin-left: 33px;
-  color:red;
+  color: red;
 }
+
+.sign_in_checkbox_box {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 20px;
+  margin-right: 80px;
+}
+

@@ -14,8 +14,6 @@ const ProfileSettings = () => {
     const userName = useAppSelector<string>(state => state.auth.user.name)
     const userAva = useAppSelector<string>(state => state.auth.user.avatar ? state.auth.user.avatar : image)
 
-/*    const name = useInput(userName, ['isEmpty', 'minLength': 2])
-    const ava = useInput(userAva, ['isEmpty', 'minLength': 2]) */
     const name = useInput(userName, ['isEmpty', 'minLength'])
     const ava = useInput(userAva, ['isEmpty', 'minLength'])
 
