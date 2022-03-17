@@ -2,7 +2,6 @@ import SuperButton from "../../common/c2-SuperButton/SuperButton";
 import {PackResponseType,} from "../../../bll/reducers/packs-reducer";
 import HeaderTable from "./HeaderTable/HeaderTable";
 import SuperSelect from "../../common/SuperComponents/SuperSelect";
-
 import TablePack from "./TablePack/TablePack";
 import Paginator from "../../common/Paginator/Paginator";
 import s from './PacksListPage.module.scss'

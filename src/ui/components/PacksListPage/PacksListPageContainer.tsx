@@ -1,7 +1,7 @@
 import {
     changeNumberPageAC,
     getCardsTC,
-    PackResponseType, searchPackAC,
+    PackResponseType,
     setMaxMinNumberCardsAC,
     setPageCountAC,
 } from "../../../bll/reducers/packs-reducer";
@@ -30,10 +30,9 @@ const PacksListPageContainer = () => {
     const myUserID = useAppSelector<string>(state => state.auth.user._id)
 
 
-
     const [pack, setPack] = useState<'myPack' | 'allPack'>('myPack')
 
-    const search = useInput('', {minLength: 1})
+    const search = useInput('', [])
 
     const searchDebounce = useDebounce(search.value, 1500)
     const minDebounce = useDebounce(minCardsCount, 1000)
@@ -74,7 +73,7 @@ const PacksListPageContainer = () => {
                           maxCardsCount={maxCardsCount} minCardsCount={minCardsCount} arrayNumbers={arrayNumbers}
                           changeNumberPage={changeNumberPage} setValuesOnSlider={setValuesOnSlider} pack={pack}
                           addNewPack={addNewPack}
-                          searchValue={search.value} searchOnChange={search.onChange}/>
+                          searchValue={search.value} searchOnChange={search.valueChange}/>
 }
 
 export default PacksListPageContainer

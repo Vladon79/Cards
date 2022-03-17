@@ -1,5 +1,5 @@
-import { Slider } from '@mui/material'
-import React, { ChangeEvent } from 'react'
+import Slider from '@mui/material/Slider/Slider'
+import React from 'react'
 import s from './SuperDoubleRange.module.scss'
 
 type SuperDoubleRangePropsType = {
@@ -20,8 +20,7 @@ const SuperDoubleRange: React.FC<SuperDoubleRangePropsType> = (
 
     const onChangeCallback = (event: Event, value: number | number[], activeThumb: number) => {
         if (typeof value === 'number') {
-        }
-        else {
+        } else {
             onChangeRange && onChangeRange(value)
         }
     }
