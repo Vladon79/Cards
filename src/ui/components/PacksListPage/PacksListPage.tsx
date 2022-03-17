@@ -2,11 +2,12 @@ import SuperButton from "../../common/c2-SuperButton/SuperButton";
 import {PackResponseType,} from "../../../bll/reducers/packs-reducer";
 import HeaderTable from "./HeaderTable/HeaderTable";
 import SuperSelect from "../../common/SuperComponents/SuperSelect";
-import SuperDoubleRange from "../../common/SuperComponents/SuperDoubleRange";
+
 import TablePack from "./TablePack/TablePack";
 import Paginator from "../../common/Paginator/Paginator";
 import s from './PacksListPage.module.scss'
 import Search from "./Search/SearchInput";
+import SuperDoubleRange from "../../common/SuperComponents/SuperDoubleRange";
 
 type PacksListPagePropsType = {
     pageCount: number
@@ -26,6 +27,7 @@ type PacksListPagePropsType = {
     addNewPack: () => void
     searchOnChange: (e: string) => void
     searchValue: string
+
 
 }
 
@@ -58,11 +60,13 @@ const PacksListPage = ({
                                  onClick={getAllPacks}>All</SuperButton>
                 </section>
                 <h6>Number of cards</h6>
+                <span>{minCardsCount}</span>
                 <SuperDoubleRange onChangeRange={setValuesOnSlider}
                                   value={[minCardsCount, maxCardsCount]}
                                   min={minCardsCount}
-                                  max={maxCardsCount}
+                                  max={100}
                 />
+                <span>{maxCardsCount}</span>
             </div>
 
             <div className={s.rightBlock}>

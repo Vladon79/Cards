@@ -16,6 +16,7 @@ export type PackResponseType = {
 export type PacksResponseType = {
     cardPacks: PackResponseType []
     cardPacksTotalCount: number// количество колод
+    startMaxCount:number
     maxCardsCount: number
     minCardsCount: number
     page: number// выбранная страница
@@ -35,6 +36,7 @@ const initialState = {
         },
     ],
     cardPacksTotalCount: 14,
+    startMaxCount: 100,
     maxCardsCount: 100,
     minCardsCount: 0,
     page: 1,
@@ -44,7 +46,7 @@ const initialState = {
 export const packsReducer = (state: PacksResponseType = initialState, action: ActionType): PacksResponseType => {
     switch (action.type) {
         case "PACKS/GET-PACKS":
-            return {...state, cardPacks: action.cardPacks, cardPacksTotalCount: action.totalCount}
+            return {...state, cardPacks: action.cardPacks, cardPacksTotalCount: action.totalCount, startMaxCount:action.maxCardsCount}
         case "PACKS/CHANGE-NUMBER-PACKS":
             return {...state, page: action.numberPage}
         case "PACKS/SET-MAX-MIN-CARDS":
@@ -61,10 +63,10 @@ export const packsReducer = (state: PacksResponseType = initialState, action: Ac
     }
 }
 
-export const getPacksAC = (cardPacks: PackResponseType [], totalCount: number) => {
+export const getPacksAC = (cardPacks: PackResponseType [], totalCount: number, maxCardsCount:number) => {
     return {
         type: "PACKS/GET-PACKS",
-        cardPacks, totalCount
+        cardPacks, totalCount, maxCardsCount
     } as const
 }
 
@@ -101,7 +103,7 @@ export const getCardsTC = (pack: 'myPack' | 'allPack', packName?: string, cardPa
         //  dispatch(toggleIsFetchingAC(true))
         const res = await packsApi.getCards(cardPacksTotalCount, packName, min, max, page, user_id)
         try {
-            dispatch(getPacksAC(res.data.cardPacks, res.data.cardPacksTotalCount))
+            dispatch(getPacksAC(res.data.cardPacks, res.data.cardPacksTotalCount, res.data.maxCardsCount))
         } catch (e) {
 
         } finally {
@@ -113,7 +115,7 @@ export const getCardsTC = (pack: 'myPack' | 'allPack', packName?: string, cardPa
         //  dispatch(toggleIsFetchingAC(true))
         const res = await packsApi.getCards(cardPacksTotalCount, packName, min, max, page)
         try {
-            dispatch(getPacksAC(res.data.cardPacks, res.data.cardPacksTotalCount))
+            dispatch(getPacksAC(res.data.cardPacks, res.data.cardPacksTotalCount, res.data.maxCardsCount))
 
         } catch (e) {
 

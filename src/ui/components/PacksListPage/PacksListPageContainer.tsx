@@ -26,7 +26,10 @@ const PacksListPageContainer = () => {
     const page = useAppSelector<number>(state => state.packs.page)
     const minCardsCount = useAppSelector<number>(state => state.packs.minCardsCount)
     const maxCardsCount = useAppSelector<number>(state => state.packs.maxCardsCount)
+
     const myUserID = useAppSelector<string>(state => state.auth.user._id)
+
+
 
     const [pack, setPack] = useState<'myPack' | 'allPack'>('myPack')
 
