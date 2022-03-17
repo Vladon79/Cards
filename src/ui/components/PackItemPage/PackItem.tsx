@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react';
 import {useAppSelector} from "../../../bll/store";
 import {
     changeNumberPageAC,
+    getPackItemTC,
     PackItemResponseType,
     PackItemType,
     setCardsCountAC,
@@ -52,10 +53,9 @@ const PackItem = () => {
 
     const packItem = useAppSelector<PackItemResponseType>(state => state.packItem)
     const cards = useAppSelector<PackItemType[]>(state => state.packItem.cards)
-    //const packItemId = useAppSelector<string>(state => state.packItemId.packItemId)
+    const packItemId = useAppSelector<string>(state => state.packItemId.packItemId)
     const pageCount = useAppSelector<number>(state => state.packItem.pageCount)
     const myUserID = useAppSelector<string>(state => state.auth.user._id)
-
 
     const dispatch = useDispatch()
     const navigate = useNavigate()
@@ -64,10 +64,10 @@ const PackItem = () => {
     // const minGradeDebounce = useDebounce(packItem.minGrade, 1000)
     // const maxGradeDebounce = useDebounce(packItem.maxGrade, 1000)
 
-    const nuller = cards.length === 0
+    const NO_CARDS = cards.length === 0
 
     useEffect(() => {
-        // dispatch(getPackItemTC(packItemId))
+        //dispatch(getPackItemTC(packItemId))
     }, [])
 
     const handleBackToPackList = () => {
@@ -102,8 +102,8 @@ const PackItem = () => {
                         value={[packItem.minGrade, packItem.maxGrade]}
                         min={packItem.minGrade}
                         max={packItem.maxGrade}/></div>
-                {nuller && <h1>Not found cards</h1>}
-                {!nuller &&
+                {NO_CARDS && <h1>Not found cards</h1>}
+                {!NO_CARDS &&
                 <div className={s.rightBlock}>
                     <section className={s.table}>
                         <TablePackItem/>

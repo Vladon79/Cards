@@ -1,4 +1,4 @@
-import s from './Card.module.scss'
+import s from '../TablePackItem/TablePackItem.module.scss'
 import {useAppSelector} from "../../../../bll/store";
 import SuperInputText from "../../../common/c1-SuperInputText/SuperInputText";
 import {useState} from "react";
@@ -33,16 +33,17 @@ const Card = ({id, userId, question, answer, updated, create, grade}: CardType) 
                 ? <SuperInputText name={'Ava'} value={newQuestion.value}
                                   onChange={e => newQuestion.onChange(e.currentTarget.value)} autoFocus
                                   onBlur={() => UpdateQuestion(false)}/>
-                : <p onDoubleClick={() => UpdateQuestion(true)} className={s.pack_block_name}>{newQuestion.value}</p>}
+                : <p onDoubleClick={() => UpdateQuestion(true)} className={s.pack_block_question}>{newQuestion.value}</p>}
             {updateAnswer && userId === myUserID
                 ? <SuperInputText name={'Ava'} value={newAnswer.value}
                                   onChange={e => newAnswer.onChange(e.currentTarget.value)} autoFocus
                                   onBlur={() => UpdateAnswer(false)}/>
-                : <p onDoubleClick={() => UpdateAnswer(true)} className={s.pack_block_name}>{newAnswer.value}</p>}
+                : <p onDoubleClick={() => UpdateAnswer(true)} className={s.pack_block_answer}>{newAnswer.value}</p>}
             <p className={s.pack_block_update}>{updated}</p>
             <p className={s.pack_block_createdBy}>{create}</p>
-            <p className={s.pack_block_createdBy}>{grade}</p>
-            {userId === myUserID && <RefactorMyCard _id={id} newQuestion={newQuestion.value} newAnswer={newAnswer.value}/>}
+            <p className={s.pack_block_grade}>{grade}</p>
+            {userId === myUserID && <p className={s.pack_block_action}>
+            <RefactorMyCard _id={id} newQuestion={newQuestion.value} newAnswer={newAnswer.value}/></p>}
         </div>
     )
 }
