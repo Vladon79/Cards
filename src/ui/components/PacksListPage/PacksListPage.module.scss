@@ -32,11 +32,15 @@
     }
 
     .superRange_span_block {
+      display: flex;
+      justify-content: space-evenly;
+
       span {
         color: $primaryColor;
       }
 
       .span {
+        width: 10px;
         @include text(16px, 600, $authTextColor, 1.2)
       }
 
