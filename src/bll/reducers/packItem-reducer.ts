@@ -23,7 +23,7 @@ export type PackItemResponseType = {
     page: number
     pageCount: number
     packUserId: string
-    preLoader: boolean
+
 }
 
 const initialState: PackItemResponseType = {
@@ -41,13 +41,11 @@ const initialState: PackItemResponseType = {
         },
     ],
     cardsTotalCount: 3,
-    maxGrade: 4.987525071790364,
-    minGrade: 2.0100984354076568,
+    maxGrade: 6,
+    minGrade: 0,
     page: 1,
     pageCount: 4,
     packUserId: "5eecf82a3ed8f700042f1186",
-    preLoader: false
-
 }
 
 
@@ -55,7 +53,12 @@ export const packItemReducer = (state: PackItemResponseType = initialState, acti
     switch (action.type) {
         case "PACK-ITEM/GET-CARD":
             return action.packItem
-
+        case "PACK-ITEM/SET-MAX-MIN-GRADE":
+            return {...state, minGrade: action.min, maxGrade: action.max}
+        case "PACKS/SET-PAGE-COUNT":
+            return {...state, pageCount: action.pageCount}
+        case "PACKS/CHANGE-NUMBER-PACKS":
+            return {...state, page: action.numberPage}
         default:
             return state
     }
@@ -68,11 +71,34 @@ export const getPackItemAC = (packItem: PackItemResponseType) => {
     } as const
 }
 
+export const setMaxMinGradeAC = (min: number, max: number) => {
+    return {
+        type: "PACK-ITEM/SET-MAX-MIN-GRADE",
+        max, min
+    } as const
+}
 
-export const getPackItemTC = ( cardsPack_id:string) => (dispatch: Dispatch) => {
+export const setCardsCountAC = (cardsCount: number) => {
+    return {
+        type: "PACK-ITEM/SET-CARDS-COUNT",
+        cardsCount
+    } as const
+}
+
+export const changeNumberPageAC = (numberPage: number) => {
+    return {
+        type: "PACK-ITEM/CHANGE-NUMBER-PACKS",
+        numberPage
+    } as const
+}
+
+
+export const getPackItemTC = (cardsPack_id:string, cardAnswer?:string, cardQuestion?: string,  min?:number, max?:number, sortCards?:number, page?:number, pageCount?:number) => (dispatch: Dispatch) => {
+    debugger
     dispatch(toggleIsFetchingAC(true))
-    packItemApi.getCard( cardsPack_id )
+    packItemApi.getCard( cardsPack_id, cardAnswer, cardQuestion,  min, max, sortCards, page, pageCount  )
         .then(res => {
+            debugger
             dispatch(getPackItemAC(res.data))
                  })
         .catch(() => {

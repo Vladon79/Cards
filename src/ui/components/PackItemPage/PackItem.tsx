@@ -1,10 +1,23 @@
-import React, {useState} from 'react';
+import React, {useEffect} from 'react';
 import {useAppSelector} from "../../../bll/store";
-import {PackItemResponseType, PackItemType} from "../../../bll/reducers/packItem-reducer";
+import {
+    changeNumberPageAC, getPackItemTC,
+    PackItemResponseType,
+    PackItemType,
+    setCardsCountAC,
+    setMaxMinGradeAC
+} from "../../../bll/reducers/packItem-reducer";
 import Card from './Card/Card';
 import TablePackItem from './TablePackItem/TablePackItem';
 import {useNavigate} from "react-router-dom";
 import SuperButton from "../../common/c2-SuperButton/SuperButton";
+import s from "../PacksListPage/PacksListPage.module.scss";
+import SuperDoubleRange from "../../common/SuperComponents/SuperDoubleRange";
+import SuperSelect from "../../common/SuperComponents/SuperSelect";
+import Paginator from "../../common/Paginator/Paginator";
+import {useDispatch} from "react-redux";
+import {useDebounce} from "../../../hooks/useDebounce";
+
 
 type ResponsePackItem = {
     carts: CardsType[],
@@ -32,41 +45,73 @@ type CardsType = [
 
 
 const PackItem = () => {
-
+    console.log('hello')
+    const arrayNumbers = [4, 5, 6, 7, 8, 9, 10]
     const packItem = useAppSelector<PackItemResponseType>(state => state.packItem)
-    const card = useAppSelector<PackItemType[]>(state => state.packItem.cards)
+    const cards = useAppSelector<PackItemType[]>(state => state.packItem.cards)
+    const packItemId = useAppSelector<string>(state => state.packItemId.packItemId)
+    const pageCount = useAppSelector<number>(state => state.packItem.pageCount)
+    debugger
+    const dispatch = useDispatch()
     const navigate = useNavigate()
-    const nuller = card.length === 0
+    console.log(packItemId)
+
+    // const minGradeDebounce = useDebounce(packItem.minGrade, 1000)
+    // const maxGradeDebounce = useDebounce(packItem.maxGrade, 1000)
+
+    const nuller = cards.length === 0
+
+    useEffect(() => {
+        // dispatch(getPackItemTC(packItemId))
+    }, [])
 
     const handleBackToPackList = () => {
         navigate('/packsList')
     };
 
 
+    const setValuesOnSlider = (value: number[]) => {
+        dispatch(setMaxMinGradeAC(value[0], value[1]))
+    };
+
+    const setCardCount = (cardsCount: number) => {
+        dispatch(setCardsCountAC(cardsCount))
+    };
+
+    const changeNumberPage = (num: number) => {
+        dispatch(changeNumberPageAC(num))
+    };
+
     return (
-        <div>
-            <SuperButton onClick={handleBackToPackList}>Back to Pack List</SuperButton>
+        <div className={s.packsListPageContainer}>
+
+            <div className={s.leftBlock}>
+                <SuperButton onClick={handleBackToPackList}>Back to Pack List</SuperButton>
+                <h6>Number of cards</h6>
+                <SuperDoubleRange
+                    onChangeRange={setValuesOnSlider}
+                    value={[packItem.minGrade, packItem.maxGrade]}
+                    min={packItem.minGrade}
+                    max={packItem.maxGrade}/></div>
             {nuller && <h1>Not found cards</h1>}
-            {!nuller && <div>
-                <TablePackItem/>
-                {card.map(p => <Card key={p._id} question={p.question} answer={p.answer}
-                                     updated={p.updated} create={p.created} grade={p.grade}/>)}
-                {/*<SuperButton onClick={getCards}>getCards</SuperButton>*/}
-                {/*<SuperSelect options={numbers}*/}
-                {/*             value={pageCount}*/}
-                {/*             onChangeOption={setPageCount}/>*/}
-                {/*<SuperDoubleRange onChangeRange={setValuesOnSlider}*/}
-                {/*                  value={[minCardsCount, maxCardsCount]}*/}
-                {/*                  min={minCardsCount}*/}
-                {/*                  max={maxCardsCount}*/}
-                {/*/>*/}
-                {/*<Paginator totalUsersCount={cardPacksTotalCount} pageSize={pageCount}*/}
-                {/*           currentPage={page} onPageChange={changeNumberPage}/>*/}
+            {!nuller &&
+            <div className={s.rightBlock}>
+                <section className={s.table}>
+                    <TablePackItem/>
+                    {cards.map(p => <Card key={p._id} question={p.question} answer={p.answer}
+                                          updated={p.updated} create={p.created} grade={p.grade}/>)}
+                </section>
+
+                <SuperSelect options={arrayNumbers}
+                             value={pageCount}
+                             onChangeOption={(cardsCount) => setCardCount(cardsCount)}/>
+
+                <Paginator totalCount={packItem.cardsTotalCount} pageSize={packItem.pageCount}
+                           currentPage={packItem.page}
+                           changeNumberPage={(num) => changeNumberPage(num)} portionSize={10}/>
             </div>}
-
-
         </div>
     );
 };
 
-export default PackItem;
+export default React.memo(PackItem);

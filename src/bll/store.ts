@@ -9,6 +9,7 @@ import {packsReducer} from "./reducers/packs-reducer";
 import {myPacksReducer} from "./reducers/myPacks-reducer";
 
 import {packItemReducer} from "./reducers/packItem-reducer";
+import {packIdReducer} from "./reducers/packId-reducer";
 
 const reducers = combineReducers({
     auth: authReducer,
@@ -16,6 +17,7 @@ const reducers = combineReducers({
     singIn: singInReducer,
     signUp: singUpReducer,
     packItem:packItemReducer,
+    packItemId: packIdReducer,
     packs: packsReducer,
     myPacks:myPacksReducer
 })

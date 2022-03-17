@@ -5,8 +5,10 @@ import {useState} from "react";
 import SuperInputText from "../../../common/c1-SuperInputText/SuperInputText";
 import {useInput} from "../../../../hooks/useInput";
 import {useDispatch} from "react-redux";
-import {getPackItemTC} from "../../../../bll/reducers/packItem-reducer";
+
 import {useNavigate} from "react-router-dom";
+import {savePackItemIdAC} from "../../../../bll/reducers/packId-reducer";
+import {getPackItemTC} from "../../../../bll/reducers/packItem-reducer";
 
 type PackType = {
     id: string
@@ -24,7 +26,11 @@ const TablePack = ({id, user_id, name, cardsCount, user_name, updated, myUserID}
     const [update, setUpdate] = useState<boolean>(false)
     const newName = useInput(name, {minLength: 2})
 
+
     const handleClickLearn = (id:string) => {
+        debugger
+        console.log(id)
+        dispatch(savePackItemIdAC(id))
         dispatch(getPackItemTC(id))
         navigate('/packItem')
     };
