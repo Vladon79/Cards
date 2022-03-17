@@ -4,8 +4,9 @@ import {authMeAC, changeProfileAC, signOutAC} from "./reducers/auth-reducer";
 import {signUpAC} from "./reducers/sign-up-reducer";
 import {changeNumberPageAC, getPacksAC, setMaxMinNumberCardsAC, setPageCountAC} from "./reducers/packs-reducer";
 import {addPacksAC, deletePackAC, updatePackAC} from "./reducers/myPacks-reducer";
-import {getPackItemAC,  setCardsCountAC, setMaxMinGradeAC} from "./reducers/packItem-reducer";
-import { savePackItemIdAC } from "./reducers/packId-reducer";
+import {getPackItemAC, setCardsCountAC, setMaxMinGradeAC} from "./reducers/packItem-reducer";
+import {savePackItemIdAC} from "./reducers/packId-reducer";
+import {addNewCardAC, deleteCardAC, updateCardAC} from "./reducers/myCard-reducer";
 
 
 export type ActionType = ToggleIsFetchingACType
@@ -27,6 +28,10 @@ export type ActionType = ToggleIsFetchingACType
     | SetCardsCountAT
     | ChangeNumberPageAT
     | SavePackItemIdAT
+
+    | AddNewCardAT
+    | DeleteCardAT
+    | UpdateCardAT
 
 type ToggleIsFetchingACType = ReturnType<typeof toggleIsFetchingAC>;
 
@@ -55,6 +60,12 @@ export type SetMinMaxGradeAT = ReturnType<typeof setMaxMinGradeAC>
 export type SetCardsCountAT = ReturnType<typeof setCardsCountAC>
 export type ChangeNumberPageAT = ReturnType<typeof changeNumberPageAC>
 export type SavePackItemIdAT = ReturnType<typeof savePackItemIdAC>
+
+
+export type AddNewCardAT = ReturnType<typeof addNewCardAC>
+export type DeleteCardAT = ReturnType<typeof deleteCardAC>
+export type UpdateCardAT = ReturnType<typeof updateCardAC>
+
 
 export type DispatchType = Dispatch<ActionType>
 

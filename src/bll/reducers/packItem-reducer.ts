@@ -94,11 +94,11 @@ export const changeNumberPageAC = (numberPage: number) => {
 
 
 export const getPackItemTC = (cardsPack_id:string, cardAnswer?:string, cardQuestion?: string,  min?:number, max?:number, sortCards?:number, page?:number, pageCount?:number) => (dispatch: Dispatch) => {
-    debugger
+
     dispatch(toggleIsFetchingAC(true))
     packItemApi.getCard( cardsPack_id, cardAnswer, cardQuestion,  min, max, sortCards, page, pageCount  )
         .then(res => {
-            debugger
+
             dispatch(getPackItemAC(res.data))
                  })
         .catch(() => {

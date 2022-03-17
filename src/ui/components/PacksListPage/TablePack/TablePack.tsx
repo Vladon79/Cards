@@ -28,8 +28,6 @@ const TablePack = ({id, user_id, name, cardsCount, user_name, updated, myUserID}
 
 
     const handleClickLearn = (id:string) => {
-        debugger
-        console.log(id)
         dispatch(savePackItemIdAC(id))
         dispatch(getPackItemTC(id))
         navigate('/packItem')
