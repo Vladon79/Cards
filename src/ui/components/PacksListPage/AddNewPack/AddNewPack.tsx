@@ -9,7 +9,7 @@ import {addNewPackTC} from "../../../../bll/reducers/myPacks-reducer";
 const AddNewPack = () => {
     const [privateBoolean, setPrivateBoolean] = useState<boolean>(false)
     const dispatch = useDispatch()
-    const name = useInput('', {isEmpty: true, minLength: 2})
+    const name = useInput('', ['isEmpty', 'minLength'])
 
     const addNewPack = () => {
         dispatch(addNewPackTC(name.value, privateBoolean))
@@ -21,7 +21,7 @@ const AddNewPack = () => {
             <h2>Packs list</h2>
             <section className={s.input_button}>
                 <input placeholder={'🔍Search...'} className={s.input} name={'Name'} value={name.value}
-                                onChange={e => name.onChange(e.currentTarget.value)}/>
+                                onChange={e => name.valueChange(e.currentTarget.value)}/>
                 <SuperButton onClick={addNewPack}>Add new pack</SuperButton>
             </section>
 

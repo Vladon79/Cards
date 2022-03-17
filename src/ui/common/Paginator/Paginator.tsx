@@ -34,7 +34,7 @@ const Paginator = React.memo(({
     return (
         <div className={s.paginatorContainer}>
 
-            <SuperButton cancele={portionNumber < 2} disabled={portionNumber < 2} className={s.button}
+            <SuperButton cancel={portionNumber < 2} disabled={portionNumber < 2} className={s.button}
                          onClick={() => setPortionNumber(portionNumber - 1)}>prev</SuperButton>
 
             {pages
@@ -44,7 +44,7 @@ const Paginator = React.memo(({
                                 onClick={() => changeNumberPage(p)}>{p}</span>
                 )}
 
-            <SuperButton cancele={portionCount == portionNumber} disabled={portionCount == portionNumber} className={s.button}
+            <SuperButton cancel={portionCount == portionNumber} disabled={portionCount == portionNumber} className={s.button}
                          onClick={() => setPortionNumber(portionNumber + 1)}>next</SuperButton>
 
         </div>
