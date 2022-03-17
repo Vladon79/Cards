@@ -44,7 +44,7 @@ const initialState: PackItemResponseType = {
     maxGrade: 6,
     minGrade: 0,
     page: 1,
-    pageCount: 4,
+    pageCount: 10,
     packUserId: "5eecf82a3ed8f700042f1186",
 }
 
@@ -55,9 +55,9 @@ export const packItemReducer = (state: PackItemResponseType = initialState, acti
             return action.packItem
         case "PACK-ITEM/SET-MAX-MIN-GRADE":
             return {...state, minGrade: action.min, maxGrade: action.max}
-        case "PACKS/SET-PAGE-COUNT":
-            return {...state, pageCount: action.pageCount}
-        case "PACKS/CHANGE-NUMBER-PACKS":
+        case "PACK-ITEM/SET-CARDS-COUNT":
+            return {...state, pageCount: action.cardsCount}
+        case  "PACK-ITEM/CHANGE-NUMBER-CARDS":
             return {...state, page: action.numberPage}
         default:
             return state
@@ -85,15 +85,15 @@ export const setCardsCountAC = (cardsCount: number) => {
     } as const
 }
 
-export const changeNumberPageAC = (numberPage: number) => {
+export const changeNumberPageCardsAC = (numberPage: number) => {
     return {
-        type: "PACK-ITEM/CHANGE-NUMBER-PACKS",
+        type: "PACK-ITEM/CHANGE-NUMBER-CARDS",
         numberPage
     } as const
 }
 
 
-export const getPackItemTC = (cardsPack_id:string, cardAnswer?:string, cardQuestion?: string,  min?:number, max?:number, sortCards?:number, page?:number, pageCount?:number) => (dispatch: Dispatch) => {
+export const getPackItemTC = (cardsPack_id:string,  page?:number, pageCount?:number,cardAnswer?:string, cardQuestion?: string,  min?:number, max?:number, sortCards?:number,) => (dispatch: Dispatch) => {
     dispatch(toggleIsFetchingAC(true))
     packItemApi.getCard( cardsPack_id, cardAnswer, cardQuestion,  min, max, sortCards, page, pageCount  )
         .then(res => {

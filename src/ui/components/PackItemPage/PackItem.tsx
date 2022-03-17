@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {useAppSelector} from "../../../bll/store";
 import {
-    changeNumberPageAC,
+    changeNumberPageCardsAC,
     getPackItemTC,
     PackItemResponseType,
     PackItemType,
@@ -18,31 +18,7 @@ import SuperSelect from "../../common/SuperComponents/SuperSelect";
 import Paginator from "../../common/Paginator/Paginator";
 import {useDispatch} from "react-redux";
 import WindowForAddNewCard from "./WindowForAddNewCard/windowForAddNewCard";
-
-
-type ResponsePackItem = {
-    carts: CardsType[],
-    cardsTotalCount: number
-    maxGrade: number
-    minGrade: number
-    page: number
-    pageCount: number
-    packUserId: string
-}
-
-type CardsType = [
-    {
-        answer: string
-        question: string
-        cardsPack_id: string
-        grade: number
-        shots: number
-        user_id: string
-        created: string
-        updated: string
-        _id: string
-    }
-]
+import Preloader from "../../common/Preloader/Preloader";
 
 
 const PackItem = () => {
@@ -51,15 +27,16 @@ const PackItem = () => {
 
     const [showWindowAddNewCard, setShowWindowAddNewCard] = useState<boolean>(false)
 
+    const isFetching = useAppSelector<boolean>(state => state.app.isFetching)
     const packItem = useAppSelector<PackItemResponseType>(state => state.packItem)
     const cards = useAppSelector<PackItemType[]>(state => state.packItem.cards)
     const packItemId = useAppSelector<string>(state => state.packItemId.packItemId)
-    const pageCount = useAppSelector<number>(state => state.packItem.pageCount)
+    const pageCount = useAppSelector<number>(state => state.packItem.page)
+    const page = useAppSelector<number>(state => state.packItem.pageCount)
     const myUserID = useAppSelector<string>(state => state.auth.user._id)
 
     const dispatch = useDispatch()
     const navigate = useNavigate()
-
 
     // const minGradeDebounce = useDebounce(packItem.minGrade, 1000)
     // const maxGradeDebounce = useDebounce(packItem.maxGrade, 1000)
@@ -67,8 +44,9 @@ const PackItem = () => {
     const NO_CARDS = cards.length === 0
 
     useEffect(() => {
-        //dispatch(getPackItemTC(packItemId))
+       dispatch(getPackItemTC(packItemId))
     }, [])
+
 
     const handleBackToPackList = () => {
         navigate('/packsList')
@@ -84,18 +62,19 @@ const PackItem = () => {
     };
 
     const changeNumberPage = (num: number) => {
-        dispatch(changeNumberPageAC(num))
+        dispatch(changeNumberPageCardsAC(num))
     };
 
 
     return (
-        <>
+        <>  {isFetching && <Preloader/>}
             {showWindowAddNewCard && <WindowForAddNewCard setShowWindowAddNewCard={setShowWindowAddNewCard}/>}
-            {!showWindowAddNewCard &&
+            {  !showWindowAddNewCard &&
             <div className={s.packsListPageContainer}>
                 <div className={s.leftBlock}>
-                    <SuperButton onClick={handleBackToPackList}>Back to Pack List</SuperButton>
-                    {myUserID === packItem.packUserId && <SuperButton onClick={() => setShowWindowAddNewCard(true)}>Add New Card</SuperButton>}
+                        <SuperButton className={s.doubleButton} onClick={handleBackToPackList}>Back to Pack List</SuperButton>
+                        {myUserID === packItem.packUserId &&
+                        <SuperButton  className={s.doubleButton} onClick={() => setShowWindowAddNewCard(true)}>Add New Card</SuperButton>}
                     <h6>Number of cards</h6>
                     <SuperDoubleRange
                         onChangeRange={setValuesOnSlider}
@@ -119,14 +98,15 @@ const PackItem = () => {
 
                     <SuperSelect options={arrayNumbers}
                                  value={pageCount}
-                                 onChangeOption={(cardsCount) => setCardCount(cardsCount)}/>
+                                 onChangeOption={(pageCount) => setCardCount(Number(pageCount))}/>
 
                     <Paginator totalCount={packItem.cardsTotalCount} pageSize={packItem.pageCount}
-                               currentPage={packItem.page}
+                               currentPage={page}
                                changeNumberPage={(num) => changeNumberPage(num)} portionSize={10}/>
                 </div>}
             </div>
             }
+
         </>
     );
 };
