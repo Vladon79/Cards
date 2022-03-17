@@ -34,18 +34,15 @@ const Card = ({id, userId, question, answer, updated, create, grade}: CardType) 
                                   onChange={e => newQuestion.onChange(e.currentTarget.value)} autoFocus
                                   onBlur={() => UpdateQuestion(false)}/>
                 : <p onDoubleClick={() => UpdateQuestion(true)} className={s.pack_block_name}>{newQuestion.value}</p>}
-            {/*<p className={s.pack_block_name}>{question}</p>*/}
             {updateAnswer && userId === myUserID
                 ? <SuperInputText name={'Ava'} value={newAnswer.value}
                                   onChange={e => newAnswer.onChange(e.currentTarget.value)} autoFocus
                                   onBlur={() => UpdateAnswer(false)}/>
                 : <p onDoubleClick={() => UpdateAnswer(true)} className={s.pack_block_name}>{newAnswer.value}</p>}
-            {/*<p className={s.pack_block_answer}>{answer}</p>*/}
             <p className={s.pack_block_update}>{updated}</p>
             <p className={s.pack_block_createdBy}>{create}</p>
             <p className={s.pack_block_createdBy}>{grade}</p>
             {userId === myUserID && <RefactorMyCard _id={id} newQuestion={newQuestion.value} newAnswer={newAnswer.value}/>}
-
         </div>
     )
 }

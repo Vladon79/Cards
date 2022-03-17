@@ -9,7 +9,6 @@ const TablePackItem = () => {
             <p className={s.pack_block_update}>Last update</p>
             <p className={s.pack_block_createdBy}>Create by</p>
             <p className={s.pack_block_action}>Grade</p>
-
         </div>
     )
 }

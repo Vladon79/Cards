@@ -12,14 +12,10 @@ import TablePackItem from './TablePackItem/TablePackItem';
 import {useNavigate} from "react-router-dom";
 import SuperButton from "../../common/c2-SuperButton/SuperButton";
 import s from "../PacksListPage/PacksListPage.module.scss";
-import style from "../../features/Login/SingIn/SignIn.module.scss"
 import SuperDoubleRange from "../../common/SuperComponents/SuperDoubleRange";
 import SuperSelect from "../../common/SuperComponents/SuperSelect";
 import Paginator from "../../common/Paginator/Paginator";
 import {useDispatch} from "react-redux";
-import SuperInputText from "../../common/c1-SuperInputText/SuperInputText";
-import {useInput} from "../../../hooks/useInput";
-import {addNewCardTC} from "../../../bll/reducers/myCard-reducer";
 import WindowForAddNewCard from "./WindowForAddNewCard/windowForAddNewCard";
 
 
@@ -56,9 +52,9 @@ const PackItem = () => {
 
     const packItem = useAppSelector<PackItemResponseType>(state => state.packItem)
     const cards = useAppSelector<PackItemType[]>(state => state.packItem.cards)
-    const packItemId = useAppSelector<string>(state => state.packItemId.packItemId)
+    //const packItemId = useAppSelector<string>(state => state.packItemId.packItemId)
     const pageCount = useAppSelector<number>(state => state.packItem.pageCount)
-
+    const myUserID = useAppSelector<string>(state => state.auth.user._id)
 
 
     const dispatch = useDispatch()
@@ -99,7 +95,7 @@ const PackItem = () => {
             <div className={s.packsListPageContainer}>
                 <div className={s.leftBlock}>
                     <SuperButton onClick={handleBackToPackList}>Back to Pack List</SuperButton>
-                    <SuperButton onClick={() => setShowWindowAddNewCard(true)}>Add New Card</SuperButton>
+                    {myUserID === packItem.packUserId && <SuperButton onClick={() => setShowWindowAddNewCard(true)}>Add New Card</SuperButton>}
                     <h6>Number of cards</h6>
                     <SuperDoubleRange
                         onChangeRange={setValuesOnSlider}
