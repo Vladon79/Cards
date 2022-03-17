@@ -1,22 +1,12 @@
 import {Dispatch} from "redux";
+import {ActionType} from "../bll/action-dispatchTypes";
+import {setAppErrorAC} from "../bll/reducers/app-reducer";
 
 
-/*
-type HandleErrorType = --> all actions type
-*/
-
-
-/*export const handleServerNetworkError = (dispatch: Dispatch<HandleErrorType>, message: string) => {
-    dispatch(setAppErrorAC(message))
-}*/
-
-/*
-
-export const handleServerAppError = <T>(dispatch: Dispatch<HandleErrorType>, data: ResponseType<T>) => {
-    if (data.messages.length) {
-        dispatch(setAppErrorAC(data.messages[0]))
+export const handleServerAppError = (dispatch: Dispatch<ActionType>, err: any) => {
+    if (err.response.data.error) {
+        dispatch(setAppErrorAC(err.response.data.error))
     } else {
         dispatch(setAppErrorAC('Some error occurred'))
     }
 }
-*/

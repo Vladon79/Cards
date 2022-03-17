@@ -54,9 +54,9 @@ const PacksListPage = ({
             <div className={s.leftBlock}>
                 <h6>Show packs cards</h6>
                 <section className={s.buttonSection}>
-                    <SuperButton disabled={pack === 'myPack'} cancele={pack === 'myPack'} className={s.button}
+                    <SuperButton disabled={pack === 'myPack'} cancel={pack === 'myPack'} className={s.button}
                                  onClick={getMyPacks}>My</SuperButton>
-                    <SuperButton disabled={pack === 'allPack'} cancele={pack === 'allPack'} className={s.button}
+                    <SuperButton disabled={pack === 'allPack'} cancel={pack === 'allPack'} className={s.button}
                                  onClick={getAllPacks}>All</SuperButton>
                 </section>
                 <h6>Number of cards</h6>

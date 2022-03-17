@@ -17,13 +17,13 @@ type PackType = {
 
 const TablePack = ({id, user_id, name, cardsCount, user_name, updated, myUserID}: PackType) => {
     const [update, setUpdate] = useState<boolean>(false)
-    const newName = useInput(name, {minLength: 2})
+    const newName = useInput(name, ['minLength'])
 
     return (
         <div className={s.pack}>
             {update && user_id === myUserID
                 ? <SuperInputText name={'Ava'} value={newName.value}
-                                  onChange={e => newName.onChange(e.currentTarget.value)} autoFocus
+                                  onChange={e => newName.valueChange(e.currentTarget.value)} autoFocus
                                   onBlur={() => setUpdate(false)}/>
                 : <p onDoubleClick={() => setUpdate(true)} className={s.pack_block_name}>{newName.value}</p>}
             <p className={s.pack_block_cards}>{cardsCount}</p>

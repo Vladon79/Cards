@@ -1,8 +1,7 @@
 import {toggleIsFetchingAC} from "./app-reducer";
-
 import {ActionType, DispatchType} from "../action-dispatchTypes";
-import { authApi } from "../../dal/api/auth-api";
-import {signUpAC} from "./sign-up-reducer";
+import {authApi} from "../../dal/api/auth-api";
+import {handleServerAppError} from "../../utils/error-utils";
 
 export type UserType = {
     _id: string;
@@ -21,10 +20,14 @@ export type UserType = {
 type StateType = {
     isAuth: boolean
     user: UserType
+    tokenIsSent: boolean
+    sentPassword: string
 }
 
 const initialState: StateType = {
     isAuth: false,
+    tokenIsSent: false,
+    sentPassword: '',
     user: {
         _id: "0",
         email: "fake",
@@ -47,6 +50,10 @@ export const authReducer = (state: StateType = initialState, action: ActionType)
             return {...state, isAuth: false}
         case "AUTH/CHANGE-PROFILE":
             return {...state, user: {...state.user, name: action.name, avatar: action.avatar}}
+        case "AUTH/SET-TOKEN-IS-SENT":
+            return {...state, tokenIsSent: action.value}
+        case "AUTH/SET-SENT-PASS":
+            return {...state, sentPassword: action.value}
         default:
             return state
     }
@@ -69,6 +76,21 @@ export const changeProfileAC = (name: string, avatar: string) => {
     return {
         type: "AUTH/CHANGE-PROFILE",
         name, avatar
+    } as const
+}
+
+
+export const setTokenIsSentAC = (value: boolean) => {
+    return {
+        type: "AUTH/SET-TOKEN-IS-SENT",
+        value
+    } as const
+}
+
+export const setSentPassAC = (value: string) => {
+    return {
+        type: "AUTH/SET-SENT-PASS",
+        value
     } as const
 }
 
@@ -97,3 +119,26 @@ export const changeProfileTC = (name: string, avatar: string) => async (dispatch
     dispatch(toggleIsFetchingAC(false))
 }
 
+export const sendTokenTC = (email: string) => async (dispatch: DispatchType) => {
+    const message = "\n<div style=\"background-color: lime; padding: 15px\">\npassword recovery link: \n<a href='http://localhost:3000/#/set-new-password/$token$'>link</a>\n</div>\n"
+    try {
+        await authApi.forgot(email, 'Password reset', message)
+        dispatch(setSentPassAC(email))
+    } catch (err) {
+        handleServerAppError(dispatch, err)
+    } finally {
+        dispatch(toggleIsFetchingAC(false))
+    }
+}
+
+export const setNewPass = (password: string, token: string | undefined) => async (dispatch: DispatchType) => {
+    dispatch(toggleIsFetchingAC(true))
+    try {
+        await authApi.newPass(password, token)
+        dispatch(setTokenIsSentAC(true))
+    } catch (err) {
+        handleServerAppError(dispatch, err)
+    } finally {
+        dispatch(toggleIsFetchingAC(false))
+    }
+}

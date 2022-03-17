@@ -1,11 +1,11 @@
-import {useCallback, useState} from "react";
+import {useState} from "react";
 
 export const useCheckBox = (initialValue: boolean) => {
 
-    const [isDone, setIsDone] = useState(initialValue)
+    const [isChecked, setIsChecked] = useState(initialValue)
 
-    const handleCheckedChange = useCallback((e: boolean) => {
-        setIsDone(e)
-    }, []);
-    return {isDone, handleCheckedChange}
+    const toggleChecked = () => {
+        setIsChecked(!isChecked)
+    }
+    return {isChecked, toggleChecked}
 }

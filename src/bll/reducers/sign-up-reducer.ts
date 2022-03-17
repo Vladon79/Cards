@@ -1,6 +1,7 @@
 import {authApi} from "../../dal/api/auth-api";
 import {toggleIsFetchingAC} from "./app-reducer";
 import {DispatchType, signUpAT} from "../action-dispatchTypes";
+import {handleServerAppError} from "../../utils/error-utils";
 
 
 const initialState = {
@@ -25,22 +26,17 @@ export const signUpAC = (value: boolean) => {
     } as const
 }
 
-
 export const register = (email: string, password: string) => (dispatch: DispatchType) => {
 
     dispatch(toggleIsFetchingAC(true))
     authApi.register(email, password)
-        .then(res => {
-            /*
-                dispatch(setIsLoggedInAC(true)
-              */
+        .then(() => {
             dispatch(signUpAC(true))
         })
         .catch(err => {
-            /* handleServerNetworkError(dispatch, err.message)*/
+            handleServerAppError(dispatch, err)
         })
         .finally(() => {
             dispatch(toggleIsFetchingAC(false))
         })
-
 }

@@ -88,3 +88,11 @@
   cursor: pointer;
 }
 
+.btn_not_allowed:hover {
+  cursor: not-allowed;
+}
+
+.input_error {
+  margin-left: 33px;
+  color: red;
+}

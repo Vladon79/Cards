@@ -11,11 +11,12 @@ import Preloader from "../common/Preloader/Preloader";
 import {useDispatch, useSelector} from "react-redux";
 import {AppRootStateType} from "../../bll/store";
 import ProfileSettings from "../components/ProfilePage/ProfileSettings/ProfileSettings";
+import SignUp from '../features/Login/SignUp/SignUp';
 import {appInitializeTC} from "../../bll/reducers/app-reducer";
-import {ForgotPass} from "../features/Login/ForgotPass/ForgotPass";
 import {CheckEmail} from "../features/Login/CheckEmail/CheckEmail";
 import {NewPass} from "../features/Login/NewPass/NewPass";
-import {SignUp} from "../features/Login/SignUp/SignUp";
+import PacksListPage from "../components/PacksListPage/PacksListPage";
+import ForgotPass from "../features/Login/ForgotPass/ForgotPass";
 import PacksListPageContainer from "../components/PacksListPage/PacksListPageContainer";
 
 
@@ -47,7 +48,9 @@ const App = () => {
                         <Route path="/signup" element={<SignUp/>}/>
                         <Route path="/forgotPass" element={<ForgotPass/>}/>
                         <Route path="/checkEmail" element={<CheckEmail/>}/>
-                        <Route path="/newPass" element={<NewPass/>}/>
+                        <Route path="/newPass" element={<NewPass/>}>
+                            <Route path=":token" element={<NewPass/>}/>
+                        </Route>
                         <Route path="/error" element={<ErrorPage/>}/>
                         <Route path="/profile" element={<ProfilePage/>}/>
                         <Route path="/test" element={<TestPage/>}/>

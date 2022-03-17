@@ -1,7 +1,6 @@
 @import "../../../../styles/sass/variables";
 @import "../../../../styles/sass/mixins";
 
-
 .main_box {
   display: flex;
   justify-content: center;
@@ -63,6 +62,7 @@
 
 .forgot_link:hover {
   opacity: 1;
+  cursor: pointer;
 }
 
 .account_text {
@@ -85,6 +85,27 @@
   cursor: pointer;
 }
 
-.signInBtn {
+.sign_in_btn {
   width: 266px;
 }
+
+.sign_in_btn:hover {
+  cursor: pointer;
+}
+
+.btn_not_allowed:hover {
+  cursor: not-allowed;
+}
+
+.input_error {
+  margin-left: 33px;
+  color: red;
+}
+
+.sign_in_checkbox_box {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 20px;
+  margin-right: 80px;
+}
+
