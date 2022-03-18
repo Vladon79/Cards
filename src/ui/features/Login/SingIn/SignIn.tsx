@@ -31,6 +31,7 @@ const SignIn = () => {
     const signInBtnClass = `${s.sign_in_btn} ${!formIsValid ? s.btn_not_allowed : null}`
     /*console.log(formIsValid)*/
 
+
     const signInBtnClickHandler = () => {
         dispatch(singInTC(singInData))
     }

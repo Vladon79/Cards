@@ -13,7 +13,7 @@ import SuperButton from "../../../common/c2-SuperButton/SuperButton";
 
 export type InputFieldType = 'password' | 'text'
 
-const SignUp = () => {
+ const SignUp = () => {
 
     const isLoggedIn = useAppSelector<boolean>(state => state.auth.isAuth)
     const isFetching = useAppSelector<boolean>(state => state.app.isFetching)
@@ -94,5 +94,5 @@ const SignUp = () => {
         </section>
     )
 }
-
 export default SignUp
+

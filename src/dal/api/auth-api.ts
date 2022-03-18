@@ -2,7 +2,7 @@ import axios, {AxiosResponse} from "axios";
 
 export const instance = axios.create({
     baseURL: process.env.REACT_APP_BACK_URL
-        || 'http://localhost:7542/2.0/'
+       // || 'http://localhost:7542/2.0/'
     ,
     withCredentials: true,
 })
@@ -32,6 +32,8 @@ export const authApi = {
         return instance.post<newPassResponseType>(`auth/set-new-password`, {password, resetPasswordToken: token})
     }
 }
+
+
 type RegisterResponseType = {
     addedUser: AddedUserType
     created: string
@@ -53,6 +55,7 @@ type AddedUserType = {
     isAdmin: boolean
 }
 
+
 export type SingInRequestType = {
     email: string
     password: string
@@ -65,11 +68,13 @@ export type SingInResponseType = {
     name: string;
     avatar?: string;
     publicCardPacksCount: number;
+
     created: Date;
     updated: Date;
     isAdmin: boolean;
     verified: boolean;
     rememberMe: boolean;
+
     error?: string;
 }
 
