@@ -16,6 +16,10 @@
     background-color: #ECECF9;
     border-radius: 8px;
 
+    .doubleButton{
+      margin-bottom: 5px;
+    }
+
     h6 {
       margin: 20px 0 20px;
       @include text(16px, 600, $authTextColor, 1.2)

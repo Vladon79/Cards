@@ -32,6 +32,8 @@ export const authApi = {
         return instance.post<newPassResponseType>(`auth/set-new-password`, {password, resetPasswordToken: token})
     }
 }
+
+
 type RegisterResponseType = {
     addedUser: AddedUserType
     created: string
@@ -53,6 +55,7 @@ type AddedUserType = {
     isAdmin: boolean
 }
 
+
 export type SingInRequestType = {
     email: string
     password: string
@@ -65,11 +68,13 @@ export type SingInResponseType = {
     name: string;
     avatar?: string;
     publicCardPacksCount: number;
+
     created: Date;
     updated: Date;
     isAdmin: boolean;
     verified: boolean;
     rememberMe: boolean;
+
     error?: string;
 }
 

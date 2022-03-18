@@ -5,19 +5,20 @@ import {Navigate, Route, Routes} from 'react-router-dom';
 import ErrorPage from "../features/ErrorPage/ErrorPage";
 import TestPage from "../features/TestPage/TestPage";
 import ProfilePage from "../components/ProfilePage/ProfilePage";
-import SignIn from "../features/Login/SingIn/SignIn";
+
 import s from './App.module.scss'
 import Preloader from "../common/Preloader/Preloader";
 import {useDispatch, useSelector} from "react-redux";
 import {AppRootStateType} from "../../bll/store";
 import ProfileSettings from "../components/ProfilePage/ProfileSettings/ProfileSettings";
-import SignUp from '../features/Login/SignUp/SignUp';
 import {appInitializeTC} from "../../bll/reducers/app-reducer";
 import {CheckEmail} from "../features/Login/CheckEmail/CheckEmail";
 import {NewPass} from "../features/Login/NewPass/NewPass";
 import PacksListPage from "../components/PacksListPage/PacksListPage";
 import ForgotPass from "../features/Login/ForgotPass/ForgotPass";
 import PacksListPageContainer from "../components/PacksListPage/PacksListPageContainer";
+import SignUp from '../features/Login/SignUp/SignUp';
+import PackItem from "../components/PackItemPage/PackItem";
 
 
 const App = () => {
@@ -56,6 +57,7 @@ const App = () => {
                         <Route path="/test" element={<TestPage/>}/>
                         <Route path="/profileSettings" element={<ProfileSettings/>}/>
                         <Route path="/packsList" element={<PacksListPageContainer/>}/>
+                        <Route path="/packItem" element={<PackItem/>}/>
                     </Routes>
                 </div>
             }
