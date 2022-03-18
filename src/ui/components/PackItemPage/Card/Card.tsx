@@ -23,20 +23,20 @@ const Card = ({id, userId, question, answer, updated, create, grade}: CardType) 
 
     const myUserID = useAppSelector<string>(state => state.auth.user._id)
 
-    const newQuestion = useInput(question, {minLength: 2})
-    const newAnswer = useInput(answer, {minLength: 2})
+    const newQuestion = useInput(question, [])
+    const newAnswer = useInput(answer, [])
 
 
     return (
         <div className={s.pack}>
             {updateQuestion && userId === myUserID
                 ? <SuperInputText name={'Ava'} value={newQuestion.value}
-                                  onChange={e => newQuestion.onChange(e.currentTarget.value)} autoFocus
+                                  onChange={e => newQuestion.valueChange(e.currentTarget.value)} autoFocus
                                   onBlur={() => UpdateQuestion(false)}/>
                 : <p onDoubleClick={() => UpdateQuestion(true)} className={s.pack_block_question}>{newQuestion.value}</p>}
             {updateAnswer && userId === myUserID
                 ? <SuperInputText name={'Ava'} value={newAnswer.value}
-                                  onChange={e => newAnswer.onChange(e.currentTarget.value)} autoFocus
+                                  onChange={e => newAnswer.valueChange(e.currentTarget.value)} autoFocus
                                   onBlur={() => UpdateAnswer(false)}/>
                 : <p onDoubleClick={() => UpdateAnswer(true)} className={s.pack_block_answer}>{newAnswer.value}</p>}
             <p className={s.pack_block_update}>{updated}</p>

@@ -94,7 +94,7 @@ export const changeNumberPageCardsAC = (numberPage: number) => {
 
 
 export const getPackItemTC = (cardsPack_id:string,  page?:number, pageCount?:number,cardAnswer?:string, cardQuestion?: string,  min?:number, max?:number, sortCards?:number,) => (dispatch: Dispatch) => {
-    dispatch(toggleIsFetchingAC(true))
+    // dispatch(toggleIsFetchingAC(true))
     packItemApi.getCard( cardsPack_id, cardAnswer, cardQuestion,  min, max, sortCards, page, pageCount  )
         .then(res => {
             dispatch(getPackItemAC(res.data))
@@ -103,6 +103,6 @@ export const getPackItemTC = (cardsPack_id:string,  page?:number, pageCount?:num
             return
         })
         .finally(() => {
-            dispatch(toggleIsFetchingAC(false))
+            // dispatch(toggleIsFetchingAC(false))
         })
 }
