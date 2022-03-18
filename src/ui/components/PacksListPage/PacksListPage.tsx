@@ -7,6 +7,7 @@ import Paginator from "../../common/Paginator/Paginator";
 import s from './PacksListPage.module.scss'
 import Search from "./Search/SearchInput";
 import SuperDoubleRange from "../../common/SuperComponents/SuperDoubleRange";
+import Ava from "../../common/Ava/Ava";
 
 type PacksListPagePropsType = {
     pageCount: number
@@ -51,6 +52,9 @@ const PacksListPage = ({
     return (
         <div className={s.packsListPageContainer}>
             <div className={s.leftBlock}>
+                <div className={s.avaContainer}>
+                    <Ava/>
+                </div>
                 <h6>Show packs cards</h6>
                 <section className={s.buttonSection}>
                     <SuperButton disabled={pack === 'myPack'} cancel={pack === 'myPack'} className={s.button}

@@ -16,7 +16,14 @@
     background-color: #ECECF9;
     border-radius: 8px;
 
-    .doubleButton{
+    .avaContainer {
+      display: flex;
+      width: 100%;
+      justify-content: center;
+      margin: 10px 0 5px;
+    }
+
+    .doubleButton {
       margin-bottom: 5px;
     }
 

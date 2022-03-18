@@ -26,7 +26,7 @@ const ProfilePage = () => {
 
         <section className={`${s.box}`}>
             <h3>Personal Information</h3>
-            <Ava ava={user.avatar || image}/>
+            <Ava/>
             <div className={s.userData}>
                 <p>email: {user.email}</p>
                 <p> public Card Packs Count: {user.publicCardPacksCount}</p>
