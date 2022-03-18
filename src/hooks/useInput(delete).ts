@@ -2,7 +2,7 @@ import  {ChangeEvent, FocusEvent,  useState} from "react";
 import {useFormValidDelete} from "./useFormValid(delete)";
 
 
-export const useInput = (initialValue: string, validations:any) => {
+export const useInputDelete = (initialValue: string, validations:any) => {
 
     const [value, setValue] = useState(initialValue)
     const [isDirty, setIsDirty] = useState(false)

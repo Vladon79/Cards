@@ -120,7 +120,7 @@ export const changeProfileTC = (name: string, avatar: string) => async (dispatch
 }
 
 export const sendTokenTC = (email: string) => async (dispatch: DispatchType) => {
-    const message = "\n<div style=\"background-color: lime; padding: 15px\">\npassword recovery link: \n<a href='http://localhost:3000/#/set-new-password/$token$'>link</a>\n</div>\n"
+    const message = "\n<div style=\"background-color: lime; padding: 15px\">\npassword recovery link: \n<a href=' https://vladon79.github.io/Project/#/set-new-password/$token$'>link</a>\n</div>\n"
     try {
         await authApi.forgot(email, 'Password reset', message)
         dispatch(setSentPassAC(email))
