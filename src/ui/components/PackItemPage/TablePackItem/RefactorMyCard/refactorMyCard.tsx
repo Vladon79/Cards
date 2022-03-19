@@ -3,6 +3,7 @@ import SuperButton from "../../../../common/c2-SuperButton/SuperButton";
 import s from "../TablePackItem.module.scss";
 import {useDispatch} from "react-redux";
 import {deleteCardTC, updateCardTC} from "../../../../../bll/reducers/myCard-reducer";
+import {useAppSelector} from "../../../../../bll/store";
 
 type RefactorMyCardType = {
     _id: string,
@@ -11,9 +12,11 @@ type RefactorMyCardType = {
 }
 
 const RefactorMyCard = ({_id, newQuestion, newAnswer}: RefactorMyCardType) => {
+    const packItemId = useAppSelector<string>(state => state.packItemId.packItemId)
     const dispatch = useDispatch()
+
     const deleteCard = () => {
-        dispatch(deleteCardTC(_id))
+        dispatch(deleteCardTC(_id, packItemId))
     };
 
     const updateCard = () => {
