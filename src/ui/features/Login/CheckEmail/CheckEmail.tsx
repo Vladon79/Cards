@@ -24,7 +24,7 @@ export const CheckEmail = () => {
                 <div className={s.check_email_text}>Check Email</div>
 
                 <div className={s.email_instructions}>
-                    {<span className={s.email_instructions_text}>We’ve sent an Email with instructions to ${sentPassword}</span>}
+                    {<span className={s.email_instructions_text}>We’ve sent an Email with instructions to {sentPassword}</span>}
                 </div>
 
             </section>

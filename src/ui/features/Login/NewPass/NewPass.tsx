@@ -1,4 +1,4 @@
-import React, {MouseEvent, useCallback, useState} from 'react';
+import React from 'react';
 import s from './NewPass.module.scss'
 import {AuthPassField} from "../../../common/AuthFields/AuthPassField/AuthPassField";
 import {InputFieldType} from "../SignUp/SignUp";
@@ -17,7 +17,6 @@ export const NewPass = () => {
     const isLoggedIn = useAppSelector<boolean>(state => state.auth.isAuth)
     const isFetching = useAppSelector<boolean>(state => state.app.isFetching)
     const responseError = useAppSelector<null | string>(state => state.app.error)
-    const tokenIsSet = useAppSelector<boolean>(state => state.auth.tokenIsSent)
     const dispatch = useDispatch()
     const params = useParams()
     const password = useInput('', ['minLength', 'maxLength', 'isEmpty'])
@@ -26,28 +25,24 @@ export const NewPass = () => {
     const createPassBtnClass = `${s.createPassBtn} ${!formIsValid ? s.btn_not_allowed : null}`
     const token = params.token
 
-    console.log(token)
 
     const handleCreatePassBtn = () => {
-    dispatch(setNewPass(password.value, token))
-    }
-
-    if (!token) {
-        dispatch(setTokenIsSentAC(false))
+        dispatch(setNewPass(password.value, token))
     }
 
     if (isLoggedIn) {
         return <Navigate to={'/profile'}/>
     }
-    if (tokenIsSet) {
+
+    if (!token) {
         return <Navigate to={'/signin'}/>
     }
 
-    return (
-        <section className={s.main_box}>
-            {isFetching
-                ? <Preloader/>
-                :
+return (
+    <section className={s.main_box}>
+        {isFetching
+            ? <Preloader/>
+            :
             <section className={s.create_pass_box}>
 
                 <div>
@@ -82,8 +77,9 @@ export const NewPass = () => {
                     </SuperButton>
                 </div>
             </section>
-            }
-        </section>
-    );
-};
+        }
+    </section>
+);
+}
+;
 
