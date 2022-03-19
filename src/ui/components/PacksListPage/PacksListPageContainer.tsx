@@ -33,7 +33,7 @@ const PacksListPageContainer = () => {
     const myUserID = useAppSelector<string>(state => state.auth.user._id)
 
 
-    const [pack, setPack] = useState<'myPack' | 'allPack'>('allPack')
+    const [pack, setPack] = useState<'myPack' | 'allPack'>('myPack')
 
     const search = useInput('', [])
 
