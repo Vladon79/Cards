@@ -1,7 +1,7 @@
 import {ActionType, DispatchType} from "../action-dispatchTypes";
 import {packsApi} from "../../dal/api/packs-api";
-import {toggleIsFetchingAC} from "./app-reducer";
 import {sortPacksType} from "../../ui/components/PacksListPage/PacksListPageContainer";
+
 
 export type PackResponseType = {
     _id: string
@@ -113,7 +113,7 @@ export const getCardsTC = (pack: 'myPack' | 'allPack',
 
         if (pack === 'myPack') {
             // debugger
-           // dispatch(toggleIsFetchingAC(true))
+            // dispatch(toggleIsFetchingAC(true))
             const res = await packsApi.getCards(cardPacksTotalCount, packName, min, max, sortPacks, page, user_id)
             //dispatch(toggleIsFetchingAC(false))
             try {
@@ -135,7 +135,7 @@ export const getCardsTC = (pack: 'myPack' | 'allPack',
             } catch (e) {
 
             } finally {
-               // dispatch(toggleIsFetchingAC(false))
+                // dispatch(toggleIsFetchingAC(false))
             }
 
         }

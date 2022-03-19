@@ -1,5 +1,5 @@
 import s from './HeaderTable.module.scss'
-import {sortPacksType} from "../PacksListPageContainer";
+import {sortPacksType} from "../../PacksListPageContainer";
 
 type HeaderTablePropsType = {
     sortPacks: sortPacksType

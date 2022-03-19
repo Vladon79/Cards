@@ -3,6 +3,7 @@ import {packsApi} from "../../dal/api/packs-api";
 import {getCardsTC, PackResponseType} from "./packs-reducer";
 import {Dispatch} from "redux";
 import {log} from "util";
+import {setActiveModalAC} from "./modal-reducer";
 
 
 export type PacksResponseType = {
@@ -26,18 +27,18 @@ const initialState = {
 
 export const myPacksReducer = (state: PacksResponseType = initialState, action: ActionType): PacksResponseType => {
     switch (action.type) {
+
         case "MY-PACKS/DELETE-PACK":
             return {...state, cardPacks: state.cardPacks.filter(c => c._id !== action.id && c)}
         case "MY-PACKS/ADD-PACK":
             return {...state, cardPacks: [...state.cardPacks, action.newPack]}
         case "MY-PACKS/UPDATE-PACK":
             return {...state, cardPacks: state.cardPacks.filter(c => action.id === c._id && action.updatePack)}
-
-
         default:
             return state
     }
 }
+
 
 export const deletePackAC = (id: string) => {
     return {
@@ -61,19 +62,21 @@ export const updatePackAC = (id: string, updatePack: PackResponseType) => {
 }
 
 
-
 export const deletePackTC = (id: string) => async (dispatch: DispatchType) => {
     await packsApi.deletePack(id)
+    dispatch(setActiveModalAC(false))
     dispatch(deletePackAC(id))
 }
 
 export const addNewPackTC = (name: string, privateBoolean: boolean) => async (dispatch: DispatchType) => {
     const res = await packsApi.addPack(name, privateBoolean)
+    dispatch(setActiveModalAC(false))
     dispatch(addPacksAC(res.data.newCardsPack))
 }
 
 
 export const updatePackTC = (id: string, newName: string) => async (dispatch: DispatchType) => {
     const res = await packsApi.updatePack(id, newName)
+    dispatch(setActiveModalAC(false))
     dispatch(updatePackAC(id, res.data.updatedCardsPack))
 }

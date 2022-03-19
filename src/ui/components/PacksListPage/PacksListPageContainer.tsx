@@ -10,8 +10,9 @@ import {useAppSelector} from "../../../bll/store";
 import PacksListPage from "./PacksListPage";
 import {useEffect, useState} from "react";
 import {useDebounce} from "../../../hooks/useDebounce";
-import {addNewPackTC} from "../../../bll/reducers/myPacks-reducer";
+import {addNewPackTC, deletePackTC, updatePackTC} from "../../../bll/reducers/myPacks-reducer";
 import {useInput} from "../../../hooks/useInput";
+import {ModalType} from "../../../bll/reducers/modal-reducer";
 
 export type sortPacksType = '' | '1updated' | '0updated' | '1cardsCount' | '0cardsCount'
 
@@ -24,7 +25,7 @@ const PacksListPageContainer = () => {
     const arrayNumbers = [4, 5, 6, 7, 8, 9, 10]
     const pageCount = useAppSelector<number>(state => state.packs.pageCount)
     const cardPacks = useAppSelector<PackResponseType[]>(state => state.packs.cardPacks)
-    const myCardPacks = useAppSelector<PackResponseType []>(state => state.myPacks.cardPacks)
+    const myCardPacks = useAppSelector<PackResponseType[]>(state => state.myPacks.cardPacks)
     const cardPacksTotalCount = useAppSelector<number>(state => state.packs.cardPacksTotalCount)
     const page = useAppSelector<number>(state => state.packs.page)
     const minCardsCount = useAppSelector<number>(state => state.packs.minCardsCount)
@@ -64,10 +65,17 @@ const PacksListPageContainer = () => {
         setPack('allPack')
     }
 
-    const addNewPack = () => {
-        dispatch(addNewPackTC('new pack', false))
+    const addNewPack = (name: string, privateBoolean: boolean) => {
+        dispatch(addNewPackTC(name, privateBoolean))
     }
 
+    const deletePack = (id: string) => {
+        dispatch(deletePackTC(id))
+    }
+    const updatePack = (id: string, newName: string) => {
+        dispatch(updatePackTC(id, newName))
+
+    }
 
     return <PacksListPage myUserID={myUserID} page={page} getMyPacks={getMyPacks} cardPacks={cardPacks}
                           getAllPacks={getALlPacks}
@@ -76,7 +84,8 @@ const PacksListPageContainer = () => {
                           changeNumberPage={changeNumberPage} setValuesOnSlider={setValuesOnSlider} pack={pack}
                           addNewPack={addNewPack}
                           searchValue={search.value} searchOnChange={search.valueChange}
-                          sortPacks={sortPacks} setSortPacks={setSortPacks}/>
+                          sortPacks={sortPacks} setSortPacks={setSortPacks}
+                          deletePack={deletePack} updatePack={updatePack}/>
 }
 
 export default PacksListPageContainer
