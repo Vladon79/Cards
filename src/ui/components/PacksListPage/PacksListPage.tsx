@@ -8,6 +8,7 @@ import s from './PacksListPage.module.scss'
 import Search from "./Search/SearchInput";
 import SuperDoubleRange from "../../common/SuperComponents/SuperDoubleRange";
 import Ava from "../../common/Ava/Ava";
+import {sortPacksType} from "./PacksListPageContainer";
 
 type PacksListPagePropsType = {
     pageCount: number
@@ -27,8 +28,8 @@ type PacksListPagePropsType = {
     addNewPack: () => void
     searchOnChange: (e: string) => void
     searchValue: string
-
-
+    sortPacks: sortPacksType
+    setSortPacks: (value: sortPacksType) => void
 }
 
 
@@ -45,7 +46,8 @@ const PacksListPage = ({
                            changeNumberPage,
                            setPageCount,
                            setValuesOnSlider,
-                           pack, myUserID, addNewPack, searchOnChange, searchValue
+                           pack, myUserID, addNewPack, searchOnChange, searchValue,
+                           sortPacks, setSortPacks
                        }: PacksListPagePropsType) => {
 
 
@@ -55,28 +57,32 @@ const PacksListPage = ({
                 <div className={s.avaContainer}>
                     <Ava/>
                 </div>
-                <h6>Show packs cards</h6>
-                <section className={s.buttonSection}>
-                    <SuperButton disabled={pack === 'myPack'} cancel={pack === 'myPack'} className={s.button}
-                                 onClick={getMyPacks}>My</SuperButton>
-                    <SuperButton disabled={pack === 'allPack'} cancel={pack === 'allPack'} className={s.button}
-                                 onClick={getAllPacks}>All</SuperButton>
+                <section className={s.show_packs_cards}>
+                    <h6>Show packs cards</h6>
+                    <section className={s.buttonSection}>
+                        <SuperButton disabled={pack === 'myPack'} cancel={pack === 'myPack'} className={s.button}
+                                     onClick={getMyPacks}>My</SuperButton>
+                        <SuperButton disabled={pack === 'allPack'} cancel={pack === 'allPack'} className={s.button}
+                                     onClick={getAllPacks}>All</SuperButton>
+                    </section>
                 </section>
-                <h6>Number of cards</h6>
-                <div className={s.superRange_span_block}>
-                    <span className={s.span}>{minCardsCount}</span>
-                    <div className={s.superRange}>
-                        <SuperDoubleRange
-                            onChangeRange={setValuesOnSlider}
-                            value={[minCardsCount, maxCardsCount]}
-                            min={minCardsCount}
-                            max={100}
+                <section className={s.show_packs_cards}>
+                    <h6>Number of cards</h6>
+                    <div className={s.superRange_span_block}>
+                        <span className={s.span}>{minCardsCount}</span>
+                        <div className={s.superRange}>
+                            <SuperDoubleRange
+                                onChangeRange={setValuesOnSlider}
+                                value={[minCardsCount, maxCardsCount]}
+                                min={minCardsCount}
+                                max={100}
 
-                        />
+                            />
+                        </div>
+
+                        <span className={s.span}>{maxCardsCount}</span>
                     </div>
-
-                    <span className={s.span}>{maxCardsCount}</span>
-                </div>
+                </section>
 
             </div>
 
@@ -87,7 +93,7 @@ const PacksListPage = ({
                     <SuperButton onClick={addNewPack}>Add new pack</SuperButton>
                 </section>
                 <section className={s.table}>
-                    <HeaderTable/>
+                    <HeaderTable sortPacks={sortPacks} setSortPacks={setSortPacks}/>
                     {cardPacks.map(p => <TablePack key={p._id} id={p._id} myUserID={myUserID} user_id={p.user_id}
                                                    name={p.name}
                                                    cardsCount={p.cardsCount} user_name={p.user_name}

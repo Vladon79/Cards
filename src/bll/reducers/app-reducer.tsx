@@ -59,7 +59,7 @@ export const appInitializeTC = () => (dispatch: Dispatch) => {
             dispatch(authMeAC(res.data))
         })
         .catch(() => {
-            return
+
         })
         .finally(() => {
             dispatch(setAppInitializeAC(true))

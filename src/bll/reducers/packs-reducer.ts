@@ -1,7 +1,7 @@
-import {ActionType} from "../action-dispatchTypes";
-import {Dispatch} from "redux";
+import {ActionType, DispatchType} from "../action-dispatchTypes";
 import {packsApi} from "../../dal/api/packs-api";
 import {toggleIsFetchingAC} from "./app-reducer";
+import {sortPacksType} from "../../ui/components/PacksListPage/PacksListPageContainer";
 
 export type PackResponseType = {
     _id: string
@@ -16,7 +16,7 @@ export type PackResponseType = {
 export type PacksResponseType = {
     cardPacks: PackResponseType []
     cardPacksTotalCount: number// количество колод
-    startMaxCount:number
+    startMaxCount: number
     maxCardsCount: number
     minCardsCount: number
     page: number// выбранная страница
@@ -46,7 +46,12 @@ const initialState = {
 export const packsReducer = (state: PacksResponseType = initialState, action: ActionType): PacksResponseType => {
     switch (action.type) {
         case "PACKS/GET-PACKS":
-            return {...state, cardPacks: action.cardPacks, cardPacksTotalCount: action.totalCount, startMaxCount:action.maxCardsCount}
+            return {
+                ...state,
+                cardPacks: action.cardPacks,
+                cardPacksTotalCount: action.totalCount,
+                startMaxCount: action.maxCardsCount
+            }
         case "PACKS/CHANGE-NUMBER-PACKS":
             return {...state, page: action.numberPage}
         case "PACKS/SET-MAX-MIN-CARDS":
@@ -63,7 +68,7 @@ export const packsReducer = (state: PacksResponseType = initialState, action: Ac
     }
 }
 
-export const getPacksAC = (cardPacks: PackResponseType [], totalCount: number, maxCardsCount:number) => {
+export const getPacksAC = (cardPacks: PackResponseType [], totalCount: number, maxCardsCount: number) => {
     return {
         type: "PACKS/GET-PACKS",
         cardPacks, totalCount, maxCardsCount
@@ -98,31 +103,41 @@ export const searchPackAC = (value: string) => {
 }
 
 
-export const getCardsTC = (pack: 'myPack' | 'allPack', packName?: string, cardPacksTotalCount?: number, min?: number, max?: number, page?: number, user_id?: string) => async (dispatch: Dispatch) => {
-    if (pack === 'myPack') {
-        //  dispatch(toggleIsFetchingAC(true))
-        const res = await packsApi.getCards(cardPacksTotalCount, packName, min, max, page, user_id)
-        try {
-            dispatch(getPacksAC(res.data.cardPacks, res.data.cardPacksTotalCount, res.data.maxCardsCount))
-        } catch (e) {
+export const getCardsTC = (pack: 'myPack' | 'allPack',
+                           packName?: string,
+                           cardPacksTotalCount?: number,
+                           min?: number, max?: number,
+                           sortPacks?: sortPacksType,
+                           page?: number, user_id?: string) =>
+    async (dispatch: DispatchType) => {
 
-        } finally {
-            //      dispatch(toggleIsFetchingAC(false))
-        }
+        if (pack === 'myPack') {
+            // debugger
+           // dispatch(toggleIsFetchingAC(true))
+            const res = await packsApi.getCards(cardPacksTotalCount, packName, min, max, sortPacks, page, user_id)
+            //dispatch(toggleIsFetchingAC(false))
+            try {
+                dispatch(getPacksAC(res.data.cardPacks, res.data.cardPacksTotalCount, res.data.maxCardsCount))
+            } catch (e) {
+
+            } finally {
+                //dispatch(toggleIsFetchingAC(false))
+                //
+            }
 
 
-    } else if (pack === 'allPack') {
-        //  dispatch(toggleIsFetchingAC(true))
-        const res = await packsApi.getCards(cardPacksTotalCount, packName, min, max, page)
-        try {
-            dispatch(getPacksAC(res.data.cardPacks, res.data.cardPacksTotalCount, res.data.maxCardsCount))
+        } else if (pack === 'allPack') {
+            //dispatch(toggleIsFetchingAC(true))
+            const res = await packsApi.getCards(cardPacksTotalCount, packName, min, max, sortPacks, page)
+            try {
+                dispatch(getPacksAC(res.data.cardPacks, res.data.cardPacksTotalCount, res.data.maxCardsCount))
 
-        } catch (e) {
+            } catch (e) {
 
-        } finally {
-            //      dispatch(toggleIsFetchingAC(false))
+            } finally {
+               // dispatch(toggleIsFetchingAC(false))
+            }
+
         }
 
     }
-
-}

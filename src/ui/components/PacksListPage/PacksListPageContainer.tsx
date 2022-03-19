@@ -13,10 +13,13 @@ import {useDebounce} from "../../../hooks/useDebounce";
 import {addNewPackTC} from "../../../bll/reducers/myPacks-reducer";
 import {useInput} from "../../../hooks/useInput";
 
+export type sortPacksType = '' | '1updated' | '0updated' | '1cardsCount' | '0cardsCount'
 
 const PacksListPageContainer = () => {
 
     const dispatch = useDispatch()
+
+    const [sortPacks, setSortPacks] = useState<sortPacksType>('')
 
     const arrayNumbers = [4, 5, 6, 7, 8, 9, 10]
     const pageCount = useAppSelector<number>(state => state.packs.pageCount)
@@ -30,7 +33,7 @@ const PacksListPageContainer = () => {
     const myUserID = useAppSelector<string>(state => state.auth.user._id)
 
 
-    const [pack, setPack] = useState<'myPack' | 'allPack'>('myPack')
+    const [pack, setPack] = useState<'myPack' | 'allPack'>('allPack')
 
     const search = useInput('', [])
 
@@ -39,8 +42,8 @@ const PacksListPageContainer = () => {
     const maxDebounce = useDebounce(maxCardsCount, 1000)
 
     useEffect(() => {
-        dispatch(getCardsTC(pack, String(searchDebounce), pageCount, minCardsCount, maxCardsCount, page, myUserID))
-    }, [pageCount, minDebounce, maxDebounce, pack, page, myCardPacks, searchDebounce])
+        dispatch(getCardsTC(pack, String(searchDebounce), pageCount, minCardsCount, maxCardsCount, sortPacks, page, myUserID))
+    }, [pageCount, minDebounce, pack, maxDebounce, page, myCardPacks, searchDebounce, sortPacks])
 
     const setValuesOnSlider = (value: number[]) => {
         dispatch(setMaxMinNumberCardsAC(value[0], value[1]))
@@ -49,7 +52,6 @@ const PacksListPageContainer = () => {
 
     const changeNumberPage = (numberPage: number) => {
         dispatch(changeNumberPageAC(numberPage))
-        // dispatch(getCardsTC(pageCount, minCardsCount, maxCardsCount, numberPage))
     }
     const setPageCount = (n: number) => {
         dispatch(setPageCountAC(n))
@@ -63,7 +65,7 @@ const PacksListPageContainer = () => {
     }
 
     const addNewPack = () => {
-        dispatch(addNewPackTC('new Pack', false))
+        dispatch(addNewPackTC('new pack', false))
     }
 
 
@@ -73,7 +75,8 @@ const PacksListPageContainer = () => {
                           maxCardsCount={maxCardsCount} minCardsCount={minCardsCount} arrayNumbers={arrayNumbers}
                           changeNumberPage={changeNumberPage} setValuesOnSlider={setValuesOnSlider} pack={pack}
                           addNewPack={addNewPack}
-                          searchValue={search.value} searchOnChange={search.valueChange}/>
+                          searchValue={search.value} searchOnChange={search.valueChange}
+                          sortPacks={sortPacks} setSortPacks={setSortPacks}/>
 }
 
 export default PacksListPageContainer

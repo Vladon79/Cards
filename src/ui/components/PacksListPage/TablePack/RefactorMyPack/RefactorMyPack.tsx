@@ -22,7 +22,7 @@ const RefactorMyPack = (props: RefactorMyPackPropsType) => {
         props.setUpdate(false)
     }
     return (
-        <div>
+        <div className={s.block_button}>
             <SuperButton className={` ${s.button} ${s.delete}`} onClick={deletePack}>Delete</SuperButton>
             <SuperButton className={s.button} onClick={updatePack}>Edit</SuperButton>
         </div>
