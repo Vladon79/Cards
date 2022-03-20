@@ -19,7 +19,7 @@ const WindowForAddNewCard = ({setShowWindowAddNewCard}:WindowForAddNewCardType) 
     const dispatch = useDispatch()
 
     const handleAddNewCard = () => {
-        dispatch(addNewCardTC(packItemId, question, answer))
+        dispatch(addNewCardTC(packItemId, question, answer, packItemId))
         setShowWindowAddNewCard(false)
     };
 

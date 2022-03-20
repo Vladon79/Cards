@@ -20,7 +20,7 @@ const RefactorMyCard = ({_id, newQuestion, newAnswer}: RefactorMyCardType) => {
     };
 
     const updateCard = () => {
-        dispatch(updateCardTC(_id, newQuestion, newAnswer))
+        dispatch(updateCardTC(_id, newQuestion, newAnswer, packItemId))
     };
 
     return (

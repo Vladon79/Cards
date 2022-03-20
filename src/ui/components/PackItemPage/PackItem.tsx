@@ -18,7 +18,10 @@ import SuperSelect from "../../common/SuperComponents/SuperSelect";
 import Paginator from "../../common/Paginator/Paginator";
 import {useDispatch} from "react-redux";
 import WindowForAddNewCard from "./WindowForAddNewCard/windowForAddNewCard";
+import {useDebounce} from "../../../hooks/useDebounce";
 import Preloader from "../../common/Preloader/Preloader";
+import Search from "../PacksListPage/Search/SearchInput";
+import {useInput} from "../../../hooks/useInput";
 
 
 const PackItem = () => {
@@ -31,21 +34,26 @@ const PackItem = () => {
     const packItem = useAppSelector<PackItemResponseType>(state => state.packItem)
     const cards = useAppSelector<PackItemType[]>(state => state.packItem.cards)
     const packItemId = useAppSelector<string>(state => state.packItemId.packItemId)
-    const pageCount = useAppSelector<number>(state => state.packItem.page)
-    const page = useAppSelector<number>(state => state.packItem.pageCount)
+    const pageCount = useAppSelector<number>(state => state.packItem.pageCount)
+    const page = useAppSelector<number>(state => state.packItem.page)
     const myUserID = useAppSelector<string>(state => state.auth.user._id)
 
     const dispatch = useDispatch()
     const navigate = useNavigate()
 
-    // const minGradeDebounce = useDebounce(packItem.minGrade, 1000)
-    // const maxGradeDebounce = useDebounce(packItem.maxGrade, 1000)
+    const search = useInput('', [])
+
+    const searchDebounce = useDebounce(search.value, 1500)
+
+    const minGradeDebounce = useDebounce(packItem.minGrade, 1000)
+    const maxGradeDebounce = useDebounce(packItem.maxGrade, 1000)
 
     const NO_CARDS = cards.length === 0
+    const MAX_RANGE_COUNT = 6
 
     useEffect(() => {
-       dispatch(getPackItemTC(packItemId))
-    }, [])
+        dispatch(getPackItemTC(packItemId, page, pageCount, packItem.minGrade, packItem.maxGrade, String(searchDebounce), String(searchDebounce)))
+    }, [page, pageCount, minGradeDebounce, maxGradeDebounce, searchDebounce])
 
 
     const handleBackToPackList = () => {
@@ -65,25 +73,37 @@ const PackItem = () => {
         dispatch(changeNumberPageCardsAC(num))
     };
 
-
     return (
         <>  {isFetching && <Preloader/>}
             {showWindowAddNewCard && <WindowForAddNewCard setShowWindowAddNewCard={setShowWindowAddNewCard}/>}
-            {  !showWindowAddNewCard &&
+            {!showWindowAddNewCard &&
             <div className={s.packsListPageContainer}>
                 <div className={s.leftBlock}>
-                        <SuperButton className={s.doubleButton} onClick={handleBackToPackList}>Back to Pack List</SuperButton>
-                        {myUserID === packItem.packUserId &&
-                        <SuperButton  className={s.doubleButton} onClick={() => setShowWindowAddNewCard(true)}>Add New Card</SuperButton>}
-                    <h6>Number of cards</h6>
-                    <SuperDoubleRange
-                        onChangeRange={setValuesOnSlider}
-                        value={[packItem.minGrade, packItem.maxGrade]}
-                        min={packItem.minGrade}
-                        max={packItem.maxGrade}/></div>
+                    <SuperButton className={s.doubleButton} onClick={handleBackToPackList}>Back to Pack
+                        List</SuperButton>
+                    {myUserID === packItem.packUserId &&
+                    <SuperButton className={s.doubleButton} onClick={() => setShowWindowAddNewCard(true)}>Add New
+                        Card</SuperButton>}
+                    <section className={s.show_packs_cards}>
+                        <h6>Number of cards</h6>
+                        <div className={s.superRange_span_block}>
+                            <span className={s.span}>{packItem.minGrade}</span>
+                            <div className={s.superRange}>
+                                <SuperDoubleRange
+                                    onChangeRange={setValuesOnSlider}
+                                    value={[packItem.minGrade, packItem.maxGrade]}
+                                    min={packItem.minGrade}
+                                    max={MAX_RANGE_COUNT}
+                                />
+                            </div>
+                            <span className={s.span}>{packItem.maxGrade}</span>
+                        </div>
+                    </section>
+                </div>
                 {NO_CARDS && <h1>Not found cards</h1>}
                 {!NO_CARDS &&
                 <div className={s.rightBlock}>
+                    <Search searchOnChange={search.valueChange} searchValue={search.value}/>
                     <section className={s.table}>
                         <TablePackItem/>
                         {cards.map(p => <Card key={p._id}
@@ -98,11 +118,15 @@ const PackItem = () => {
 
                     <SuperSelect options={arrayNumbers}
                                  value={pageCount}
-                                 onChangeOption={(pageCount) => setCardCount(Number(pageCount))}/>
+                                 onChangeOption={(pageCount) => setCardCount(Number(pageCount))}
+                    />
 
-                    <Paginator totalCount={packItem.cardsTotalCount} pageSize={packItem.pageCount}
+                    <Paginator totalCount={packItem.cardsTotalCount}
+                               pageSize={packItem.pageCount}
                                currentPage={page}
-                               changeNumberPage={(num) => changeNumberPage(num)} portionSize={10}/>
+                               changeNumberPage={(num) => changeNumberPage(num)}
+                               portionSize={10}
+                    />
                 </div>}
             </div>
             }

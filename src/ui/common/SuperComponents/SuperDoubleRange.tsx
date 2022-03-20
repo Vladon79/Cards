@@ -12,7 +12,7 @@ type SuperDoubleRangePropsType = {
 
 const SuperDoubleRange: React.FC<SuperDoubleRangePropsType> = (
     {
-        onChangeRange, value, ...restProps
+        onChangeRange, value, max, ...restProps
         // min, max, step, disable, ...
     }
 ) => {
@@ -35,7 +35,7 @@ const SuperDoubleRange: React.FC<SuperDoubleRangePropsType> = (
                     color='primary'
                     size='medium'
                     min={0}
-                    max={100}
+                    max={max}
                 />
             </div>
 

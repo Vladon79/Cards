@@ -44,7 +44,7 @@ const initialState: PackItemResponseType = {
     maxGrade: 6,
     minGrade: 0,
     page: 1,
-    pageCount: 10,
+    pageCount: 4,
     packUserId: "5eecf82a3ed8f700042f1186",
 }
 
@@ -93,9 +93,16 @@ export const changeNumberPageCardsAC = (numberPage: number) => {
 }
 
 
-export const getPackItemTC = (cardsPack_id:string,  page?:number, pageCount?:number,cardAnswer?:string, cardQuestion?: string,  min?:number, max?:number, sortCards?:number,) => (dispatch: Dispatch) => {
-    // dispatch(toggleIsFetchingAC(true))
-    packItemApi.getCard( cardsPack_id, cardAnswer, cardQuestion,  min, max, sortCards, page, pageCount  )
+export const getPackItemTC = (cardsPack_id:string,
+                              page?:number,
+                              pageCount?:number,
+                              min?:number,
+                              max?:number,
+                              cardAnswer?:string,
+                              cardQuestion?: string,
+                              sortCards?:string) => (dispatch: Dispatch) => {
+    dispatch(toggleIsFetchingAC(true))
+    packItemApi.getCard( cardsPack_id, page, pageCount, min, max,  cardAnswer, cardQuestion, sortCards)
         .then(res => {
             dispatch(getPackItemAC(res.data))
                  })
@@ -103,6 +110,6 @@ export const getPackItemTC = (cardsPack_id:string,  page?:number, pageCount?:num
             return
         })
         .finally(() => {
-            // dispatch(toggleIsFetchingAC(false))
+            dispatch(toggleIsFetchingAC(false))
         })
 }

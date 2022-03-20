@@ -1,6 +1,9 @@
 import {ActionType, DispatchType} from "../action-dispatchTypes";
-import {PackItemType} from "./packItem-reducer";
+import {getPackItemTC, PackItemType} from "./packItem-reducer";
 import {packItemApi} from "../../dal/api/packItem-api";
+import {AppRootStateType} from "../store";
+import { ThunkAction } from "redux-thunk";
+import {toggleIsFetchingAC} from "./app-reducer";
 
 
 export type CardsResponseType = {
@@ -25,72 +28,82 @@ const initialState = {
 
 export const myCardReducer = (state: CardsResponseType = initialState, action: ActionType): CardsResponseType => {
     switch (action.type) {
-
-         case "MY-CARDS/ADD-CARD":
-             return {...state, cards: [...state.cards, action.newCard]}
-        case "MY-CARDS/DELETE-CARD":
-             return {...state, cards: state.cards.filter(c => c._id !== action.id && c)}
-         case "MY-CARDS/UPDATE-CARD":
-             return {...state, cards: state.cards.filter(c => action.id === c._id && action.updateCard)}
-
+        //  case "MY-CARDS/ADD-CARD":
+        //      return {...state, cards: [...state.cards, action.newCard]}
+        // case "MY-CARDS/DELETE-CARD":
+        //      return {...state, cards: state.cards.filter(c => c._id !== action.id && c)}
+        //  case "MY-CARDS/UPDATE-CARD":
+        //      return {...state, cards: state.cards.filter(c => action.id === c._id && action.updateCard)}
         default:
             return state
     }
 }
 
+// export const addNewCardAC = (newCard: PackItemType) => {
+//     return {
+//         type: "MY-CARDS/ADD-CARD",
+//         newCard
+//     } as const
+// }
+//
+// export const deleteCardAC = (id: string) => {
+//     return {
+//         type: "MY-CARDS/DELETE-CARD",
+//         id
+//     } as const
+// }
+//
+// export const updateCardAC = (id: string, updateCard: PackItemType) => {
+//     return {
+//         type: "MY-CARDS/UPDATE-CARD",
+//         id, updateCard
+//     } as const
+// }
 
-
-export const addNewCardAC = (newCard: PackItemType) => {
-    return {
-        type: "MY-CARDS/ADD-CARD",
-        newCard
-    } as const
-}
-
-export const deleteCardAC = (id: string) => {
-    return {
-        type: "MY-CARDS/DELETE-CARD",
-        id
-    } as const
-}
-
-export const updateCardAC = (id: string, updateCard: PackItemType) => {
-    return {
-        type: "MY-CARDS/UPDATE-CARD",
-        id, updateCard
-    } as const
-}
-
-
-
-export const addNewCardTC = (cardsPack_id:string, question:string, answer:string) => (dispatch: DispatchType) => {
+export const addNewCardTC = (cardsPack_id:string, question:string, answer:string, packItemId:string):
+    ThunkAction<void, AppRootStateType, unknown, ActionType> =>
+    (dispatch) => {
+        dispatch(toggleIsFetchingAC(true))
    packItemApi.postCard(cardsPack_id, question, answer)
        .then(res => {
-           dispatch(addNewCardAC(res.data))
-
+           dispatch(getPackItemTC( packItemId))
        })
        .catch( error => {
 
        })
+       .finally(()=>{
+           dispatch(toggleIsFetchingAC(false))
+       })
 }
 
-export const deleteCardTC = (id: string) =>  (dispatch: DispatchType) => {
+export const deleteCardTC = (id: string, packItemId:string):
+    ThunkAction<void, AppRootStateType, unknown, ActionType> =>
+    (dispatch) => {
+        dispatch(toggleIsFetchingAC(true))
     packItemApi.deleteCard(id)
-        .then(res=>{
-            dispatch(deleteCardAC(id))
+        .then(()=>{
+            dispatch(getPackItemTC( packItemId))
         })
         .catch(error => {
 
         })
+        .finally(()=>{
+            dispatch(toggleIsFetchingAC(false))
+        })
 }
 
-export const updateCardTC = (id: string, newQuestion: string, newAnswer:string) =>  (dispatch: DispatchType) => {
+export const updateCardTC = (id: string, newQuestion: string, newAnswer:string, packItemId:string):
+    ThunkAction<void, AppRootStateType, unknown, ActionType> =>
+    (dispatch) => {
+        dispatch(toggleIsFetchingAC(true))
 packItemApi.updateCard(id, newQuestion, newAnswer )
     .then((res)=>{
-        dispatch(updateCardAC(id, res.data))
+        dispatch(getPackItemTC( packItemId))
     })
     .catch((error)=>{
 
     })
-
+    .finally(()=>{
+        dispatch(toggleIsFetchingAC(false))
+    })
 }
