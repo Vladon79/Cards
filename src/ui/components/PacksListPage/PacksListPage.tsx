@@ -84,10 +84,8 @@ const PacksListPage = ({
                                 value={[minCardsCount, maxCardsCount]}
                                 min={minCardsCount}
                                 max={100}
-
                             />
                         </div>
-
                         <span className={s.span}>{maxCardsCount}</span>
                     </div>
                 </section>
