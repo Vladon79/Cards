@@ -3,7 +3,7 @@ import {
     getCardsTC,
     PackResponseType,
     setMaxMinNumberCardsAC,
-    setPageCountAC,
+    setPageCountAC, setWhosePackAC, WhosePackType,
 } from "../../../bll/reducers/packs-reducer";
 import {useDispatch} from "react-redux";
 import {useAppSelector} from "../../../bll/store";
@@ -12,7 +12,6 @@ import {useEffect, useState} from "react";
 import {useDebounce} from "../../../hooks/useDebounce";
 import {addNewPackTC, deletePackTC, updatePackTC} from "../../../bll/reducers/myPacks-reducer";
 import {useInput} from "../../../hooks/useInput";
-import {ModalType} from "../../../bll/reducers/modal-reducer";
 
 export type sortPacksType = '' | '1updated' | '0updated' | '1cardsCount' | '0cardsCount'
 
@@ -30,11 +29,9 @@ const PacksListPageContainer = () => {
     const page = useAppSelector<number>(state => state.packs.page)
     const minCardsCount = useAppSelector<number>(state => state.packs.minCardsCount)
     const maxCardsCount = useAppSelector<number>(state => state.packs.maxCardsCount)
+    const whosePack = useAppSelector<WhosePackType>(state => state.packs.whosePack)
 
     const myUserID = useAppSelector<string>(state => state.auth.user._id)
-
-
-    const [pack, setPack] = useState<'myPack' | 'allPack'>('myPack')
 
     const search = useInput('', [])
 
@@ -43,8 +40,8 @@ const PacksListPageContainer = () => {
     const maxDebounce = useDebounce(maxCardsCount, 1000)
 
     useEffect(() => {
-        dispatch(getCardsTC(pack, String(searchDebounce), pageCount, minCardsCount, maxCardsCount, sortPacks, page, myUserID))
-    }, [pageCount, minDebounce, pack, maxDebounce, page, myCardPacks, searchDebounce, sortPacks])
+        dispatch(getCardsTC(whosePack, String(searchDebounce), pageCount, minCardsCount, maxCardsCount, sortPacks, page, myUserID))
+    }, [pageCount, minDebounce, whosePack, maxDebounce, page, myCardPacks, searchDebounce, sortPacks])
 
     const setValuesOnSlider = (value: number[]) => {
         dispatch(setMaxMinNumberCardsAC(value[0], value[1]))
@@ -59,10 +56,10 @@ const PacksListPageContainer = () => {
     }
 
     const getMyPacks = () => {
-        setPack('myPack')
+        dispatch(setWhosePackAC('myPack'))
     }
     const getALlPacks = () => {
-        setPack('allPack')
+        dispatch(setWhosePackAC('allPack'))
     }
 
     const addNewPack = (name: string, privateBoolean: boolean) => {
@@ -81,7 +78,8 @@ const PacksListPageContainer = () => {
                           getAllPacks={getALlPacks}
                           setPageCount={setPageCount} pageCount={pageCount} cardPacksTotalCount={cardPacksTotalCount}
                           maxCardsCount={maxCardsCount} minCardsCount={minCardsCount} arrayNumbers={arrayNumbers}
-                          changeNumberPage={changeNumberPage} setValuesOnSlider={setValuesOnSlider} pack={pack}
+                          changeNumberPage={changeNumberPage} setValuesOnSlider={setValuesOnSlider}
+                          whosePack={whosePack}
                           addNewPack={addNewPack}
                           searchValue={search.value} searchOnChange={search.valueChange}
                           sortPacks={sortPacks} setSortPacks={setSortPacks}

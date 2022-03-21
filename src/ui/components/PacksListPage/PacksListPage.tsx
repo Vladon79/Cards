@@ -1,5 +1,5 @@
 import SuperButton from "../../common/c2-SuperButton/SuperButton";
-import {PackResponseType,} from "../../../bll/reducers/packs-reducer";
+import {PackResponseType, WhosePackType,} from "../../../bll/reducers/packs-reducer";
 import HeaderTable from "./Table/HeaderTable/HeaderTable";
 import SuperSelect from "../../common/SuperComponents/SuperSelect";
 import TablePack from "./Table/TablePack/TablePack";
@@ -9,11 +9,10 @@ import Search from "./Search/SearchInput";
 import SuperDoubleRange from "../../common/SuperComponents/SuperDoubleRange";
 import Ava from "../../common/Ava/Ava";
 import {sortPacksType} from "./PacksListPageContainer";
-import {addPackModalAC, setActiveModalAC} from "../../../bll/reducers/modal-reducer";
+import {addPackModalAC} from "../../../bll/reducers/modal-reducer";
 import {useDispatch} from "react-redux";
 import MyModalPage from "./ModalsPage/MyModalPage";
 import Preloader from "../../common/Preloader/Preloader";
-import {useAppSelector} from "../../../bll/store";
 
 type PacksListPagePropsType = {
     pageCount: number
@@ -28,7 +27,7 @@ type PacksListPagePropsType = {
     changeNumberPage: (numberPage: number) => void
     setPageCount: (n: number) => void
     setValuesOnSlider: (value: number[]) => void
-    pack: 'allPack' | 'myPack'
+    whosePack: WhosePackType
     myUserID: string
     searchOnChange: (e: string) => void
     searchValue: string
@@ -53,7 +52,7 @@ const PacksListPage = ({
                            changeNumberPage,
                            setPageCount,
                            setValuesOnSlider,
-                           pack, myUserID, addNewPack, searchOnChange, searchValue,
+                           whosePack, myUserID, addNewPack, searchOnChange, searchValue,
                            sortPacks, setSortPacks,
                            deletePack, updatePack
                        }: PacksListPagePropsType) => {
@@ -68,9 +67,9 @@ const PacksListPage = ({
                 <section className={s.show_packs_cards}>
                     <h6>Show packs cards</h6>
                     <section className={s.buttonSection}>
-                        <SuperButton disabled={pack === 'myPack'} cancel={pack === 'myPack'} className={s.button}
+                        <SuperButton disabled={whosePack === 'myPack'} cancel={whosePack === 'myPack'} className={s.button}
                                      onClick={getMyPacks}>My</SuperButton>
-                        <SuperButton disabled={pack === 'allPack'} cancel={pack === 'allPack'} className={s.button}
+                        <SuperButton disabled={whosePack === 'allPack'} cancel={whosePack === 'allPack'} className={s.button}
                                      onClick={getAllPacks}>All</SuperButton>
                     </section>
                 </section>
@@ -96,6 +95,7 @@ const PacksListPage = ({
 
             <div className={s.rightBlock}>
                 <h2>Packs list</h2>
+                <Preloader />
                 <section className={s.input_button}>
                     <Search searchOnChange={searchOnChange} searchValue={searchValue}/>
                     <SuperButton onClick={() => dispatch(addPackModalAC())}>Add new pack</SuperButton>

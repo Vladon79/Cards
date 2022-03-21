@@ -3,6 +3,8 @@ import {packsApi} from "../../dal/api/packs-api";
 import {sortPacksType} from "../../ui/components/PacksListPage/PacksListPageContainer";
 
 
+export type WhosePackType = 'myPack' | 'allPack'
+
 export type PackResponseType = {
     _id: string
     user_id: string
@@ -13,7 +15,7 @@ export type PackResponseType = {
     user_name: string
 }
 
-export type PacksResponseType = {
+export type PacksReducerType = {
     cardPacks: PackResponseType []
     cardPacksTotalCount: number// количество колод
     startMaxCount: number
@@ -21,9 +23,10 @@ export type PacksResponseType = {
     minCardsCount: number
     page: number// выбранная страница
     pageCount: number
+    whosePack: WhosePackType
 }
 
-const initialState = {
+const initialState: PacksReducerType = {
     cardPacks: [
         {
             _id: "5eb6cef840b7bf1cf0d8122d",
@@ -41,9 +44,10 @@ const initialState = {
     minCardsCount: 0,
     page: 1,
     pageCount: 4,
+    whosePack: 'myPack'
 }
 
-export const packsReducer = (state: PacksResponseType = initialState, action: ActionType): PacksResponseType => {
+export const packsReducer = (state: PacksReducerType = initialState, action: ActionType): PacksReducerType => {
     switch (action.type) {
         case "PACKS/GET-PACKS":
             return {
@@ -59,10 +63,9 @@ export const packsReducer = (state: PacksResponseType = initialState, action: Ac
         case "PACKS/SET-PAGE-COUNT":
             return {...state, pageCount: action.pageCount}
         case "PACKS/SEARCH-PACK":
-            return {
-                ...state, cardPacks: state.cardPacks.filter(c => c.name.includes(action.value) && c
-                )
-            }
+            return {...state, cardPacks: state.cardPacks.filter(c => c.name.includes(action.value) && c)}
+        case "PACKS/SET-WHOSE-PACK":
+            return {...state, whosePack: action.whosePack}
         default:
             return state
     }
@@ -102,42 +105,27 @@ export const searchPackAC = (value: string) => {
     } as const
 }
 
+export const setWhosePackAC = (whosePack: WhosePackType) => {
+    return {
+        type: "PACKS/SET-WHOSE-PACK",
+        whosePack
+    } as const
+}
 
-export const getCardsTC = (pack: 'myPack' | 'allPack',
+
+export const getCardsTC = (whosePack: WhosePackType,
                            packName?: string,
                            cardPacksTotalCount?: number,
                            min?: number, max?: number,
                            sortPacks?: sortPacksType,
                            page?: number, user_id?: string) =>
     async (dispatch: DispatchType) => {
-
-        if (pack === 'myPack') {
-            // debugger
-            // dispatch(toggleIsFetchingAC(true))
+        if (whosePack === 'myPack') {
             const res = await packsApi.getCards(cardPacksTotalCount, packName, min, max, sortPacks, page, user_id)
-            //dispatch(toggleIsFetchingAC(false))
-            try {
-                dispatch(getPacksAC(res.data.cardPacks, res.data.cardPacksTotalCount, res.data.maxCardsCount))
-            } catch (e) {
+            dispatch(getPacksAC(res.data.cardPacks, res.data.cardPacksTotalCount, res.data.maxCardsCount))
 
-            } finally {
-                //dispatch(toggleIsFetchingAC(false))
-                //
-            }
-
-
-        } else if (pack === 'allPack') {
-            //dispatch(toggleIsFetchingAC(true))
+        } else if (whosePack === 'allPack') {
             const res = await packsApi.getCards(cardPacksTotalCount, packName, min, max, sortPacks, page)
-            try {
-                dispatch(getPacksAC(res.data.cardPacks, res.data.cardPacksTotalCount, res.data.maxCardsCount))
-
-            } catch (e) {
-
-            } finally {
-                // dispatch(toggleIsFetchingAC(false))
-            }
-
+            dispatch(getPacksAC(res.data.cardPacks, res.data.cardPacksTotalCount, res.data.maxCardsCount))
         }
-
     }
