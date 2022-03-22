@@ -1,6 +1,7 @@
 @import "./src/styles/sass/mixins";
 
 .box {
+
   @include box();
 
   h3 {

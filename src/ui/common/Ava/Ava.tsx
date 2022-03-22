@@ -1,14 +1,16 @@
 import s from './Ava.module.scss'
+import {useAppSelector} from "../../../bll/store";
+import image from '../../../assets/image/img.png'
 
 type AvaPropsType = {
-    ava: string
+    newAva?: string
 }
 
-const Ava = ({ava}:AvaPropsType) => {
-    //const ava = useSelector<AppRootStateType, string>(state => state.auth.user.avatar ? state.auth.user.avatar : userPhoto)
+const Ava = ({newAva}: AvaPropsType) => {
+    const ava = useAppSelector<string | undefined>(state => state.auth.user.avatar)
     return (
         <div className={s.ava}>
-            <img src={ava} className={s.ava}/>
+            <img src={newAva || ava || image} className={s.ava}/>
         </div>
     )
 }

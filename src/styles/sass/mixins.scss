@@ -40,25 +40,33 @@
 
 @mixin tableBlock() {
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
-  border: 2px solid black;
+  border: 1px solid $authTextColor;
   width: 100%;
-  height: 50px;
+  min-height: 50px;
   @include text(16px, 500, $authTextColor, 1.2);
+  @media screen and (max-width: 1050px) {
+    width: auto;
+  }
 
   .pack_block_name {
-    padding-left: 15px;
+    padding-left: 2%;
     width: 30%;
   }
   .pack_block_cards {
     width: 10%;
   }
   .pack_block_update {
-    width: 20%;
+    display: flex;
+    @include text(12px, 500, $authTextColor, 1.2);
+    width: 25%;
   }
   .pack_block_createdBy {
-    width: 20%;
+    display: flex;
+    white-space: pre;
+    @include text(12px, 500, $authTextColor, 1.2);
+    width: 15%;
   }
   .pack_block_action {
     width: 20%;
@@ -66,3 +74,21 @@
 
 }
 
+@mixin modalBox() {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+  height: 75%;
+  button{
+    margin-top: 15px;
+    width: 40%;
+  }
+  p{
+    margin: 5px;
+    @include text(16px, 500, $textColor, 14px);
+    .packName{
+      font-weight:bolder;
+    }
+  }
+}

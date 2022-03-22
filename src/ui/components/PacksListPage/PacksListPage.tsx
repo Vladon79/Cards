@@ -1,12 +1,18 @@
 import SuperButton from "../../common/c2-SuperButton/SuperButton";
-import {PackResponseType,} from "../../../bll/reducers/packs-reducer";
-import HeaderTable from "./HeaderTable/HeaderTable";
+import {PackResponseType, WhosePackType,} from "../../../bll/reducers/packs-reducer";
+import HeaderTable from "./Table/HeaderTable/HeaderTable";
 import SuperSelect from "../../common/SuperComponents/SuperSelect";
-import TablePack from "./TablePack/TablePack";
+import TablePack from "./Table/TablePack/TablePack";
 import Paginator from "../../common/Paginator/Paginator";
 import s from './PacksListPage.module.scss'
 import Search from "./Search/SearchInput";
 import SuperDoubleRange from "../../common/SuperComponents/SuperDoubleRange";
+import Ava from "../../common/Ava/Ava";
+import {sortPacksType} from "./PacksListPageContainer";
+import {addPackModalAC} from "../../../bll/reducers/modal-reducer";
+import {useDispatch} from "react-redux";
+import MyModalPage from "./ModalsPage/MyModalPage";
+import Preloader from "../../common/Preloader/Preloader";
 
 type PacksListPagePropsType = {
     pageCount: number
@@ -21,13 +27,15 @@ type PacksListPagePropsType = {
     changeNumberPage: (numberPage: number) => void
     setPageCount: (n: number) => void
     setValuesOnSlider: (value: number[]) => void
-    pack: 'allPack' | 'myPack'
+    whosePack: WhosePackType
     myUserID: string
-    addNewPack: () => void
     searchOnChange: (e: string) => void
     searchValue: string
-
-
+    sortPacks: sortPacksType
+    setSortPacks: (value: sortPacksType) => void
+    addNewPack: (name: string, privateBoolean: boolean) => void
+    deletePack: (id: string) => void
+    updatePack: (id: string, newName: string) => void
 }
 
 
@@ -44,50 +52,64 @@ const PacksListPage = ({
                            changeNumberPage,
                            setPageCount,
                            setValuesOnSlider,
-                           pack, myUserID, addNewPack, searchOnChange, searchValue
+                           whosePack, myUserID, addNewPack, searchOnChange, searchValue,
+                           sortPacks, setSortPacks,
+                           deletePack, updatePack
                        }: PacksListPagePropsType) => {
-
+    const dispatch = useDispatch()
 
     return (
         <div className={s.packsListPageContainer}>
             <div className={s.leftBlock}>
-                <h6>Show packs cards</h6>
-                <section className={s.buttonSection}>
-                    <SuperButton disabled={pack === 'myPack'} cancel={pack === 'myPack'} className={s.button}
-                                 onClick={getMyPacks}>My</SuperButton>
-                    <SuperButton disabled={pack === 'allPack'} cancel={pack === 'allPack'} className={s.button}
-                                 onClick={getAllPacks}>All</SuperButton>
-                </section>
-                <h6>Number of cards</h6>
-                <div className={s.superRange_span_block}>
-                    <span className={s.span}>{minCardsCount}</span>
-                    <div className={s.superRange}>
-                        <SuperDoubleRange
-                            onChangeRange={setValuesOnSlider}
-                            value={[minCardsCount, maxCardsCount]}
-                            min={minCardsCount}
-                            max={100}
-
-                        />
-                    </div>
-
-                    <span className={s.span}>{maxCardsCount}</span>
+                <div className={s.avaContainer}>
+                    <Ava/>
                 </div>
+                <section className={s.show_packs_cards}>
+                    <h6>Show packs cards</h6>
+                    <section className={s.buttonSection}>
+                        <SuperButton disabled={whosePack === 'myPack'} cancel={whosePack === 'myPack'} className={s.button}
+                                     onClick={getMyPacks}>My</SuperButton>
+                        <SuperButton disabled={whosePack === 'allPack'} cancel={whosePack === 'allPack'} className={s.button}
+                                     onClick={getAllPacks}>All</SuperButton>
+                    </section>
+                </section>
+                <section className={s.show_packs_cards}>
+                    <h6>Number of cards</h6>
+                    <div className={s.superRange_span_block}>
+                        <span className={s.span}>{minCardsCount}</span>
+                        <div className={s.superRange}>
+                            <SuperDoubleRange
+                                onChangeRange={setValuesOnSlider}
+                                value={[minCardsCount, maxCardsCount]}
+                                min={minCardsCount}
+                                max={100}
+
+                            />
+                        </div>
+
+                        <span className={s.span}>{maxCardsCount}</span>
+                    </div>
+                </section>
 
             </div>
 
             <div className={s.rightBlock}>
                 <h2>Packs list</h2>
+                <Preloader />
                 <section className={s.input_button}>
                     <Search searchOnChange={searchOnChange} searchValue={searchValue}/>
-                    <SuperButton onClick={addNewPack}>Add new pack</SuperButton>
+                    <SuperButton onClick={() => dispatch(addPackModalAC())}>Add new pack</SuperButton>
                 </section>
+
+
                 <section className={s.table}>
-                    <HeaderTable/>
+
+                    <HeaderTable sortPacks={sortPacks} setSortPacks={setSortPacks}/>
                     {cardPacks.map(p => <TablePack key={p._id} id={p._id} myUserID={myUserID} user_id={p.user_id}
                                                    name={p.name}
                                                    cardsCount={p.cardsCount} user_name={p.user_name}
-                                                   updated={p.updated}/>)}
+                                                   updated={p.updated}
+                    />)}
 
                 </section>
 
@@ -99,6 +121,8 @@ const PacksListPage = ({
                            changeNumberPage={changeNumberPage} portionSize={10}/>
 
             </div>
+            <MyModalPage addNewPack={addNewPack} deletePack={deletePack} updatePack={updatePack}/>
+
         </div>
     )
 }

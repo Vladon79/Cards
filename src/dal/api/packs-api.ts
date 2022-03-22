@@ -1,15 +1,17 @@
 import {instance} from "./auth-api";
 
 export const packsApi = {
-    getCards(cardPacksTotalCount?: number, packName?: string, min?: number, max?: number, page?: number, user_id?: string) {
+    getCards(cardPacksTotalCount?: number, packName?: string, min?: number, max?: number, sortPacks?: string, page?: number, user_id?: string,) {
         return instance.get<any>(`cards/pack`, {
             params: {
                 packName,
                 min,
                 max,
+                sortPacks,
                 page,
                 pageCount: cardPacksTotalCount,
-                user_id
+                user_id,
+
             }
         })
     },

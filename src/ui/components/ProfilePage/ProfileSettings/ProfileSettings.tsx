@@ -33,7 +33,7 @@ const ProfileSettings = () => {
     return (
         <section className={s.box}>
             <h3>Profile settings</h3>
-            <Ava ava={ava.value}/>
+            <Ava newAva={ava.value}/>
             <div className={s.input_block}>
                 <SuperInputText className={s.input} name={'Ava'} value={ava.value}
                                 onChange={e => ava.valueChange(e.currentTarget.value)}/>

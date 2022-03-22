@@ -8,7 +8,7 @@ import ErrorBar from "../../../common/ErrorBar/ErrorBar";
 import {useAppSelector} from "../../../../bll/store";
 import {useDispatch} from "react-redux";
 import Preloader from "../../../common/Preloader/Preloader";
-import {sendTokenTC} from "../../../../bll/reducers/auth-reducer";
+import {sendTokenTC, setTokenIsSentAC} from "../../../../bll/reducers/auth-reducer";
 
 
 const ForgotPass = () => {
@@ -34,6 +34,7 @@ const ForgotPass = () => {
         return <Navigate to={'/profile'}/>
     }
     if (sentPassword) {
+        dispatch(setTokenIsSentAC(false))
         return <Navigate to={'/checkEmail'}/>
     }
 
