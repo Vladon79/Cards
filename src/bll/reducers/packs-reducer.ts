@@ -24,6 +24,7 @@ export type PacksReducerType = {
     page: number// выбранная страница
     pageCount: number
     whosePack: WhosePackType
+    packsPreloader: boolean
 }
 
 const initialState: PacksReducerType = {
@@ -44,7 +45,8 @@ const initialState: PacksReducerType = {
     minCardsCount: 0,
     page: 1,
     pageCount: 4,
-    whosePack: 'myPack'
+    whosePack: 'myPack',
+    packsPreloader: false
 }
 
 export const packsReducer = (state: PacksReducerType = initialState, action: ActionType): PacksReducerType => {
@@ -66,6 +68,8 @@ export const packsReducer = (state: PacksReducerType = initialState, action: Act
             return {...state, cardPacks: state.cardPacks.filter(c => c.name.includes(action.value) && c)}
         case "PACKS/SET-WHOSE-PACK":
             return {...state, whosePack: action.whosePack}
+        case "PACKS/SET-PACK-PRELOADER":
+            return {...state, packsPreloader: action.packsPreloader}
         default:
             return state
     }
@@ -112,6 +116,12 @@ export const setWhosePackAC = (whosePack: WhosePackType) => {
     } as const
 }
 
+export const setPackPreloaderAC = (packsPreloader: boolean) => {
+    return {
+        type: "PACKS/SET-PACK-PRELOADER",
+        packsPreloader
+    } as const
+}
 
 export const getCardsTC = (whosePack: WhosePackType,
                            packName?: string,
@@ -120,6 +130,7 @@ export const getCardsTC = (whosePack: WhosePackType,
                            sortPacks?: sortPacksType,
                            page?: number, user_id?: string) =>
     async (dispatch: DispatchType) => {
+        dispatch(setPackPreloaderAC(true))
         if (whosePack === 'myPack') {
             const res = await packsApi.getCards(cardPacksTotalCount, packName, min, max, sortPacks, page, user_id)
             dispatch(getPacksAC(res.data.cardPacks, res.data.cardPacksTotalCount, res.data.maxCardsCount))
@@ -128,4 +139,5 @@ export const getCardsTC = (whosePack: WhosePackType,
             const res = await packsApi.getCards(cardPacksTotalCount, packName, min, max, sortPacks, page)
             dispatch(getPacksAC(res.data.cardPacks, res.data.cardPacksTotalCount, res.data.maxCardsCount))
         }
+        dispatch(setPackPreloaderAC(false))
     }

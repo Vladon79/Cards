@@ -7,12 +7,13 @@ type SuperDoubleRangePropsType = {
     value: [number, number]
     min: number
     max: number
+    disabled?:boolean
     // min, max, step, disable, ...
 }
 
 const SuperDoubleRange: React.FC<SuperDoubleRangePropsType> = (
     {
-        onChangeRange, value, ...restProps
+        onChangeRange, value,disabled, ...restProps
         // min, max, step, disable, ...
     }
 ) => {
@@ -29,6 +30,7 @@ const SuperDoubleRange: React.FC<SuperDoubleRangePropsType> = (
         <>
             <div className={s.slider}>
                 <Slider
+                    disabled={disabled}
                     value={value}
                     onChange={onChangeCallback}
                     valueLabelDisplay="auto"

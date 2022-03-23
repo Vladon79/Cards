@@ -30,6 +30,7 @@ const PacksListPageContainer = () => {
     const minCardsCount = useAppSelector<number>(state => state.packs.minCardsCount)
     const maxCardsCount = useAppSelector<number>(state => state.packs.maxCardsCount)
     const whosePack = useAppSelector<WhosePackType>(state => state.packs.whosePack)
+    const packsPreloader = useAppSelector<boolean>(state => state.packs.packsPreloader)
 
     const myUserID = useAppSelector<string>(state => state.auth.user._id)
 
@@ -83,7 +84,7 @@ const PacksListPageContainer = () => {
                           addNewPack={addNewPack}
                           searchValue={search.value} searchOnChange={search.valueChange}
                           sortPacks={sortPacks} setSortPacks={setSortPacks}
-                          deletePack={deletePack} updatePack={updatePack}/>
+                          deletePack={deletePack} updatePack={updatePack} packsPreloader={packsPreloader}/>
 }
 
 export default PacksListPageContainer

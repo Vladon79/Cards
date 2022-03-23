@@ -36,6 +36,7 @@ type PacksListPagePropsType = {
     addNewPack: (name: string, privateBoolean: boolean) => void
     deletePack: (id: string) => void
     updatePack: (id: string, newName: string) => void
+    packsPreloader: boolean
 }
 
 
@@ -54,7 +55,7 @@ const PacksListPage = ({
                            setValuesOnSlider,
                            whosePack, myUserID, addNewPack, searchOnChange, searchValue,
                            sortPacks, setSortPacks,
-                           deletePack, updatePack
+                           deletePack, updatePack, packsPreloader
                        }: PacksListPagePropsType) => {
     const dispatch = useDispatch()
 
@@ -67,9 +68,11 @@ const PacksListPage = ({
                 <section className={s.show_packs_cards}>
                     <h6>Show packs cards</h6>
                     <section className={s.buttonSection}>
-                        <SuperButton disabled={whosePack === 'myPack'} cancel={whosePack === 'myPack'} className={s.button}
+                        <SuperButton disabled={whosePack === 'myPack'} cancel={whosePack === 'myPack'}
+                                     className={s.button}
                                      onClick={getMyPacks}>My</SuperButton>
-                        <SuperButton disabled={whosePack === 'allPack'} cancel={whosePack === 'allPack'} className={s.button}
+                        <SuperButton disabled={whosePack === 'allPack'} cancel={whosePack === 'allPack'}
+                                     className={s.button}
                                      onClick={getAllPacks}>All</SuperButton>
                     </section>
                 </section>
@@ -79,6 +82,7 @@ const PacksListPage = ({
                         <span className={s.span}>{minCardsCount}</span>
                         <div className={s.superRange}>
                             <SuperDoubleRange
+                                disabled={!!packsPreloader}
                                 onChangeRange={setValuesOnSlider}
                                 value={[minCardsCount, maxCardsCount]}
                                 min={minCardsCount}
@@ -95,13 +99,16 @@ const PacksListPage = ({
 
             <div className={s.rightBlock}>
                 <h2>Packs list</h2>
-                <Preloader />
+
+
                 <section className={s.input_button}>
                     <Search searchOnChange={searchOnChange} searchValue={searchValue}/>
-                    <SuperButton onClick={() => dispatch(addPackModalAC())}>Add new pack</SuperButton>
+                    <SuperButton disabled={!!packsPreloader} onClick={() => dispatch(addPackModalAC())}>Add new
+                        pack</SuperButton>
                 </section>
-
-
+                <section className={s.preloaderSection}>
+                    {!!packsPreloader && <Preloader/>}
+                </section>
                 <section className={s.table}>
 
                     <HeaderTable sortPacks={sortPacks} setSortPacks={setSortPacks}/>
@@ -113,11 +120,13 @@ const PacksListPage = ({
 
                 </section>
 
+
                 <SuperSelect options={arrayNumbers}
                              value={pageCount}
                              onChangeOption={setPageCount}/>
 
-                <Paginator totalCount={cardPacksTotalCount} pageSize={pageCount} currentPage={page}
+                <Paginator disabled={!!packsPreloader} totalCount={cardPacksTotalCount} pageSize={pageCount}
+                           currentPage={page}
                            changeNumberPage={changeNumberPage} portionSize={10}/>
 
             </div>
