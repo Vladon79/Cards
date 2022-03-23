@@ -29,6 +29,7 @@ const SignIn = () => {
     const passwordInputMode: InputFieldType = !password.isShow ? 'password' : 'text'
     const formIsValid = !!(email.value && !email.error && !password.error)
     const signInBtnClass = `${s.sign_in_btn} ${!formIsValid ? s.btn_not_allowed : null}`
+    /*console.log(formIsValid)*/
 
 
     const signInBtnClickHandler = () => {
