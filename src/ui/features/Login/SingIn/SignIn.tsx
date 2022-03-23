@@ -4,7 +4,7 @@ import {Navigate, NavLink, useNavigate} from "react-router-dom";
 import {useCheckBox} from "../../../../hooks/useCheckBox";
 import s from './SignIn.module.scss'
 import Preloader from "../../../common/Preloader/Preloader";
-import React from "react";
+import React, {useEffect} from "react";
 import {InputFieldType} from "../SignUp/SignUp";
 import {signUpAC} from "../../../../bll/reducers/sign-up-reducer";
 import {useInput} from "../../../../hooks/useInput";
@@ -13,6 +13,7 @@ import ErrorBar from "../../../common/ErrorBar/ErrorBar";
 import SuperButton from "../../../common/c2-SuperButton/SuperButton";
 import SuperCheckbox from "../../../common/c3-SuperCheckbox/SuperCheckbox";
 import {singInTC} from "../../../../bll/reducers/sing-in-reducer";
+import {setPasswordIsCreatedAC} from "../../../../bll/reducers/auth-reducer";
 
 
 const SignIn = () => {
@@ -29,8 +30,10 @@ const SignIn = () => {
     const passwordInputMode: InputFieldType = !password.isShow ? 'password' : 'text'
     const formIsValid = !!(email.value && !email.error && !password.error)
     const signInBtnClass = `${s.sign_in_btn} ${!formIsValid ? s.btn_not_allowed : null}`
-    /*console.log(formIsValid)*/
 
+    useEffect(()=> {
+        dispatch(setPasswordIsCreatedAC(false))
+    },[])
 
     const signInBtnClickHandler = () => {
         dispatch(singInTC(singInData))
