@@ -6,7 +6,7 @@ import {
     changeNumberPageAC,
     getPacksAC,
     searchPackAC,
-    setMaxMinNumberCardsAC,
+    setMaxMinNumberCardsAC, setPackPreloaderAC,
     setPageCountAC, setWhosePackAC
 } from "./reducers/packs-reducer";
 import {addPacksAC, deletePackAC, updatePackAC} from "./reducers/myPacks-reducer";
@@ -41,6 +41,7 @@ export type ActionType =
     | ChangeNumberPageCardsAT
     | SavePackItemIdAT
     | setWhosePackAT
+    | setPackPreloaderAT
 
     | AddNewCardAT
     | DeleteCardAT
@@ -78,6 +79,7 @@ export type SetCardsCountAT = ReturnType<typeof setCardsCountAC>
 export type ChangeNumberPageCardsAT = ReturnType<typeof changeNumberPageCardsAC>
 export type SavePackItemIdAT = ReturnType<typeof savePackItemIdAC>
 export type setWhosePackAT = ReturnType<typeof setWhosePackAC>
+export type setPackPreloaderAT = ReturnType<typeof setPackPreloaderAC>
 
 
 export type AddNewCardAT = ReturnType<typeof addNewCardAC>

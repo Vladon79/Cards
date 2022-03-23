@@ -1,6 +1,6 @@
 import {ActionType, DispatchType} from "../action-dispatchTypes";
 import {packsApi} from "../../dal/api/packs-api";
-import {getCardsTC, PackResponseType} from "./packs-reducer";
+import {getCardsTC, PackResponseType, setPackPreloaderAC} from "./packs-reducer";
 import {Dispatch} from "redux";
 import {log} from "util";
 import {setActiveModalAC} from "./modal-reducer";
@@ -63,20 +63,26 @@ export const updatePackAC = (id: string, updatePack: PackResponseType) => {
 
 
 export const deletePackTC = (id: string) => async (dispatch: DispatchType) => {
+    dispatch(setPackPreloaderAC(true))
     await packsApi.deletePack(id)
     dispatch(setActiveModalAC(false))
     dispatch(deletePackAC(id))
+    dispatch(setPackPreloaderAC(false))
 }
 
 export const addNewPackTC = (name: string, privateBoolean: boolean) => async (dispatch: DispatchType) => {
+    dispatch(setPackPreloaderAC(true))
     const res = await packsApi.addPack(name, privateBoolean)
     dispatch(setActiveModalAC(false))
     dispatch(addPacksAC(res.data.newCardsPack))
+    dispatch(setPackPreloaderAC(false))
 }
 
 
 export const updatePackTC = (id: string, newName: string) => async (dispatch: DispatchType) => {
+    dispatch(setPackPreloaderAC(true))
     const res = await packsApi.updatePack(id, newName)
     dispatch(setActiveModalAC(false))
     dispatch(updatePackAC(id, res.data.updatedCardsPack))
+    dispatch(setPackPreloaderAC(false))
 }

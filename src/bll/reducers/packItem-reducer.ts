@@ -1,7 +1,6 @@
 import {ActionType} from "../action-dispatchTypes";
 import {Dispatch} from "redux";
 import {packItemApi} from "../../dal/api/packItem-api";
-import {toggleIsFetchingAC} from "./app-reducer";
 
 export type PackItemType = {
     answer: string
