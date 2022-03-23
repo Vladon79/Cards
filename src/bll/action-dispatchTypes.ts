@@ -1,6 +1,13 @@
 import {Dispatch} from "redux";
 import {setAppErrorAC, setAppInitializeAC, toggleIsFetchingAC} from "./reducers/app-reducer";
-import {authMeAC, changeProfileAC, setSentPassAC, setTokenIsSentAC, signOutAC} from "./reducers/auth-reducer";
+import {
+    authMeAC,
+    changeProfileAC,
+    setPasswordIsCreatedAC,
+    setSentPassAC,
+    setTokenIsSentAC,
+    signOutAC
+} from "./reducers/auth-reducer";
 import {signUpAC} from "./reducers/sign-up-reducer";
 import {
     changeNumberPageAC,
@@ -34,6 +41,7 @@ export type ActionType =
     | updatePackAT
     | searchPackAT
     | setPassIsSentAT
+    | setPasswordIsCreatedAT
 
     | GetPackItemAT
     | SetMinMaxGradeAT
@@ -65,6 +73,7 @@ export type setMaxMinNumberCardsAT = ReturnType<typeof setMaxMinNumberCardsAC>
 export type setPageCountAT = ReturnType<typeof setPageCountAC>
 export type setTokenIsSentAT = ReturnType<typeof setTokenIsSentAC>
 export type setPassIsSentAT = ReturnType<typeof setSentPassAC>
+export type setPasswordIsCreatedAT = ReturnType<typeof setPasswordIsCreatedAC>
 
 
 export type deletePackAT = ReturnType<typeof deletePackAC>

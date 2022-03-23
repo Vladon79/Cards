@@ -72,7 +72,6 @@ export type SingInResponseType = {
     isAdmin: boolean;
     verified: boolean;
     rememberMe: boolean;
-
     error?: string;
 }
 

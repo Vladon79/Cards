@@ -21,12 +21,14 @@ type StateType = {
     isAuth: boolean
     user: UserType
     tokenIsSent: boolean
+    passwordIsCreated: boolean
     sentPassword: string
 }
 
 const initialState: StateType = {
     isAuth: false,
     tokenIsSent: false,
+    passwordIsCreated: false,
     sentPassword: '',
     user: {
         _id: "0",
@@ -94,6 +96,14 @@ export const setSentPassAC = (value: string) => {
     } as const
 }
 
+export const setPasswordIsCreatedAC = (value: boolean) => {
+    return {
+        type: "AUTH/SET-PASS-IS-CREATED",
+        value
+    } as const
+}
+
+
 export const authMeTC = () => async (dispatch: DispatchType) => {
     dispatch(toggleIsFetchingAC(true))
     try {
@@ -120,7 +130,7 @@ export const changeProfileTC = (name: string, avatar: string) => async (dispatch
 }
 
 export const sendTokenTC = (email: string) => async (dispatch: DispatchType) => {
-    const message = "\n<div style=\"background-color: lime; padding: 15px\">\npassword recovery link: \n<a href=' https://vladon79.github.io/Project/#/set-new-password/$token$'>link</a>\n</div>\n"
+    const message = "\n<div style=\"background-color: lime; padding: 15px\">\npassword recovery link: \n<a href=' https://Vladon79.github.io/Project/#/set-new-password/$token$'>link</a>\n</div>\n"
     try {
         await authApi.forgot(email, 'Password reset', message)
         dispatch(setSentPassAC(email))
@@ -136,6 +146,7 @@ export const setNewPass = (password: string, token: string | undefined) => async
     try {
         await authApi.newPass(password, token)
         dispatch(setTokenIsSentAC(true))
+        dispatch(setPasswordIsCreatedAC(true))
     } catch (err) {
         handleServerAppError(dispatch, err)
     } finally {
