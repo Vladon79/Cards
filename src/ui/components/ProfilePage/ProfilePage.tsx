@@ -28,9 +28,9 @@ const ProfilePage = () => {
             <h3>Personal Information</h3>
             <Ava/>
             <div className={s.userData}>
-                <p>email: {user.email}</p>
-                <p> public Card Packs Count: {user.publicCardPacksCount}</p>
-                <p>nik name:{user.name}</p>
+                <p>email:<a> {user.email}</a></p>
+                <p>Public card packs count:<a> {user.publicCardPacksCount}</a></p>
+                <p>nik name:<a> {user.name}</a></p>
             </div>
             <div className={s.button_block}>
                 <SuperButton onClick={profileSettings}>Edit profile</SuperButton>

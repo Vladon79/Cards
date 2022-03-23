@@ -29,10 +29,10 @@ const SuperCheckbox: React.FC<SuperCheckboxPropsType> = (
         }
     }
 
-    const finalInputClassName = `${s.checkbox} ${className && className}`
+    const finalInputClassName = `${className && className} ${s.checkbox} `
 
     return (
-        <label className={s.checkboxLabel} >
+        <label className={s.checkboxLabel}>
             <input
                 type={'checkbox'}
                 onChange={onChangeCallback}

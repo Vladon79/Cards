@@ -36,7 +36,7 @@ const App = () => {
 
 
     return (
-        <div className="App">
+        <div className={s.app}>
             <Header/>
             {isFetching
                 ? <Preloader/>

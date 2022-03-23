@@ -4,6 +4,7 @@
 .main_box {
   display: flex;
   justify-content: center;
+  height: min-content;
 }
 
 .sign_in_box {
@@ -35,7 +36,7 @@
 }
 
 .input_box_buttons {
-  margin: 92px 33px 0 33px;
+  margin: 50px 33px 0 33px;
   display: flex;
   justify-content: center;
 }
@@ -46,10 +47,10 @@
 
 
 .forgot {
-  margin-top: 48px;
+  margin-top: 25px;
   margin-right: 51px;
   display: flex;
-  justify-content: space-around;
+  justify-content: flex-end;
   text-underline: none;
 }
 
@@ -103,9 +104,10 @@
 }
 
 .sign_in_checkbox_box {
+  @include text(18px, 600, $authTextColor, 2px);
   display: flex;
   justify-content: flex-end;
-  margin-top: 20px;
-  margin-right: 80px;
+  margin-top: 40px;
+  margin-right: 40px;
 }
 

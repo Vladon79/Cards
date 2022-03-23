@@ -1,4 +1,6 @@
 @import "./src/styles/sass/mixins";
+@import "./src/styles/sass/variables";
+
 
 .box {
   @include box();
@@ -13,15 +15,19 @@
     margin: 40px 0 20px;
 
     p {
-      @include text(18px, 500, $authTextColor, 1);
+      @include text(18px, 1000, $authTextColor, 1);
       margin: 10px;
+      a{
+        @include text(18px, 1000, $primaryColor, 1);
+      }
     }
 
 
   }
   .button_block {
     display: flex;
-    justify-content: center;
+    width: 100%;
+    justify-content: space-around;
     margin: 30px;
   }
 

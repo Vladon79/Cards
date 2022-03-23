@@ -2,11 +2,13 @@
 @import "src/styles/sass/variables";
 
 .packsListPageContainer {
+  height: min-content;
   display: flex;
   width: 80%;
   margin-top: 84px;
   border: $authTextColor solid 1px;
   border-radius: 8px;
+  background-color: $authBlockColor;
   @media screen and (max-width: 1050px) {
     display: flex;
     flex-direction: column;

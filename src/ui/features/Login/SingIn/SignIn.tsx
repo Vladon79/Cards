@@ -68,6 +68,14 @@ const SignIn = () => {
                     <div className={s.forgot}>
                         <NavLink className={s.forgot_link} children={'Forgot Password'} to={'/forgotPass'}/>
                     </div>
+                    <div className={s.sign_in_checkbox_box}>
+                        <SuperCheckbox
+                            checked={rememberMe.isChecked}
+                            onChange={rememberMe.toggleChecked}
+                        >
+                            Remember me
+                        </SuperCheckbox>
+                    </div>
                     <div className={s.input_box_buttons}>
                         <SuperButton
                             onClick={signInBtnClickHandler}
@@ -77,14 +85,7 @@ const SignIn = () => {
                             Login
                         </SuperButton>
                     </div>
-                    <div className={s.sign_in_checkbox_box}>
-                        <SuperCheckbox
-                            checked={rememberMe.isChecked}
-                            onChange={rememberMe.toggleChecked}
-                        >
-                            Remember me
-                        </SuperCheckbox>
-                    </div>
+
                     <div className={s.account_text}>Don’t have an account?</div>
                     <div className={s.sign_up_text}>
                         <span onClick={signUpLinkHandler} className={s.sign_up_link}>Sign Up</span>

@@ -10,14 +10,21 @@ header {
   left: 0;
   width: 100%;
   z-index: 3;
-  background-color: $blockColor;
+  background-color: #ECECF9;
 
-  .link {
-    text-decoration: none;
-    @include text(18px, 600, $primaryColor, 1.2)
+  .navlinkContainer {
+    padding: 20px;
+
+    .link {
+      text-decoration: none;
+      @include text(18px, 600, $primaryColor, 1.2)
+    }
+
+    .linkActive {
+      text-decoration: none;
+      @include text(18px, 600, $textColor, 1.2);
+    }
   }
-  .linkActive{
-    text-decoration: none;
-    @include text(18px, 600, $textColor, 1.2)
-  }
+
+
 }

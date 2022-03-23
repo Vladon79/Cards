@@ -2,9 +2,11 @@
 @import "./src/styles/sass/mixins";
 
 .content {
+  min-height: 100vh;
+  background: linear-gradient(180deg, $authBlockColor 0%, $primaryColor 150%);
   display: flex;
   justify-content: center;
-  background-color: $bgColor;
+  //background-color: $bgColor;
 }
 
 h2 {
@@ -24,3 +26,4 @@ h4 {
   text-decoration: none;
   @include text(18px, 600, $primaryColor, 1.2)
 }
+
