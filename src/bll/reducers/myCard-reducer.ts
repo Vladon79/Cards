@@ -4,6 +4,7 @@ import {packItemApi} from "../../dal/api/packItem-api";
 import {AppRootStateType} from "../store";
 import { ThunkAction } from "redux-thunk";
 import {toggleIsFetchingAC} from "./app-reducer";
+import {setActiveModalCardAC} from "./modalCard-reducer";
 
 export type sortCardsType = '' | '1question' | '0question' | '1answer' | '0answer' | '1updated' | '0updated' | '1grade' | '0grade'
 
@@ -77,8 +78,9 @@ export const addNewCardTC = (cardsPack_id:string, question:string, answer:string
     (dispatch) => {
         dispatch(toggleIsFetchingAC(true))
    packItemApi.postCard(cardsPack_id, question, answer)
-       .then(res => {
+       .then(() => {
            dispatch(getPackItemTC( packItemId))
+           dispatch(setActiveModalCardAC(false))
        })
        .catch( error => {
 
@@ -95,6 +97,7 @@ export const deleteCardTC = (id: string, packItemId:string):
     packItemApi.deleteCard(id)
         .then(()=>{
             dispatch(getPackItemTC( packItemId))
+            dispatch(setActiveModalCardAC(false))
         })
         .catch(error => {
 

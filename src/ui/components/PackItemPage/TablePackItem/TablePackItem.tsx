@@ -1,22 +1,23 @@
+import React from "react";
+
 import s from './TablePackItem.module.scss'
+
 import {useAppSelector} from "../../../../bll/store";
 import {PackItemResponseType} from "../../../../bll/reducers/packItem-reducer";
-import React from "react";
 import {sortCardsType} from "../../../../bll/reducers/myCard-reducer";
-import {useDispatch} from "react-redux";
 
 type TablePackItemType = {
-    sortCards:sortCardsType,
-    setSortCards: ( sortCards:sortCardsType )=>void
+    sortCards: sortCardsType,
+    setSortCards: (sortCards: sortCardsType) => void
 }
 
-const TablePackItem = ({sortCards, setSortCards}:TablePackItemType) => {
+const TablePackItem = ({sortCards, setSortCards}: TablePackItemType) => {
+
     const packItem = useAppSelector<PackItemResponseType>(state => state.packItem)
     const myUserID = useAppSelector<string>(state => state.auth.user._id)
 
-    const dispatch = useDispatch()
     const questionSort = () => {
-        if (sortCards !== '1question' && sortCards !==  '0question') {
+        if (sortCards !== '1question' && sortCards !== '0question') {
             setSortCards('1question')
         } else if (sortCards === '1question') {
             setSortCards('0question')
@@ -27,7 +28,7 @@ const TablePackItem = ({sortCards, setSortCards}:TablePackItemType) => {
 
 
     const answerSort = () => {
-        if (sortCards !== '1answer' && sortCards !==  '0answer') {
+        if (sortCards !== '1answer' && sortCards !== '0answer') {
             setSortCards('1answer')
         } else if (sortCards === '1answer') {
             setSortCards('0answer')
@@ -37,32 +38,22 @@ const TablePackItem = ({sortCards, setSortCards}:TablePackItemType) => {
     }
 
     const updateSort = () => {
-
         if (sortCards !== '1updated' && sortCards !== '0updated') {
-            //dispatch(sortCardAC('1updated'))
             setSortCards('1updated')
         } else if (sortCards === "1updated") {
-            //dispatch(sortCardAC('0updated'))
             setSortCards('0updated')
         } else {
-            //dispatch(sortCardAC('0updated'))
             setSortCards('1updated')
-
         }
     }
 
     const gradeSort = () => {
-
         if (sortCards !== '1grade' && sortCards !== '0grade') {
-            //dispatch(sortCardAC('1updated'))
             setSortCards('1grade')
         } else if (sortCards === "1grade") {
-            //dispatch(sortCardAC('0updated'))
             setSortCards('0grade')
         } else {
-            //dispatch(sortCardAC('0updated'))
             setSortCards('1grade')
-
         }
     }
 
@@ -71,9 +62,9 @@ const TablePackItem = ({sortCards, setSortCards}:TablePackItemType) => {
             <p className={s.pack_block_question} onClick={questionSort}>
                 Question
                 {
-                    sortCards !==  '1question' && sortCards !== '0question'
-                        ? <span></span>
-                        : sortCards ===  '1question'
+                    sortCards !== '1question' && sortCards !== '0question'
+                        ? <span> </span>
+                        : sortCards === '1question'
                             ? <span className={s.arrow}>⬆</span>
                             : <span className={s.arrow}>⬇</span>
                 }
@@ -81,9 +72,9 @@ const TablePackItem = ({sortCards, setSortCards}:TablePackItemType) => {
             <p className={s.pack_block_answer} onClick={answerSort}>
                 Answer
                 {
-                    sortCards !==  '1answer' && sortCards !== '0answer'
-                        ? <span></span>
-                        : sortCards ===  '1answer'
+                    sortCards !== '1answer' && sortCards !== '0answer'
+                        ? <span> </span>
+                        : sortCards === '1answer'
                             ? <span className={s.arrow}>⬆</span>
                             : <span className={s.arrow}>⬇</span>
                 }
@@ -92,7 +83,7 @@ const TablePackItem = ({sortCards, setSortCards}:TablePackItemType) => {
                 Last update
                 {
                     sortCards !== '1updated' && sortCards !== '0updated'
-                        ? <span></span>
+                        ? <span> </span>
                         : sortCards === "1updated"
                             ? <span className={s.arrow}>⬆</span>
                             : <span className={s.arrow}>⬇</span>
@@ -102,9 +93,9 @@ const TablePackItem = ({sortCards, setSortCards}:TablePackItemType) => {
             <p className={s.pack_block_grade} onClick={gradeSort}>
                 Grade
                 {
-                    sortCards !==  '1grade' && sortCards !==  '0grade'
-                        ? <span></span>
-                        : sortCards ===  '1grade'
+                    sortCards !== '1grade' && sortCards !== '0grade'
+                        ? <span> </span>
+                        : sortCards === '1grade'
                             ? <span className={s.arrow}>⬆</span>
                             : <span className={s.arrow}>⬇</span>
                 }
@@ -113,4 +104,4 @@ const TablePackItem = ({sortCards, setSortCards}:TablePackItemType) => {
         </div>
     )
 }
-export default React.memo( TablePackItem)
+export default React.memo(TablePackItem)

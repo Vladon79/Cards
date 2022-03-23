@@ -1,5 +1,7 @@
 import React, {useEffect, useState} from 'react';
-import {useAppSelector} from "../../../bll/store";
+import {useNavigate} from "react-router-dom";
+import {useDispatch} from "react-redux";
+
 import {
     changeNumberPageCardsAC,
     getPackItemTC,
@@ -8,29 +10,30 @@ import {
     setCardsCountAC,
     setMaxMinGradeAC
 } from "../../../bll/reducers/packItem-reducer";
+import {addCardModalAC, modalCardReducerType} from "../../../bll/reducers/modalCard-reducer";
+import {addNewCardTC, deleteCardTC, sortCardsType, updateCardTC} from "../../../bll/reducers/myCard-reducer";
+import {useAppSelector} from "../../../bll/store";
+
+import s from "../PacksListPage/PacksListPage.module.scss";
+
 import Card from './Card/Card';
 import TablePackItem from './TablePackItem/TablePackItem';
-import {useNavigate} from "react-router-dom";
+import MyModalPageCard from "./ModalsPageForCards/MyModalPageCard";
+
 import SuperButton from "../../common/c2-SuperButton/SuperButton";
-import s from "../PacksListPage/PacksListPage.module.scss";
 import SuperDoubleRange from "../../common/SuperComponents/SuperDoubleRange";
 import SuperSelect from "../../common/SuperComponents/SuperSelect";
-import Paginator from "../../common/Paginator/Paginator";
-import {useDispatch} from "react-redux";
-import WindowForAddNewCard from "./WindowForAddNewCard/windowForAddNewCard";
-import {useDebounce} from "../../../hooks/useDebounce";
 import Preloader from "../../common/Preloader/Preloader";
+import Paginator from "../../common/Paginator/Paginator";
+
+import {useDebounce} from "../../../hooks/useDebounce";
 import Search from "../PacksListPage/Search/SearchInput";
 import {useInput} from "../../../hooks/useInput";
-import {sortCardsType} from "../../../bll/reducers/myCard-reducer";
-import MyModalPageCard from "./ModalsPageForCards/MyModalPageCard";
-import {addCardModalAC} from "../../../bll/reducers/modalCard-reducer";
 
 
 const PackItem = () => {
 
     const arrayNumbers = [4, 5, 6, 7, 8, 9, 10]
-    const [showWindowAddNewCard, setShowWindowAddNewCard] = useState<boolean>(false)
 
     const isFetching = useAppSelector<boolean>(state => state.app.isFetching)
     const packItem = useAppSelector<PackItemResponseType>(state => state.packItem)
@@ -39,6 +42,7 @@ const PackItem = () => {
     const pageCount = useAppSelector<number>(state => state.packItem.pageCount)
     const page = useAppSelector<number>(state => state.packItem.page)
     const myUserID = useAppSelector<string>(state => state.auth.user._id)
+    const modalCard = useAppSelector<modalCardReducerType>(state => state.modalCard)
 
     const dispatch = useDispatch()
     const navigate = useNavigate()
@@ -57,7 +61,6 @@ const PackItem = () => {
 
 
     useEffect(() => {
-        console.log('work useEffect packItem')
         dispatch(getPackItemTC(packItemId,
             page,
             pageCount,
@@ -68,11 +71,6 @@ const PackItem = () => {
             sortCards))
     }, [page, pageCount, minGradeDebounce, maxGradeDebounce, searchDebounce, sortCards, packItem.minGrade,
         packItem.maxGrade,])
-
-
-    const handleBackToPackList = () => {
-        navigate('/packsList')
-    };
 
     const setValuesOnSlider = (value: number[]) => {
         dispatch(setMaxMinGradeAC(value[0], value[1]))
@@ -87,27 +85,30 @@ const PackItem = () => {
     };
 
     const addNewCard = () => {
-
+        //dispatch(addNewCardTC(packItemId, modalCard.question, modalCard.answer,))
     };
 
     const deleteCard = () => {
-
+        dispatch(deleteCardTC(modalCard.packId, modalCard.cardId))
     };
 
     const updateCard = () => {
+        dispatch(updateCardTC(modalCard.packId, modalCard.question, modalCard.answer, modalCard.cardId))
+    };
 
+    const handleBackToPackList = () => {
+        navigate('/packsList')
     };
 
     return (
-        <>  {isFetching && <Preloader/>}
-            {showWindowAddNewCard && <WindowForAddNewCard setShowWindowAddNewCard={setShowWindowAddNewCard}/>}
-            {!showWindowAddNewCard &&
+        <>
+            {isFetching && <Preloader/>}
             <div className={s.packsListPageContainer}>
                 <div className={s.leftBlock}>
                     <SuperButton className={s.doubleButton} onClick={handleBackToPackList}>Back to Pack
                         List</SuperButton>
                     {myUserID === packItem.packUserId &&
-                    <SuperButton className={s.doubleButton} onClick={()=> dispatch(addCardModalAC())}>Add New
+                    <SuperButton className={s.doubleButton} onClick={() => dispatch(addCardModalAC(packItemId, modalCard.question, modalCard.answer))}>Add New
                         Card</SuperButton>}
 
                     <section className={s.show_packs_cards}>
@@ -156,8 +157,8 @@ const PackItem = () => {
                     />
                 </div>
             </div>
-            }
             <MyModalPageCard addNewCard={addNewCard} deleteCard={deleteCard} updateCard={updateCard}/>
+
         </>
     );
 };

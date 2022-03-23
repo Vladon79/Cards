@@ -1,5 +1,4 @@
 import SuperButton from "../../../../common/c2-SuperButton/SuperButton";
-import SuperInputText from "../../../../common/c1-SuperInputText/SuperInputText";
 import s from './AddPacks.module.scss'
 import {useInput} from "../../../../../hooks/useInput";
 import SuperCheckbox from "../../../../common/c3-SuperCheckbox/SuperCheckbox";
