@@ -2,8 +2,8 @@ import React from 'react';
 import SuperButton from "../../../../common/c2-SuperButton/SuperButton";
 import s from "../TablePackItem.module.scss";
 import {useDispatch} from "react-redux";
-import {deleteCardTC, updateCardTC} from "../../../../../bll/reducers/myCard-reducer";
 import {useAppSelector} from "../../../../../bll/store";
+import {deleteCardModalAC, updateCardModalAC} from "../../../../../bll/reducers/modalCard-reducer";
 
 type RefactorMyCardType = {
     _id: string,
@@ -16,11 +16,13 @@ const RefactorMyCard = ({_id, newQuestion, newAnswer}: RefactorMyCardType) => {
     const dispatch = useDispatch()
 
     const deleteCard = () => {
-        dispatch(deleteCardTC(_id, packItemId))
+        dispatch(deleteCardModalAC(_id, packItemId))
+        //dispatch(deleteCardTC(_id, packItemId))
     };
 
     const updateCard = () => {
-        dispatch(updateCardTC(_id, newQuestion, newAnswer, packItemId))
+        dispatch(updateCardModalAC(_id, newQuestion, newAnswer, packItemId))
+        // dispatch(updateCardTC(_id, newQuestion, newAnswer, packItemId))
     };
 
     return (

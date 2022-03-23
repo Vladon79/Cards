@@ -22,12 +22,14 @@ import {useDebounce} from "../../../hooks/useDebounce";
 import Preloader from "../../common/Preloader/Preloader";
 import Search from "../PacksListPage/Search/SearchInput";
 import {useInput} from "../../../hooks/useInput";
+import {sortCardsType} from "../../../bll/reducers/myCard-reducer";
+import MyModalPageCard from "./ModalsPageForCards/MyModalPageCard";
+import {addCardModalAC} from "../../../bll/reducers/modalCard-reducer";
 
 
 const PackItem = () => {
 
     const arrayNumbers = [4, 5, 6, 7, 8, 9, 10]
-
     const [showWindowAddNewCard, setShowWindowAddNewCard] = useState<boolean>(false)
 
     const isFetching = useAppSelector<boolean>(state => state.app.isFetching)
@@ -41,6 +43,8 @@ const PackItem = () => {
     const dispatch = useDispatch()
     const navigate = useNavigate()
 
+    const [sortCards, setSortCards] = useState<sortCardsType>('')
+
     const search = useInput('', [])
 
     const searchDebounce = useDebounce(search.value, 1500)
@@ -51,15 +55,24 @@ const PackItem = () => {
     const NO_CARDS = cards.length === 0
     const MAX_RANGE_COUNT = 6
 
+
     useEffect(() => {
-        dispatch(getPackItemTC(packItemId, page, pageCount, packItem.minGrade, packItem.maxGrade, String(searchDebounce), String(searchDebounce)))
-    }, [page, pageCount, minGradeDebounce, maxGradeDebounce, searchDebounce])
+        console.log('work useEffect packItem')
+        dispatch(getPackItemTC(packItemId,
+            page,
+            pageCount,
+            packItem.minGrade,
+            packItem.maxGrade,
+            String(searchDebounce),
+            String(searchDebounce),
+            sortCards))
+    }, [page, pageCount, minGradeDebounce, maxGradeDebounce, searchDebounce, sortCards, packItem.minGrade,
+        packItem.maxGrade,])
 
 
     const handleBackToPackList = () => {
         navigate('/packsList')
     };
-
 
     const setValuesOnSlider = (value: number[]) => {
         dispatch(setMaxMinGradeAC(value[0], value[1]))
@@ -73,6 +86,18 @@ const PackItem = () => {
         dispatch(changeNumberPageCardsAC(num))
     };
 
+    const addNewCard = () => {
+
+    };
+
+    const deleteCard = () => {
+
+    };
+
+    const updateCard = () => {
+
+    };
+
     return (
         <>  {isFetching && <Preloader/>}
             {showWindowAddNewCard && <WindowForAddNewCard setShowWindowAddNewCard={setShowWindowAddNewCard}/>}
@@ -82,10 +107,11 @@ const PackItem = () => {
                     <SuperButton className={s.doubleButton} onClick={handleBackToPackList}>Back to Pack
                         List</SuperButton>
                     {myUserID === packItem.packUserId &&
-                    <SuperButton className={s.doubleButton} onClick={() => setShowWindowAddNewCard(true)}>Add New
+                    <SuperButton className={s.doubleButton} onClick={()=> dispatch(addCardModalAC())}>Add New
                         Card</SuperButton>}
+
                     <section className={s.show_packs_cards}>
-                        <h6>Number of cards</h6>
+                        <h6>Grade of cards</h6>
                         <div className={s.superRange_span_block}>
                             <span className={s.span}>{packItem.minGrade}</span>
                             <div className={s.superRange}>
@@ -100,20 +126,21 @@ const PackItem = () => {
                         </div>
                     </section>
                 </div>
-                {NO_CARDS && <h1>Not found cards</h1>}
-                {!NO_CARDS &&
+
                 <div className={s.rightBlock}>
+                    <h1>Cards</h1>
                     <Search searchOnChange={search.valueChange} searchValue={search.value}/>
                     <section className={s.table}>
-                        <TablePackItem/>
-                        {cards.map(p => <Card key={p._id}
-                                              id={p._id}
-                                              answer={p.answer}
-                                              userId={p.user_id}
-                                              question={p.question}
-                                              updated={p.updated}
-                                              create={p.created}
-                                              grade={p.grade}/>)}
+                        <TablePackItem sortCards={sortCards} setSortCards={setSortCards}/>
+                        {NO_CARDS && <h1>Not found cards</h1>}
+                        {!NO_CARDS && cards.map(p => <Card key={p._id}
+                                                           id={p._id}
+                                                           answer={p.answer}
+                                                           userId={p.user_id}
+                                                           question={p.question}
+                                                           updated={p.updated}
+                                                           create={p.created}
+                                                           grade={p.grade}/>)}
                     </section>
 
                     <SuperSelect options={arrayNumbers}
@@ -127,10 +154,10 @@ const PackItem = () => {
                                changeNumberPage={(num) => changeNumberPage(num)}
                                portionSize={10}
                     />
-                </div>}
+                </div>
             </div>
             }
-
+            <MyModalPageCard addNewCard={addNewCard} deleteCard={deleteCard} updateCard={updateCard}/>
         </>
     );
 };

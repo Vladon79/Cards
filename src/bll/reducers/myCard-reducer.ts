@@ -5,9 +5,11 @@ import {AppRootStateType} from "../store";
 import { ThunkAction } from "redux-thunk";
 import {toggleIsFetchingAC} from "./app-reducer";
 
+export type sortCardsType = '' | '1question' | '0question' | '1answer' | '0answer' | '1updated' | '0updated' | '1grade' | '0grade'
 
 export type CardsResponseType = {
-    cards: PackItemType []
+    cards: PackItemType [],
+    sortCard: string
 }
 
 const initialState = {
@@ -23,7 +25,8 @@ const initialState = {
             updated: "2020-05-13T11:05:44.867Z",
             _id: "5ebbd48876810f1ad0e7ece3",
         }
-    ]
+    ],
+    sortCard:''
 }
 
 export const myCardReducer = (state: CardsResponseType = initialState, action: ActionType): CardsResponseType => {
@@ -34,6 +37,8 @@ export const myCardReducer = (state: CardsResponseType = initialState, action: A
              return {...state, cards: state.cards.filter(c => c._id !== action.id && c)}
          case "MY-CARDS/UPDATE-CARD":
              return {...state, cards: state.cards.filter(c => action.id === c._id && action.updateCard)}
+        case "MY-CARDS/SORT-CARD":
+            return {...state, sortCard: action.sortCards}
         default:
             return state
     }
@@ -57,6 +62,13 @@ export const updateCardAC = (id: string, updateCard: PackItemType) => {
     return {
         type: "MY-CARDS/UPDATE-CARD",
         id, updateCard
+    } as const
+}
+
+export const sortCardAC = (sortCards:sortCardsType) => {
+    return {
+        type: "MY-CARDS/SORT-CARD",
+        sortCards
     } as const
 }
 

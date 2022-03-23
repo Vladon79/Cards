@@ -1,7 +1,8 @@
+import React from "react";
+import {useState} from "react";
 import s from '../TablePackItem/TablePackItem.module.scss'
 import {useAppSelector} from "../../../../bll/store";
 import SuperInputText from "../../../common/c1-SuperInputText/SuperInputText";
-import {useState} from "react";
 import {useInput} from "../../../../hooks/useInput";
 import RefactorMyCard from "../TablePackItem/RefactorMyCard/refactorMyCard";
 
@@ -16,8 +17,7 @@ type CardType = {
     grade: number,
 }
 
-const Card = ({id, userId, question, answer, updated, create, grade}: CardType) => {
-
+const Card =({id, userId, question, answer, updated, create, grade}: CardType) => {
     const [updateQuestion, UpdateQuestion] = useState<boolean>(false)
     const [updateAnswer, UpdateAnswer] = useState<boolean>(false)
 
@@ -47,4 +47,4 @@ const Card = ({id, userId, question, answer, updated, create, grade}: CardType) 
         </div>
     )
 }
-export default Card
+export default  React.memo(Card)

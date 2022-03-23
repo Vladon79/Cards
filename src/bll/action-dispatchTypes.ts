@@ -12,8 +12,14 @@ import {
 import {addPacksAC, deletePackAC, updatePackAC} from "./reducers/myPacks-reducer";
 import {changeNumberPageCardsAC, getPackItemAC, setCardsCountAC, setMaxMinGradeAC} from "./reducers/packItem-reducer";
 import {savePackItemIdAC} from "./reducers/packId-reducer";
-import {addNewCardAC, deleteCardAC, updateCardAC} from "./reducers/myCard-reducer";
+import {addNewCardAC, deleteCardAC, sortCardAC, updateCardAC} from "./reducers/myCard-reducer";
 import {addPackModalAC, deletePackModalAC, setActiveModalAC, updatePackModalAC} from "./reducers/modal-reducer";
+import {
+    addCardModalAC,
+    deleteCardModalAC,
+    setActiveModalCardAC,
+    updateCardModalAC
+} from "./reducers/modalCard-reducer";
 
 
 export type ActionType =
@@ -44,11 +50,17 @@ export type ActionType =
     | AddNewCardAT
     | DeleteCardAT
     | UpdateCardAT
+    | SortCardAT
 
     | setActiveModalAT
     | deletePackModalAT
     | updatePackModalAT
     | addPackModalAT
+
+    | SetActiveModalCardAT
+    | AddPackModalCardAT
+    | DeletePackModalCardAT
+    | UpdatePackModalCardAT
 
 export type ToggleIsFetchingACType = ReturnType<typeof toggleIsFetchingAC>;
 export type authMeACType = ReturnType<typeof authMeAC>;
@@ -81,12 +93,18 @@ export type SavePackItemIdAT = ReturnType<typeof savePackItemIdAC>
 export type AddNewCardAT = ReturnType<typeof addNewCardAC>
 export type DeleteCardAT = ReturnType<typeof deleteCardAC>
 export type UpdateCardAT = ReturnType<typeof updateCardAC>
+export type SortCardAT = ReturnType<typeof sortCardAC>
 
 
 export type setActiveModalAT = ReturnType<typeof setActiveModalAC>
 export type deletePackModalAT = ReturnType<typeof deletePackModalAC>
 export type updatePackModalAT = ReturnType<typeof updatePackModalAC>
 export type addPackModalAT = ReturnType<typeof addPackModalAC>
+
+export type SetActiveModalCardAT = ReturnType<typeof setActiveModalCardAC>
+export type AddPackModalCardAT = ReturnType<typeof addCardModalAC>
+export type DeletePackModalCardAT = ReturnType<typeof deleteCardModalAC>
+export type UpdatePackModalCardAT = ReturnType<typeof updateCardModalAC>
 
 
 export type DispatchType = Dispatch<ActionType>

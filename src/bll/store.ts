@@ -12,6 +12,7 @@ import {packItemReducer} from "./reducers/packItem-reducer";
 import {packIdReducer} from "./reducers/packId-reducer";
 import {myCardReducer} from "./reducers/myCard-reducer";
 import {modalReducer} from "./reducers/modal-reducer";
+import {modalCardReducer} from "./reducers/modalCard-reducer";
 
 const reducers = combineReducers({
     auth: authReducer,
@@ -23,7 +24,8 @@ const reducers = combineReducers({
     packItemId: packIdReducer,
     packs: packsReducer,
     myPacks: myPacksReducer,
-    modal: modalReducer
+    modal: modalReducer,
+    modalCard: modalCardReducer
 })
 
 export const store = createStore(reducers, applyMiddleware(thunkMiddleware));
