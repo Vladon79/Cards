@@ -1,8 +1,7 @@
-import s from './MyModalCard.module.scss'
+import s from '../Modal/MyModal.module.scss'
 import {ModalType} from "../../../bll/reducers/modal-reducer";
 import {useDispatch} from "react-redux";
 import {setActiveModalCardAC} from "../../../bll/reducers/modalCard-reducer";
-
 
 
 type ModalsPagePropsType = {
@@ -12,7 +11,9 @@ type ModalsPagePropsType = {
 }
 
 const MyModalCard = ({activeModal, children, title}: ModalsPagePropsType) => {
+
     const dispatch = useDispatch()
+
     const dontActive = () => {
         dispatch(setActiveModalCardAC(false))
     }
@@ -32,5 +33,5 @@ const MyModalCard = ({activeModal, children, title}: ModalsPagePropsType) => {
     )
 }
 
-// @ts-ignore
+
 export default MyModalCard

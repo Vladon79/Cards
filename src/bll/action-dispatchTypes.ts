@@ -19,7 +19,7 @@ import {
 import {addPacksAC, deletePackAC, updatePackAC} from "./reducers/myPacks-reducer";
 import {changeNumberPageCardsAC, getPackItemAC, setCardsCountAC, setMaxMinGradeAC} from "./reducers/packItem-reducer";
 import {savePackItemIdAC} from "./reducers/packId-reducer";
-import {addNewCardAC, deleteCardAC, sortCardAC, updateCardAC} from "./reducers/myCard-reducer";
+import {addNewCardAC, deleteCardAC, errorAC, sortCardAC, updateCardAC} from "./reducers/myCard-reducer";
 import {addPackModalAC, deletePackModalAC, setActiveModalAC, updatePackModalAC} from "./reducers/modal-reducer";
 import {
     addCardModalAC,
@@ -66,6 +66,7 @@ export type ActionType =
     | deletePackModalAT
     | updatePackModalAT
     | addPackModalAT
+    | ErrorAT
 
     | SetActiveModalCardAT
     | AddPackModalCardAT
@@ -113,6 +114,7 @@ export type setActiveModalAT = ReturnType<typeof setActiveModalAC>
 export type deletePackModalAT = ReturnType<typeof deletePackModalAC>
 export type updatePackModalAT = ReturnType<typeof updatePackModalAC>
 export type addPackModalAT = ReturnType<typeof addPackModalAC>
+export type ErrorAT = ReturnType<typeof errorAC>
 
 export type SetActiveModalCardAT = ReturnType<typeof setActiveModalCardAC>
 export type AddPackModalCardAT = ReturnType<typeof addCardModalAC>

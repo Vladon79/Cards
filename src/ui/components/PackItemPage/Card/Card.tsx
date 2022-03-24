@@ -1,14 +1,13 @@
 import React from "react";
-import {useState} from "react";
+
 import s from '../TablePackItem/TablePackItem.module.scss'
-import {useAppSelector} from "../../../../bll/store";
-import SuperInputText from "../../../common/c1-SuperInputText/SuperInputText";
-import {useInput} from "../../../../hooks/useInput";
 import RefactorMyCard from "../TablePackItem/RefactorMyCard/refactorMyCard";
+
+import {useAppSelector} from "../../../../bll/store";
 
 
 type CardType = {
-    id:string
+    id: string
     userId: string,
     question: string
     answer: string
@@ -17,34 +16,20 @@ type CardType = {
     grade: number,
 }
 
-const Card =({id, userId, question, answer, updated, create, grade}: CardType) => {
-    const [updateQuestion, UpdateQuestion] = useState<boolean>(false)
-    const [updateAnswer, UpdateAnswer] = useState<boolean>(false)
+const Card = ({id, userId, question, answer, updated, create, grade}: CardType) => {
 
     const myUserID = useAppSelector<string>(state => state.auth.user._id)
 
-    const newQuestion = useInput(question, [])
-    const newAnswer = useInput(answer, [])
-
-
     return (
         <div className={s.pack}>
-            {updateQuestion && userId === myUserID
-                ? <SuperInputText name={'Ava'} value={newQuestion.value}
-                                  onChange={e => newQuestion.valueChange(e.currentTarget.value)} autoFocus
-                                  onBlur={() => UpdateQuestion(false)}/>
-                : <p onDoubleClick={() => UpdateQuestion(true)} className={s.pack_block_question}>{newQuestion.value}</p>}
-            {updateAnswer && userId === myUserID
-                ? <SuperInputText name={'Ava'} value={newAnswer.value}
-                                  onChange={e => newAnswer.valueChange(e.currentTarget.value)} autoFocus
-                                  onBlur={() => UpdateAnswer(false)}/>
-                : <p onDoubleClick={() => UpdateAnswer(true)} className={s.pack_block_answer}>{newAnswer.value}</p>}
+            <p className={s.pack_block_question}>{question}</p>
+            <p className={s.pack_block_answer}>{answer}</p>
             <p className={s.pack_block_update}>{updated}</p>
             <p className={s.pack_block_createdBy}>{create}</p>
             <p className={s.pack_block_grade}>{grade}</p>
             {userId === myUserID && <p className={s.pack_block_action}>
-            <RefactorMyCard _id={id} newQuestion={newQuestion.value} newAnswer={newAnswer.value}/></p>}
+                <RefactorMyCard _id={id} newQuestion={question} newAnswer={answer}/></p>}
         </div>
     )
 }
-export default  React.memo(Card)
+export default React.memo(Card)

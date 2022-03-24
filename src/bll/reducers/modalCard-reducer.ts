@@ -1,7 +1,6 @@
 import {ActionType} from "../action-dispatchTypes";
 import {ModalType} from "./modal-reducer";
 
-//export type  ModalCardType = false | 'addCard' | 'deleteCard' | 'updateCard'
 export type modalCardReducerType = {
     activeModalCard: ModalType
     packId:string,
@@ -25,7 +24,7 @@ export const modalCardReducer = (state: modalCardReducerType = initialState, act
         case  "MODAL-CARD/SET-ACTIVE":
             return {...state, activeModalCard: action.activeModalCard}
         case "MODAL-CARD/ADD-CARD":
-            return {...state, activeModalCard: 'addPack',  title:'Add new pack'}
+            return {...state, activeModalCard: 'addPack', question: action.newQuestion, answer:action.newAnswer,  title:'Add new pack'}
         case "MODAL-CARD/DELETE-CARD":
              return {...state, activeModalCard: 'deletePack', packId: action.packId, cardId: action.cardId, title:'Delete card'}
          case "MODAL-CARD/UPDATE-CARD":
@@ -44,9 +43,10 @@ export const setActiveModalCardAC = (activeModalCard: ModalType) => {
     } as const
 }
 
-export const addCardModalAC = () => {
+export const addCardModalAC = (packId: string, newQuestion:string, newAnswer:string,) => {
     return {
         type: "MODAL-CARD/ADD-CARD",
+        packId, newQuestion, newAnswer
     } as const
 }
 
@@ -63,3 +63,4 @@ export const updateCardModalAC = (packId: string, newQuestion:string, newAnswer:
         packId, newQuestion,newAnswer, cardId
     } as const
 }
+

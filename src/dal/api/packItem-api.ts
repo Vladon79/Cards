@@ -4,14 +4,14 @@ import {AxiosResponse} from "axios";
 
 
 export const packItemApi = {
-    getCard(cardsPack_id: string,
-            page?: number,
-            pageCount?: number,
-            min?: number,
-            max?: number,
-            cardAnswer?: string,
-            cardQuestion?: string,
-            sortCards?: string,) {
+    getCards(cardsPack_id: string,
+             page?: number,
+             pageCount?: number,
+             min?: number,
+             max?: number,
+             cardAnswer?: string,
+             cardQuestion?: string,
+             sortCards?: string,) {
         return instance.get<PackItemResponseType, AxiosResponse<PackItemResponseType>, PackItemRequestType>(`/cards/card`, {
             params: {
                 cardAnswer,
@@ -26,7 +26,7 @@ export const packItemApi = {
         })
     },
     postCard(cardsPack_id: string, question?: string, answer?: string, grade?: number, shots?: number, answerImg?: string, questionImg?: string, questionVideo?: string, answerVideo?: string) {
-        return instance.post<PackItemType, AxiosResponse<PackItemType>, PostCardRequestType>('/cards/card', {
+        return instance.post<PackItemType, AxiosResponse<PackItemType>, PostAndPutCardRequestType>(`/cards/card?id=${cardsPack_id}`, {
             card: {
                 cardsPack_id,
                 question,
@@ -60,7 +60,7 @@ export type PackItemRequestType = {
     pageCount?: number
 }
 
-export type PostCardRequestType = {
+export type PostAndPutCardRequestType = {
     card: {
         cardsPack_id: string
         question?: string
