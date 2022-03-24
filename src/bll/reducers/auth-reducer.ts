@@ -56,6 +56,8 @@ export const authReducer = (state: StateType = initialState, action: ActionType)
             return {...state, tokenIsSent: action.value}
         case "AUTH/SET-SENT-PASS":
             return {...state, sentPassword: action.value}
+        case "AUTH/SET-PASS-IS-CREATED":
+            return {...state, passwordIsCreated: action.value}
         default:
             return state
     }
