@@ -47,9 +47,9 @@ const SignIn = () => {
 
     return (
         <section className={s.main_box}>
-            {isFetching
-                ? <Preloader/>
-                :
+            {/*{isFetching*/}
+            {/*    ? <Preloader/>*/}
+            {/*    :*/}
                 <section className={s.sign_in_box}>
                     <div className={s.sign_in_box_header}>
                         <div className={s.logo_text}>It-incubator</div>
@@ -91,7 +91,7 @@ const SignIn = () => {
                         <span onClick={signUpLinkHandler} className={s.sign_up_link}>Sign Up</span>
                     </div>
                 </section>
-            }
+            {/*}*/}
         </section>
     )
 }

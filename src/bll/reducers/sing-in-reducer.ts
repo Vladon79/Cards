@@ -1,15 +1,15 @@
-
 import {Dispatch} from "redux";
 import {authMeAC} from "./auth-reducer";
-import {authMeACType} from "../action-dispatchTypes";
+import {ActionType, authMeACType, DispatchType} from "../action-dispatchTypes";
 import {authApi, SingInRequestType} from "../../dal/api/auth-api";
+import {toggleIsFetchingAC} from "./app-reducer";
 
 const initialState = {
     isSingIn: false
 }
 type InitialStateType = typeof initialState
 
-export const singInReducer = (state: InitialStateType = initialState, action: SingInAT): InitialStateType => {
+export const singInReducer = (state: InitialStateType = initialState, action: ActionType): InitialStateType => {
     switch (action.type) {
         case 'SET-IS-SING-IN':
             return {...state, isSingIn: action.value}
@@ -25,10 +25,10 @@ export const singInAC = (value: boolean) => {
     } as const
 }
 
-export type SingInAT = ReturnType<typeof singInAC>
 
 export const singInTC = (data: SingInRequestType) =>
-    (dispatch: Dispatch<SingInAT | authMeACType>) => {
+    (dispatch: DispatchType) => {
+        /*dispatch(toggleIsFetchingAC(true))*/
         authApi.singIn(data)
             .then((res) => {
                 dispatch(singInAC(true))
@@ -39,5 +39,8 @@ export const singInTC = (data: SingInRequestType) =>
                     ? e.reponse.data.error
                     : (e.message + ',more details in the console')
             })
+            // .finally(() =>
+            //     // dispatch(toggleIsFetchingAC(false))
+            // )
 
     }

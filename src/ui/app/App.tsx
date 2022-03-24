@@ -21,7 +21,7 @@ import SignIn from "../features/Login/SingIn/SignIn";
 
 
 const App = () => {
-    const isInitialized = useSelector<AppRootStateType, boolean>(state => state.app.isInitialized)
+    const isFetching = useSelector<AppRootStateType, boolean>(state => state.app.isFetching)
     const dispatch = useDispatch()
 
 
@@ -29,15 +29,13 @@ const App = () => {
         dispatch(appInitializeTC())
     }, [])
 
-    if (!isInitialized) {
-        return <Preloader/>
-    }
-
 
     return (
         <div className={s.app}>
             <Header/>
-                <div className={s.content}>
+            {!!isFetching
+                ? <Preloader/>
+                : <div className={s.content}>
                     <Routes>
                         <Route path="*" element={<Navigate to="/profile"/>}/>
                         <Route path="/signin" element={<SignIn/>}/>
@@ -53,6 +51,8 @@ const App = () => {
                         <Route path="/packItem" element={<PackItem/>}/>
                     </Routes>
                 </div>
+            }
+
         </div>
     )
 }

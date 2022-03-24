@@ -51,11 +51,8 @@ const TablePack = ({
 
     return (
         <div className={s.pack}>
-            {update && user_id === myUserID
-                ? <SuperInputText name={'Ava'} value={newName.value}
-                                  onChange={e => newName.valueChange(e.currentTarget.value)} autoFocus
-                                  onBlur={() => setUpdate(false)}/>
-                : <p onDoubleClick={() => setUpdate(true)} className={s.pack_block_name}>{newName.value}</p>}
+
+            <p onClick={() => handleClickLearn(id)} className={s.pack_block_name}>{newName.value}</p>
             <p className={s.pack_block_cards}>{cardsCount}</p>
             <p className={s.pack_block_update}>{updated}</p>
             <p className={s.pack_block_createdBy}>{user_name}</p>
@@ -63,7 +60,7 @@ const TablePack = ({
                 {user_id === myUserID
                     && <RefactorMyPack id={id} name={name} setUpdate={setUpdate}/>}
                 <SuperButton className={user_id === myUserID ? s.button : `${s.button} ${s.button_learn}`}
-                             onClick={() => handleClickLearn(id)}>learn</SuperButton>
+                             >learn</SuperButton>
             </div>
         </div>
     )

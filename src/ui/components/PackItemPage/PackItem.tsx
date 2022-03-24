@@ -107,7 +107,7 @@ const PackItem = () => {
 
     return (
         <>
-            {isFetching && <Preloader/>}
+            {/*{isFetching && <Preloader/>}*/}
             <div className={s.packsListPageContainer}>
                 <div className={s.leftBlock}>
                     <SuperButton className={s.doubleButton}

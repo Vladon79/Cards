@@ -27,6 +27,7 @@ import {
     setActiveModalCardAC,
     updateCardModalAC
 } from "./reducers/modalCard-reducer";
+import {singInAC} from "./reducers/sing-in-reducer";
 
 
 export type ActionType =
@@ -72,6 +73,8 @@ export type ActionType =
     | AddPackModalCardAT
     | DeletePackModalCardAT
     | UpdatePackModalCardAT
+
+    | SingInAT
 
 export type ToggleIsFetchingACType = ReturnType<typeof toggleIsFetchingAC>;
 export type authMeACType = ReturnType<typeof authMeAC>;
@@ -121,6 +124,7 @@ export type AddPackModalCardAT = ReturnType<typeof addCardModalAC>
 export type DeletePackModalCardAT = ReturnType<typeof deleteCardModalAC>
 export type UpdatePackModalCardAT = ReturnType<typeof updateCardModalAC>
 
+export type SingInAT = ReturnType<typeof singInAC>
 
 export type DispatchType = Dispatch<ActionType>
 

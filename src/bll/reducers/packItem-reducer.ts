@@ -109,7 +109,7 @@ export const getPackItemTC = (cardsPack_id: string,
                               cardAnswer?: string,
                               cardQuestion?: string,
                               sortCards?: string) => (dispatch: Dispatch) => {
-    dispatch(toggleIsFetchingAC(true))
+    // dispatch(toggleIsFetchingAC(true))
     packItemApi.getCards(cardsPack_id, page, pageCount, min, max, cardAnswer, cardQuestion, sortCards)
         .then(res => {
             dispatch(getPackItemAC(res.data.cards, res.data.cardsTotalCount, res.data.maxGrade, res.data.packUserId))
@@ -117,7 +117,7 @@ export const getPackItemTC = (cardsPack_id: string,
         .catch(() => {
 
         })
-        .finally(() => {
-            dispatch(toggleIsFetchingAC(false))
-        })
+        // .finally(() => {
+        //     dispatch(toggleIsFetchingAC(false))
+        // })
 }
