@@ -5,13 +5,14 @@ import {useAppSelector} from "../../../../../bll/store";
 import SearchInput from "../../../PacksListPage/Search/SearchInput";
 
 
+
 type updateCardPropsType = {
-    updateCard: (id: string,  newQuestion: string, newAnswer: string) => void
+    updateCard: (cardId:string, newQuestion: string, newAnswer: string) => void
 }
 
 const UpdateCard = ({updateCard}: updateCardPropsType) => {
 
-    const id = useAppSelector<string>(state => state.modal.id)
+    const cardId = useAppSelector<string>(state => state.modalCard.cardId)
     const question = useAppSelector<string>(state => state.modalCard.question)
     const answer = useAppSelector<string>(state => state.modalCard.answer)
 
@@ -19,7 +20,7 @@ const UpdateCard = ({updateCard}: updateCardPropsType) => {
     const newAnswer = useInput(answer, [])
 
     const updateNewCard = () => {
-        updateCard(id, newQuestion.value, newAnswer.value )
+        updateCard(cardId, newQuestion.value, newAnswer.value)
     }
 
     return (

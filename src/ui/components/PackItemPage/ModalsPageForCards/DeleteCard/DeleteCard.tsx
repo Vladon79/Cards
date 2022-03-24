@@ -7,9 +7,9 @@ type DeletePacksPropsType = {
 }
 
 const DeleteCard = ({deleteCard}: DeletePacksPropsType) => {
-    const id = useAppSelector<string>(state => state.modal.id)
-    const name = useAppSelector<string>(state => state.modal.name)
 
+    const id = useAppSelector<string>(state => state.modalCard.cardId)
+    const question = useAppSelector<string>(state => state.modalCard.question)
 
     const deleteCardOnClick = () => {
         deleteCard(id)
@@ -18,7 +18,7 @@ const DeleteCard = ({deleteCard}: DeletePacksPropsType) => {
 
     return (
         <div className={s.delete_packs_container}>
-            <p>Do you really want to remove card -<a className={s.packName}> {name}</a>?</p>
+            <p>Do you really want to remove card -<a className={s.packName}> {question}</a>?</p>
             <p>All data will be excluded from this course.</p>
             <SuperButton onClick={deleteCardOnClick} className={s.delete_button}>Delete</SuperButton>
         </div>

@@ -34,13 +34,15 @@ const Card = ({id, userId, question, answer, updated, create, grade}: CardType) 
         <div className={s.pack}>
             {updateQuestion && userId === myUserID
                 ? <SuperInputText name={'Ava'} value={newQuestion.value}
-                                  onChange={e => newQuestion.valueChange(e.currentTarget.value)} autoFocus
+                                  onChange={e => newQuestion.valueChange(e.currentTarget.value)}
+                                  autoFocus
                                   onBlur={() => UpdateQuestion(false)}/>
                 :
                 <p onDoubleClick={() => UpdateQuestion(true)} className={s.pack_block_question}>{newQuestion.value}</p>}
             {updateAnswer && userId === myUserID
                 ? <SuperInputText name={'Ava'} value={newAnswer.value}
-                                  onChange={e => newAnswer.valueChange(e.currentTarget.value)} autoFocus
+                                  onChange={e => newAnswer.valueChange(e.currentTarget.value)}
+                                  autoFocus
                                   onBlur={() => UpdateAnswer(false)}/>
                 : <p onDoubleClick={() => UpdateAnswer(true)} className={s.pack_block_answer}>{newAnswer.value}</p>}
             <p className={s.pack_block_update}>{updated}</p>

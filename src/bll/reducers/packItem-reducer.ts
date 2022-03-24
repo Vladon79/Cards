@@ -103,7 +103,7 @@ export const getPackItemTC = (cardsPack_id: string,
                               cardQuestion?: string,
                               sortCards?: string) => (dispatch: Dispatch) => {
     dispatch(toggleIsFetchingAC(true))
-    packItemApi.getCard(cardsPack_id, page, pageCount, min, max, cardAnswer, cardQuestion, sortCards)
+    packItemApi.getCards(cardsPack_id, page, pageCount, min, max, cardAnswer, cardQuestion, sortCards)
         .then(res => {
             dispatch(getPackItemAC(res.data))
         })
