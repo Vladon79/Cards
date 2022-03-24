@@ -10,7 +10,8 @@
   align-items: center;
   border: 1px solid $primaryColor;
   width: 100%;
-  height: 50px;
+  min-height: 50px;
+  margin-top: 5px;
   @include text(16px, 500, $authTextColor, 1.2);
 
   .pack_block_question {
@@ -54,3 +55,4 @@
     color: $authBlockColor;
   }
 }
+

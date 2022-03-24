@@ -1,6 +1,7 @@
 import {ActionType} from "../action-dispatchTypes";
 import {Dispatch} from "redux";
 import {packItemApi} from "../../dal/api/packItem-api";
+import {setAppInitializeAC, toggleIsFetchingAC} from "./app-reducer";
 
 export type PackItemType = {
     answer: string
@@ -43,7 +44,7 @@ const initialState: PackItemResponseType = {
     maxGrade: 6,
     minGrade: 0,
     page: 1,
-    pageCount: 10,
+    pageCount: 4,
     packUserId: "5eecf82a3ed8f700042f1186",
 }
 
@@ -53,7 +54,7 @@ export const packItemReducer = (state: PackItemResponseType = initialState, acti
         case "PACK-ITEM/GET-CARD":
             return action.packItem
         case "PACK-ITEM/SET-MAX-MIN-GRADE":
-            return {...state, minGrade: action.min, maxGrade: action.max}
+            return {...state,  maxGrade: action.max, minGrade: action.min}
         case "PACK-ITEM/SET-CARDS-COUNT":
             return {...state, pageCount: action.cardsCount}
         case  "PACK-ITEM/CHANGE-NUMBER-CARDS":
@@ -67,6 +68,7 @@ export const getPackItemAC = (packItem: PackItemResponseType) => {
     return {
         type: "PACK-ITEM/GET-CARD",
         packItem
+
     } as const
 }
 
@@ -92,16 +94,23 @@ export const changeNumberPageCardsAC = (numberPage: number) => {
 }
 
 
-export const getPackItemTC = (cardsPack_id:string,  page?:number, pageCount?:number,cardAnswer?:string, cardQuestion?: string,  min?:number, max?:number, sortCards?:number,) => (dispatch: Dispatch) => {
-    // dispatch(toggleIsFetchingAC(true))
-    packItemApi.getCard( cardsPack_id, cardAnswer, cardQuestion,  min, max, sortCards, page, pageCount  )
+export const getPackItemTC = (cardsPack_id: string,
+                              page?: number,
+                              pageCount?: number,
+                              min?: number,
+                              max?: number,
+                              cardAnswer?: string,
+                              cardQuestion?: string,
+                              sortCards?: string) => (dispatch: Dispatch) => {
+    dispatch(toggleIsFetchingAC(true))
+    packItemApi.getCard(cardsPack_id, page, pageCount, min, max, cardAnswer, cardQuestion, sortCards)
         .then(res => {
             dispatch(getPackItemAC(res.data))
-                 })
+        })
         .catch(() => {
-            return
+
         })
         .finally(() => {
-            // dispatch(toggleIsFetchingAC(false))
+            dispatch(toggleIsFetchingAC(false))
         })
 }

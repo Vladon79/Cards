@@ -1,10 +1,15 @@
 import {ActionType, DispatchType} from "../action-dispatchTypes";
-import {PackItemType} from "./packItem-reducer";
+import {getPackItemTC, PackItemType} from "./packItem-reducer";
 import {packItemApi} from "../../dal/api/packItem-api";
+import {AppRootStateType} from "../store";
+import { ThunkAction } from "redux-thunk";
+import {toggleIsFetchingAC} from "./app-reducer";
 
+export type sortCardsType = '' | '1question' | '0question' | '1answer' | '0answer' | '1updated' | '0updated' | '1grade' | '0grade'
 
 export type CardsResponseType = {
-    cards: PackItemType []
+    cards: PackItemType [],
+    sortCard: string
 }
 
 const initialState = {
@@ -20,25 +25,24 @@ const initialState = {
             updated: "2020-05-13T11:05:44.867Z",
             _id: "5ebbd48876810f1ad0e7ece3",
         }
-    ]
+    ],
+    sortCard:''
 }
 
 export const myCardReducer = (state: CardsResponseType = initialState, action: ActionType): CardsResponseType => {
     switch (action.type) {
-
          case "MY-CARDS/ADD-CARD":
              return {...state, cards: [...state.cards, action.newCard]}
         case "MY-CARDS/DELETE-CARD":
              return {...state, cards: state.cards.filter(c => c._id !== action.id && c)}
          case "MY-CARDS/UPDATE-CARD":
              return {...state, cards: state.cards.filter(c => action.id === c._id && action.updateCard)}
-
+        case "MY-CARDS/SORT-CARD":
+            return {...state, sortCard: action.sortCards}
         default:
             return state
     }
 }
-
-
 
 export const addNewCardAC = (newCard: PackItemType) => {
     return {
@@ -61,36 +65,57 @@ export const updateCardAC = (id: string, updateCard: PackItemType) => {
     } as const
 }
 
+export const sortCardAC = (sortCards:sortCardsType) => {
+    return {
+        type: "MY-CARDS/SORT-CARD",
+        sortCards
+    } as const
+}
 
-
-export const addNewCardTC = (cardsPack_id:string, question:string, answer:string) => (dispatch: DispatchType) => {
+export const addNewCardTC = (cardsPack_id:string, question:string, answer:string, packItemId:string):
+    ThunkAction<void, AppRootStateType, unknown, ActionType> =>
+    (dispatch) => {
+        dispatch(toggleIsFetchingAC(true))
    packItemApi.postCard(cardsPack_id, question, answer)
        .then(res => {
-           dispatch(addNewCardAC(res.data))
-
+           dispatch(getPackItemTC( packItemId))
        })
        .catch( error => {
 
        })
+       .finally(()=>{
+           dispatch(toggleIsFetchingAC(false))
+       })
 }
 
-export const deleteCardTC = (id: string) =>  (dispatch: DispatchType) => {
+export const deleteCardTC = (id: string, packItemId:string):
+    ThunkAction<void, AppRootStateType, unknown, ActionType> =>
+    (dispatch) => {
+        dispatch(toggleIsFetchingAC(true))
     packItemApi.deleteCard(id)
-        .then(res=>{
-            dispatch(deleteCardAC(id))
+        .then(()=>{
+            dispatch(getPackItemTC( packItemId))
         })
         .catch(error => {
 
         })
+        .finally(()=>{
+            dispatch(toggleIsFetchingAC(false))
+        })
 }
 
-export const updateCardTC = (id: string, newQuestion: string, newAnswer:string) =>  (dispatch: DispatchType) => {
+export const updateCardTC = (id: string, newQuestion: string, newAnswer:string, packItemId:string):
+    ThunkAction<void, AppRootStateType, unknown, ActionType> =>
+    (dispatch) => {
+        dispatch(toggleIsFetchingAC(true))
 packItemApi.updateCard(id, newQuestion, newAnswer )
     .then((res)=>{
-        dispatch(updateCardAC(id, res.data))
+        dispatch(getPackItemTC( packItemId))
     })
     .catch((error)=>{
 
     })
-
+    .finally(()=>{
+        dispatch(toggleIsFetchingAC(false))
+    })
 }
