@@ -45,7 +45,8 @@ const TablePack = ({
 
     const handleClickLearn = (id: string) => {
         dispatch(savePackItemIdAC(id))
-        navigate('/packItem')
+        navigate(`/packItem/?id=${id}`)
+
     };
 
     return (

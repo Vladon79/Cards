@@ -18,6 +18,7 @@ export type PackItemType = {
 export type PackItemResponseType = {
     cards: PackItemType []
     cardsTotalCount: number
+    maxCardGrade:number
     maxGrade: number
     minGrade: number
     page: number
@@ -41,6 +42,7 @@ const initialState: PackItemResponseType = {
         },
     ],
     cardsTotalCount: 3,
+    maxCardGrade:6,
     maxGrade: 6,
     minGrade: 0,
     page: 1,
@@ -52,7 +54,12 @@ const initialState: PackItemResponseType = {
 export const packItemReducer = (state: PackItemResponseType = initialState, action: ActionType): PackItemResponseType => {
     switch (action.type) {
         case "PACK-ITEM/GET-CARD":
-            return action.packItem
+
+            return {...state,
+                cards:action.cards,
+                cardsTotalCount:action.cardsTotalCount,
+                maxCardGrade:action.maxGrade,
+                packUserId:action.packUserId}
         case "PACK-ITEM/SET-MAX-MIN-GRADE":
             return {...state,  maxGrade: action.max, minGrade: action.min}
         case "PACK-ITEM/SET-CARDS-COUNT":
@@ -64,10 +71,10 @@ export const packItemReducer = (state: PackItemResponseType = initialState, acti
     }
 }
 
-export const getPackItemAC = (packItem: PackItemResponseType) => {
+export const getPackItemAC = (cards: PackItemType[], cardsTotalCount:number, maxGrade:number, packUserId:string) => {
     return {
         type: "PACK-ITEM/GET-CARD",
-        packItem
+        cards, cardsTotalCount, maxGrade, packUserId
 
     } as const
 }
@@ -105,7 +112,7 @@ export const getPackItemTC = (cardsPack_id: string,
     dispatch(toggleIsFetchingAC(true))
     packItemApi.getCards(cardsPack_id, page, pageCount, min, max, cardAnswer, cardQuestion, sortCards)
         .then(res => {
-            dispatch(getPackItemAC(res.data))
+            dispatch(getPackItemAC(res.data.cards, res.data.cardsTotalCount, res.data.maxGrade, res.data.packUserId))
         })
         .catch(() => {
 

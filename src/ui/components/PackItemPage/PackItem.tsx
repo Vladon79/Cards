@@ -1,5 +1,5 @@
 import React, {useCallback, useEffect, useState} from 'react';
-import {useNavigate} from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 import {useDispatch} from "react-redux";
 
 import {
@@ -47,17 +47,20 @@ const PackItem = () => {
     const dispatch = useDispatch()
     const navigate = useNavigate()
 
+
     const [sortCards, setSortCards] = useState<sortCardsType>('')
 
     const search = useInput('', [])
 
     const searchDebounce = useDebounce(search.value, 1500)
-
     const minGradeDebounce = useDebounce(packItem.minGrade, 1000)
     const maxGradeDebounce = useDebounce(packItem.maxGrade, 1000)
 
     const NO_CARDS = cards.length === 0
     const MAX_RANGE_COUNT = 6
+    const MIN_RANGE_COUNT = 0
+    const START_PAGE = 1
+    const START_CARDS_COUNT = 4
 
     useEffect(() => {
         dispatch(getPackItemTC(packItemId,
@@ -68,8 +71,8 @@ const PackItem = () => {
             String(searchDebounce),
             String(searchDebounce),
             sortCards))
-    }, [page, pageCount, minGradeDebounce, maxGradeDebounce, searchDebounce, sortCards, packItem.minGrade,
-        packItem.maxGrade, dispatch, packItemId, modalCard.question])
+
+    }, [page, pageCount, minGradeDebounce, maxGradeDebounce, searchDebounce, sortCards, dispatch, packItemId, modalCard.question])
 
     const setValuesOnSlider = (value: number[]) => {
         dispatch(setMaxMinGradeAC(value[0], value[1]))
@@ -77,6 +80,7 @@ const PackItem = () => {
 
     const setCardCount = (cardsCount: number) => {
         dispatch(setCardsCountAC(cardsCount))
+        dispatch(changeNumberPageCardsAC(1))
     };
 
     const changeNumberPage = (num: number) => {
@@ -96,6 +100,9 @@ const PackItem = () => {
     },[modalCard.packId,packItemId, dispatch]);
 
     const handleBackToPackList = () => {
+        dispatch(setMaxMinGradeAC(MIN_RANGE_COUNT, MAX_RANGE_COUNT))
+        dispatch(setCardsCountAC(START_CARDS_COUNT))
+        dispatch(changeNumberPageCardsAC(START_PAGE))
         navigate('/packsList')
     };
 
