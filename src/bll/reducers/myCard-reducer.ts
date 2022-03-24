@@ -19,7 +19,8 @@ export type sortCardsType =
 
 export type CardsResponseType = {
     cards: PackItemType [],
-    sortCard: string
+    sortCard: string,
+    error: string | undefined
 }
 
 const initialState = {
@@ -36,7 +37,8 @@ const initialState = {
             _id: "5ebbd48876810f1ad0e7ece3",
         }
     ],
-    sortCard: ''
+    sortCard: '',
+    error: ''
 }
 
 export const myCardReducer = (state: CardsResponseType = initialState, action: ActionType): CardsResponseType => {
@@ -49,6 +51,8 @@ export const myCardReducer = (state: CardsResponseType = initialState, action: A
             return {...state, cards: state.cards.filter(c => action.id === c._id && action.updateCard)}
         case "MY-CARDS/SORT-CARD":
             return {...state, sortCard: action.sortCards}
+        case "MY-CARDS/ERROR":
+            return {...state, error:action.error}
         default:
             return state
     }
@@ -82,6 +86,13 @@ export const sortCardAC = (sortCards: sortCardsType) => {
     } as const
 }
 
+export const errorAC = (error: string) => {
+    return {
+        type: "MY-CARDS/ERROR",
+        error
+    } as const
+}
+
 export const addNewCardTC = (packItemId: string, question: string, answer: string):
     ThunkAction<void, AppRootStateType, unknown, ActionType> =>
     (dispatch) => {
@@ -91,8 +102,8 @@ export const addNewCardTC = (packItemId: string, question: string, answer: strin
                 dispatch(getPackItemTC(packItemId))
                 dispatch(setActiveModalCardAC(false))
             })
-            .catch(error => {
-
+            .catch((error) => {
+                dispatch(errorAC(error.error))
             })
             .finally(() => {
                 dispatch(toggleIsFetchingAC(false))
@@ -123,7 +134,7 @@ export const updateCardTC = (cardId: string, newQuestion: string, newAnswer: str
         packItemApi.updateCard(cardId, newQuestion, newAnswer)
             .then(() => {
                 dispatch(getPackItemTC(packItemId))
-                dispatch(updateCardModalAC(cardId, newQuestion, newAnswer, packItemId ))
+                dispatch(updateCardModalAC(cardId, newQuestion, newAnswer, packItemId))
                 dispatch(setActiveModalCardAC(false))
             })
             .catch((error) => {

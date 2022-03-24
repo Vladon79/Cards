@@ -1,5 +1,5 @@
 import React, {useCallback, useEffect, useState} from 'react';
-import {useNavigate, useParams} from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 import {useDispatch} from "react-redux";
 
 import {
@@ -168,7 +168,6 @@ const PackItem = () => {
                 </div>
             </div>
             <MyModalPageCard addNewCard={addNewCard} deleteCard={deleteCard} updateCard={updateCard}/>
-
         </>
     );
 };
