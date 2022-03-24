@@ -72,7 +72,7 @@ export type InputFieldType = 'password' | 'text'
                             repeatPassword={repeatPassword}
                         />
                     </div>
-                    <div className={s.input_box_buttons}>
+                    <div className={s.box_buttons}>
                         <SuperButton
                             onClick={cancelBtnHandler}
                             className={s.cancelBtn}
