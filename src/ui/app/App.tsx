@@ -33,25 +33,24 @@ const App = () => {
     return (
         <div className={s.app}>
             <Header/>
-            {!!isFetching
-                ? <Preloader/>
-                : <div className={s.content}>
-                    <Routes>
-                        <Route path="*" element={<Navigate to="/profile"/>}/>
-                        <Route path="/signin" element={<SignIn/>}/>
-                        <Route path="/signup" element={<SignUp/>}/>
-                        <Route path="/forgotPass" element={<ForgotPass/>}/>
-                        <Route path="/checkEmail" element={<CheckEmail/>}/>
-                        <Route path="/set-new-password/:token" element={<NewPass/>}/>
-                        <Route path="/error" element={<ErrorPage/>}/>
-                        <Route path="/profile" element={<ProfilePage/>}/>
-                        <Route path="/test" element={<TestPage/>}/>
-                        <Route path="/profileSettings" element={<ProfileSettings/>}/>
-                        <Route path="/packsList" element={<PacksListPageContainer/>}/>
-                        <Route path="/packItem" element={<PackItem/>}/>
-                    </Routes>
-                </div>
-            }
+            {!!isFetching ?? <Preloader/>}
+            <div className={s.content}>
+                <Routes>
+                    <Route path="*" element={<Navigate to="/profile"/>}/>
+                    <Route path="/signin" element={<SignIn/>}/>
+                    <Route path="/signup" element={<SignUp/>}/>
+                    <Route path="/forgotPass" element={<ForgotPass/>}/>
+                    <Route path="/checkEmail" element={<CheckEmail/>}/>
+                    <Route path="/set-new-password/:token" element={<NewPass/>}/>
+                    <Route path="/error" element={<ErrorPage/>}/>
+                    <Route path="/profile" element={<ProfilePage/>}/>
+                    <Route path="/test" element={<TestPage/>}/>
+                    <Route path="/profileSettings" element={<ProfileSettings/>}/>
+                    <Route path="/packsList" element={<PacksListPageContainer/>}/>
+                    <Route path="/packItem" element={<PackItem/>}/>
+                </Routes>
+            </div>
+
 
         </div>
     )
