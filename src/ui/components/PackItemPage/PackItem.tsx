@@ -47,7 +47,6 @@ const PackItem = () => {
     const dispatch = useDispatch()
     const navigate = useNavigate()
 
-
     const [sortCards, setSortCards] = useState<sortCardsType>('')
 
     const search = useInput('', [])
