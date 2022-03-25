@@ -8,6 +8,7 @@ import {
     PackItemResponseType,
     PackItemType,
     setCardsCountAC,
+    setCardsGradeTC,
     setMaxMinGradeAC
 } from "../../../bll/reducers/packItem-reducer";
 import {modalCardReducerType, setActiveModalCardAC} from "../../../bll/reducers/modalCard-reducer";
@@ -29,13 +30,14 @@ import Paginator from "../../common/Paginator/Paginator";
 import {useDebounce} from "../../../hooks/useDebounce";
 import Search from "../PacksListPage/Search/SearchInput";
 import {useInput} from "../../../hooks/useInput";
+import { packItemApi } from '../../../dal/api/packItem-api';
 
 
 const PackItem = () => {
 
     const arrayNumbers = [4, 5, 6, 7, 8, 9, 10]
 
-    const isFetching = useAppSelector<boolean>(state => state.app.isFetching)
+        // const isFetching = useAppSelector<boolean>(state => state.app.isFetching)
     const packItem = useAppSelector<PackItemResponseType>(state => state.packItem)
     const cards = useAppSelector<PackItemType[]>(state => state.packItem.cards)
     const packItemId = useAppSelector<string>(state => state.packItemId.packItemId)
@@ -96,7 +98,7 @@ const PackItem = () => {
 
     const updateCard = useCallback((cardId: string, newQuestion: string, newAnswer: string) => {
         dispatch(updateCardTC(modalCard.packId, newQuestion, newAnswer, packItemId))
-    },[modalCard.packId,packItemId, dispatch]);
+    }, [modalCard.packId, packItemId, dispatch]);
 
     const handleBackToPackList = () => {
         dispatch(setMaxMinGradeAC(MIN_RANGE_COUNT, MAX_RANGE_COUNT))
@@ -105,20 +107,25 @@ const PackItem = () => {
         navigate('/packsList')
     };
 
+    const grade = () => {
+        dispatch(setCardsGradeTC(5, "623d73de156d9400047f82cd"))
+    }
+
     return (
         <>
             {/*{isFetching && <Preloader/>}*/}
             <div className={s.packsListPageContainer}>
+                <button onClick={grade}>Grade</button>
                 <div className={s.leftBlock}>
                     <SuperButton className={s.doubleButton}
                                  onClick={handleBackToPackList}>
                         Back to Pack List
                     </SuperButton>
                     {myUserID === packItem.packUserId &&
-                    <SuperButton className={s.doubleButton}
-                                 onClick={() => dispatch(setActiveModalCardAC('addPack'))}>
-                        Add New Card
-                    </SuperButton>}
+                        <SuperButton className={s.doubleButton}
+                                     onClick={() => dispatch(setActiveModalCardAC('addPack'))}>
+                            Add New Card
+                        </SuperButton>}
 
                     <section className={s.show_packs_cards}>
                         <h6>Grade of cards</h6>
