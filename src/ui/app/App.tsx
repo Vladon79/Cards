@@ -18,6 +18,7 @@ import PacksListPageContainer from "../components/PacksListPage/PacksListPageCon
 import SignUp from '../features/Login/SignUp/SignUp';
 import PackItem from "../components/PackItemPage/PackItem";
 import SignIn from "../features/Login/SingIn/SignIn";
+import LearnPack from './../components/PacksListPage/LearnPack/LearnPack'
 
 
 const App = () => {
@@ -47,7 +48,8 @@ const App = () => {
                     <Route path="/test" element={<TestPage/>}/>
                     <Route path="/profileSettings" element={<ProfileSettings/>}/>
                     <Route path="/packsList" element={<PacksListPageContainer/>}/>
-                    <Route path="/packItem" element={<PackItem/>}/>
+                    <Route path="/packItem/:id" element={<PackItem/>}/>
+                    <Route path="/learn-pack/:id" element={<LearnPack/>}/>
                 </Routes>
             </div>
 
