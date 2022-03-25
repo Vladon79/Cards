@@ -16,12 +16,11 @@ const LearnPack = () => {
     const navigate = useNavigate()
     const responseError = useAppSelector<null | string>(state => state.app.error)
     const cardsArr = useAppSelector<Array<PackItemType>>(state => state.packItem.cards)
-    const params = useParams()
-    const packId = params.id
     const cardNumber = Math.floor(Math.random() * cardsArr.length)
 
     const [isShow, setIsShow] = useState<boolean>(false)
     const [radioCurrentValue, setRadioCurrentValue] = useState<string>(radioValues[0])
+    const [question, setQuestion] = useState<number>(0)
 
 
     const cancelBtnHandler = () => {
@@ -30,10 +29,13 @@ const LearnPack = () => {
 
     const showAnswerBtnClickHandler = () => {
         setIsShow(true)
+        console.log(cardNumber)
     }
 
     const nextBtnClickHandler = () => {
         console.log('next')
+        console.log(cardNumber)
+        setQuestion(1)
     }
 
     const radioOnChangeCallback = (value: string) => {
@@ -57,7 +59,7 @@ const LearnPack = () => {
 
                     <div className={s.question_box}>
                         <span className={s.question_question}>Question: </span>
-                        <span className={s.question_text}>“How "This" works in JavaScript?”</span>
+                        <span className={s.question_text}>{cardsArr[question].question}</span>
                     </div>
 
                     {isShow && <>
