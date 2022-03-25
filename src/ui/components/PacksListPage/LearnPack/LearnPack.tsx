@@ -1,27 +1,33 @@
-import React, {ChangeEvent, useState} from 'react';
+import React, {ChangeEvent, useEffect, useState} from 'react';
 import Preloader from "../../../common/Preloader/Preloader";
 import {useAppSelector} from "../../../../bll/store";
 import s from './LearnPack.module.scss';
 import ErrorBar from "../../../common/ErrorBar/ErrorBar";
 import SuperButton from "../../../common/c2-SuperButton/SuperButton";
 import SuperRadio from "../../../common/c6-SuperRadio/SuperRadio";
-import {useNavigate, useParams} from 'react-router-dom';
-import {PackItemType} from '../../../../bll/reducers/packItem-reducer';
+import {Navigate, useNavigate, useParams} from 'react-router-dom';
+import {getPackItemTC, PackItemType} from '../../../../bll/reducers/packItem-reducer';
+import {useDispatch} from 'react-redux';
 
 const radioValues = ['Did not know', 'Forgot', 'A lot of thought', 'Сonfused', 'Knew the answer']
 
 const LearnPack = () => {
 
+    const dispatch = useDispatch()
     const isFetching = useAppSelector<boolean>(state => state.app.isFetching)
     const navigate = useNavigate()
     const responseError = useAppSelector<null | string>(state => state.app.error)
     const cardsArr = useAppSelector<Array<PackItemType>>(state => state.packItem.cards)
-    const cardNumber = Math.floor(Math.random() * cardsArr.length)
-
+    const params = useParams()
+    const id = params.id ? params.id : ''
     const [isShow, setIsShow] = useState<boolean>(false)
     const [radioCurrentValue, setRadioCurrentValue] = useState<string>(radioValues[0])
-    const [question, setQuestion] = useState<number>(0)
+    let [question, setQuestion] = useState<number>(0)
 
+
+    useEffect(() => {
+        dispatch(getPackItemTC(id))
+    }, [])
 
     const cancelBtnHandler = () => {
         navigate(`/packsList`)
@@ -29,18 +35,22 @@ const LearnPack = () => {
 
     const showAnswerBtnClickHandler = () => {
         setIsShow(true)
-        console.log(cardNumber)
     }
 
     const nextBtnClickHandler = () => {
-        console.log('next')
-        console.log(cardNumber)
-        setQuestion(1)
+        setQuestion(question + 1)
+        setIsShow(!isShow)
     }
+
 
     const radioOnChangeCallback = (value: string) => {
         setRadioCurrentValue(value)
     }
+
+    if (question === cardsArr.length) {
+        return <Navigate to ={`/packsList`}/>
+    }
+
 
     return (
         <section className={s.main_box}>
@@ -65,7 +75,7 @@ const LearnPack = () => {
                     {isShow && <>
                         <div className={s.answer_box}>
                             <span className={s.question_question}>Answer: </span>
-                            <span className={s.question_text}>“This is how "This" works in JavaScript”</span>
+                            <span className={s.question_text}>{cardsArr[question].answer}</span>
                         </div>
 
                         <div className={s.rate_box}>
