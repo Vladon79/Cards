@@ -138,6 +138,7 @@ export const getPackItemTC = (cardsPack_id: string,
 
 export const setCardsGradeTC = (grade: number, card_id: string) => async (dispatch: Dispatch) => {
     // dispatch(toggleIsFetchingAC(true))
+    debugger
     packItemApi.cardsGrade(grade, card_id)
         .then(res => {
             dispatch(setCardsGradeAC(grade, card_id))
