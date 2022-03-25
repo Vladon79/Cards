@@ -6,7 +6,8 @@ import ErrorBar from "../../../common/ErrorBar/ErrorBar";
 import SuperButton from "../../../common/c2-SuperButton/SuperButton";
 import SuperRadio from "../../../common/c6-SuperRadio/SuperRadio";
 import {useNavigate, useParams} from 'react-router-dom';
-import {PackItemType} from '../../../../bll/reducers/packItem-reducer';
+import {PackItemType, setCardsGradeTC} from '../../../../bll/reducers/packItem-reducer';
+import {useDispatch} from 'react-redux';
 
 const radioValues = ['Did not know', 'Forgot', 'A lot of thought', 'Сonfused', 'Knew the answer']
 
@@ -18,9 +19,25 @@ const LearnPack = () => {
     const cardsArr = useAppSelector<Array<PackItemType>>(state => state.packItem.cards)
     const cardNumber = Math.floor(Math.random() * cardsArr.length)
 
+    const diapatch = useDispatch()
+
+
     const [isShow, setIsShow] = useState<boolean>(false)
     const [radioCurrentValue, setRadioCurrentValue] = useState<string>(radioValues[0])
     const [question, setQuestion] = useState<number>(0)
+
+    let grade = 1
+    if (radioCurrentValue === 'Did not know') {
+        grade = 1
+    } else if (radioCurrentValue === 'Forgot') {
+        grade = 2
+    } else if (radioCurrentValue === 'A lot of thought') {
+        grade = 3
+    } else if (radioCurrentValue === 'Сonfused') {
+        grade = 4
+    }else if (radioCurrentValue === 'Knew the answer') {
+        grade = 5
+    }
 
 
     const cancelBtnHandler = () => {
@@ -35,6 +52,7 @@ const LearnPack = () => {
     const nextBtnClickHandler = () => {
         console.log('next')
         console.log(cardNumber)
+        diapatch(setCardsGradeTC(grade, cardsArr[question]._id))
         setQuestion(1)
     }
 
@@ -91,21 +109,21 @@ const LearnPack = () => {
                         </SuperButton>
 
                         {!isShow &&
-                        <SuperButton
-                            onClick={showAnswerBtnClickHandler}
-                            className={s.show_answer_btn}
-                        >
-                            Show answer
-                        </SuperButton>
+                            <SuperButton
+                                onClick={showAnswerBtnClickHandler}
+                                className={s.show_answer_btn}
+                            >
+                                Show answer
+                            </SuperButton>
                         }
 
                         {isShow &&
-                        <SuperButton
-                            onClick={nextBtnClickHandler}
-                            className={s.show_answer_btn}
-                        >
-                            Next
-                        </SuperButton>
+                            <SuperButton
+                                onClick={nextBtnClickHandler}
+                                className={s.show_answer_btn}
+                            >
+                                Next
+                            </SuperButton>
                         }
                     </div>
                 </section>

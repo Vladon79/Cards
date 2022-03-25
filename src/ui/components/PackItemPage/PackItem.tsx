@@ -107,15 +107,11 @@ const PackItem = () => {
         navigate('/packsList')
     };
 
-    const grade = () => {
-        dispatch(setCardsGradeTC(5, "623d73de156d9400047f82cd"))
-    }
 
     return (
         <>
             {/*{isFetching && <Preloader/>}*/}
             <div className={s.packsListPageContainer}>
-                <button onClick={grade}>Grade</button>
                 <div className={s.leftBlock}>
                     <SuperButton className={s.doubleButton}
                                  onClick={handleBackToPackList}>
