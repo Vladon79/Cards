@@ -9,6 +9,7 @@ import {PackItemType, setCardsGradeTC} from '../../../../bll/reducers/packItem-r
 import {useDispatch} from 'react-redux';
 import {Navigate, useNavigate, useParams} from 'react-router-dom';
 import {getPackItemTC} from '../../../../bll/reducers/packItem-reducer';
+import {PackResponseType} from '../../../../bll/reducers/packs-reducer';
 
 
 const radioValues = ['Did not know', 'Forgot', 'A lot of thought', 'Сonfused', 'Knew the answer']
@@ -20,12 +21,15 @@ const LearnPack = () => {
     const navigate = useNavigate()
     const responseError = useAppSelector<null | string>(state => state.app.error)
     const cardsArr = useAppSelector<Array<PackItemType>>(state => state.packItem.cards)
+    const cardPacks = useAppSelector<Array<PackResponseType>>(state => state.packs.cardPacks)
     const params = useParams()
     const id = params.id ? params.id : ''
     const [isShow, setIsShow] = useState<boolean>(false)
     const [radioCurrentValue, setRadioCurrentValue] = useState<string>(radioValues[0])
     let [question, setQuestion] = useState<number>(0)
 
+    const namePack = cardPacks.find(c => c._id === id && c)
+    console.log(namePack ? namePack.name : '')
 
     useEffect(() => {
         dispatch(getPackItemTC(id))
@@ -39,7 +43,7 @@ const LearnPack = () => {
         grade = 3
     } else if (radioCurrentValue === 'Сonfused') {
         grade = 4
-    }else if (radioCurrentValue === 'Knew the answer') {
+    } else if (radioCurrentValue === 'Knew the answer') {
         grade = 5
     }
 
@@ -64,7 +68,7 @@ const LearnPack = () => {
     }
 
     if (question === cardsArr.length) {
-        return <Navigate to ={`/packsList`}/>
+        return <Navigate to={`/packsList`}/>
     }
 
 
@@ -80,7 +84,7 @@ const LearnPack = () => {
                     </div>
 
                     <div className={s.learn_box_header}>
-                        Learn “Pack Name”
+                        {namePack ? namePack.name : ''}
                     </div>
 
                     <div className={s.question_box}>
