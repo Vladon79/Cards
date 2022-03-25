@@ -53,9 +53,7 @@ const LearnPack = () => {
     }
 
     const nextBtnClickHandler = () => {
-        console.log('next')
         dispatch(setCardsGradeTC(grade, cardsArr[question]._id))
-        setQuestion(1)
         setQuestion(question + 1)
         setIsShow(!isShow)
     }
