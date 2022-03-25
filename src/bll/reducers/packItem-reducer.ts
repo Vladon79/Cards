@@ -24,7 +24,6 @@ export type PackItemResponseType = {
     page: number
     pageCount: number
     packUserId: string
-
 }
 
 const initialState: PackItemResponseType = {
