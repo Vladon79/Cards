@@ -98,7 +98,8 @@ export const addNewCardTC = (packItemId: string, question: string, answer: strin
     (dispatch) => {
         dispatch(toggleIsFetchingAC(true))
         packItemApi.postCard(packItemId, question, answer)
-            .then(() => {
+            .then((res) => {
+                console.log(res)
                 dispatch(getPackItemTC(packItemId))
                 dispatch(setActiveModalCardAC(false))
             })

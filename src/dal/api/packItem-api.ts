@@ -45,6 +45,9 @@ export const packItemApi = {
     },
     updateCard(id: string, newQuestion: string, newAnswer: string) {
         return instance.put('/cards/card', {card: {_id: id, question: newQuestion, answer: newAnswer}})
+    },
+    cardsGrade(grade:number, card_id:string){
+        return instance.put('/cards/grade', {grade, card_id})
     }
 }
 

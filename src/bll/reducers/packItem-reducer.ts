@@ -1,7 +1,7 @@
 import {ActionType} from "../action-dispatchTypes";
 import {Dispatch} from "redux";
 import {packItemApi} from "../../dal/api/packItem-api";
-import {setAppInitializeAC, toggleIsFetchingAC} from "./app-reducer";
+
 
 export type PackItemType = {
     answer: string
@@ -18,7 +18,7 @@ export type PackItemType = {
 export type PackItemResponseType = {
     cards: PackItemType []
     cardsTotalCount: number
-    maxCardGrade:number
+    maxCardGrade: number
     maxGrade: number
     minGrade: number
     page: number
@@ -41,7 +41,7 @@ const initialState: PackItemResponseType = {
         },
     ],
     cardsTotalCount: 3,
-    maxCardGrade:6,
+    maxCardGrade: 6,
     maxGrade: 6,
     minGrade: 0,
     page: 1,
@@ -54,23 +54,31 @@ export const packItemReducer = (state: PackItemResponseType = initialState, acti
     switch (action.type) {
         case "PACK-ITEM/GET-CARD":
 
-            return {...state,
-                cards:action.cards,
-                cardsTotalCount:action.cardsTotalCount,
-                maxCardGrade:action.maxGrade,
-                packUserId:action.packUserId}
+            return {
+                ...state,
+                cards: action.cards,
+                cardsTotalCount: action.cardsTotalCount,
+                maxCardGrade: action.maxGrade,
+                packUserId: action.packUserId
+            }
         case "PACK-ITEM/SET-MAX-MIN-GRADE":
-            return {...state,  maxGrade: action.max, minGrade: action.min}
+            return {...state, maxGrade: action.max, minGrade: action.min}
         case "PACK-ITEM/SET-CARDS-COUNT":
             return {...state, pageCount: action.cardsCount}
         case  "PACK-ITEM/CHANGE-NUMBER-CARDS":
             return {...state, page: action.numberPage}
+        case  "PACK-ITEM/SET-CARDS-GRADE":
+            return {
+                ...state, cards: state.cards.filter(c => c._id === action.card_id
+                    ? {...c, grade: action.grade}
+                    : c)
+            }
         default:
             return state
     }
 }
 
-export const getPackItemAC = (cards: PackItemType[], cardsTotalCount:number, maxGrade:number, packUserId:string) => {
+export const getPackItemAC = (cards: PackItemType[], cardsTotalCount: number, maxGrade: number, packUserId: string) => {
     return {
         type: "PACK-ITEM/GET-CARD",
         cards, cardsTotalCount, maxGrade, packUserId
@@ -99,6 +107,13 @@ export const changeNumberPageCardsAC = (numberPage: number) => {
     } as const
 }
 
+export const setCardsGradeAC = (grade: number, card_id: string) => {
+    return {
+        type: "PACK-ITEM/SET-CARDS-GRADE",
+        grade, card_id
+    } as const
+}
+
 
 export const getPackItemTC = (cardsPack_id: string,
                               page?: number,
@@ -116,7 +131,23 @@ export const getPackItemTC = (cardsPack_id: string,
         .catch(() => {
 
         })
-        // .finally(() => {
-        //     dispatch(toggleIsFetchingAC(false))
-        // })
+    // .finally(() => {
+    //     dispatch(toggleIsFetchingAC(false))
+    // })
 }
+
+export const setCardsGradeTC = (grade: number, card_id: string) => async (dispatch: Dispatch) => {
+    // dispatch(toggleIsFetchingAC(true))
+    packItemApi.cardsGrade(grade, card_id)
+        .then(res => {
+            dispatch(setCardsGradeAC(grade, card_id))
+
+        })
+        .catch(() => {
+
+        })
+    // .finally(() => {
+    //     dispatch(toggleIsFetchingAC(false))
+    // })
+}
+
