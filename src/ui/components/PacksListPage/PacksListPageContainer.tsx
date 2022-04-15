@@ -72,7 +72,6 @@ const PacksListPageContainer = () => {
     }
     const updatePack = (id: string, newName: string) => {
         dispatch(updatePackTC(id, newName))
-
     }
 
     return <PacksListPage myUserID={myUserID} page={page} getMyPacks={getMyPacks} cardPacks={cardPacks}

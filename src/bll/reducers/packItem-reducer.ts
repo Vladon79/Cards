@@ -53,7 +53,6 @@ const initialState: PackItemResponseType = {
 export const packItemReducer = (state: PackItemResponseType = initialState, action: ActionType): PackItemResponseType => {
     switch (action.type) {
         case "PACK-ITEM/GET-CARD":
-
             return {
                 ...state,
                 cards: action.cards,
