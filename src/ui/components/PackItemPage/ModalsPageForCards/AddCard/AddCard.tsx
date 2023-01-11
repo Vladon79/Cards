@@ -13,8 +13,7 @@ const AddCard = ({addNewCard}: AddCardPropsType) => {
 
     const question = useInput('', [])
     const answer = useInput('', [])
-
-
+    
     const addNewCardOnClick = () => {
         addNewCard(question.value, answer.value)
     }
@@ -24,10 +23,9 @@ const AddCard = ({addNewCard}: AddCardPropsType) => {
             <p>New card:</p>
                 <SearchInput searchValue={question.value} searchOnChange={question.valueChange}
                 placeholderProps={'Question'}/>
-                <SearchInput searchValue={answer.value} searchOnChange={answer.valueChange} placeholderProps={'Answer'}/>
-
+                <SearchInput searchValue={answer.value} searchOnChange={answer.valueChange} 
+                             placeholderProps={'Answer'}/>
                 <SuperButton onClick={addNewCardOnClick}>Add card</SuperButton>
-
         </div>
     )
 }

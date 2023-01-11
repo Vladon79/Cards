@@ -8,7 +8,7 @@ import ProfilePage from "../components/ProfilePage/ProfilePage";
 import s from './App.module.scss'
 import Preloader from "../common/Preloader/Preloader";
 import {useDispatch, useSelector} from "react-redux";
-import {AppRootStateType} from "../../bll/store";
+import {AppRootStateType, useAppSelector} from "../../bll/store";
 import ProfileSettings from "../components/ProfilePage/ProfileSettings/ProfileSettings";
 import {appInitializeTC} from "../../bll/reducers/app-reducer";
 import {CheckEmail} from "../features/Login/CheckEmail/CheckEmail";
@@ -19,18 +19,17 @@ import SignUp from '../features/Login/SignUp/SignUp';
 import PackItem from "../components/PackItemPage/PackItem";
 import SignIn from "../features/Login/SingIn/SignIn";
 import LearnPack from './../components/PacksListPage/LearnPack/LearnPack'
+import { selectorFetching } from '../../bll/selectors/selectors';
 
 
 const App = () => {
-    const isFetching = useSelector<AppRootStateType, boolean>(state => state.app.isFetching)
+    const isFetching = useAppSelector(selectorFetching)
     const dispatch = useDispatch()
-
-
+    
     useEffect(() => {
         dispatch(appInitializeTC())
     }, [])
-
-
+    
     return (
         <div className={s.app}>
             <Header/>

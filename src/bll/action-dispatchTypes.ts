@@ -1,88 +1,70 @@
-import {Dispatch} from "redux";
-import {setAppErrorAC, setAppInitializeAC, toggleIsFetchingAC} from "./reducers/app-reducer";
+import { Dispatch } from "redux";
+import { setAppErrorAC, setAppInitializeAC, toggleIsFetchingAC } from "./reducers/app-reducer";
 import {
-    authMeAC,
-    changeProfileAC,
-    setPasswordIsCreatedAC,
-    setSentPassAC,
-    setTokenIsSentAC,
-    signOutAC
+  authMeAC, changeProfileAC, setPasswordIsCreatedAC, setSentPassAC, setTokenIsSentAC, signOutAC
 } from "./reducers/auth-reducer";
-import {signUpAC} from "./reducers/sign-up-reducer";
+import { signUpAC } from "./reducers/sign-up-reducer";
 import {
-    changeNumberPageAC,
-    getPacksAC,
-    searchPackAC,
-    setMaxMinNumberCardsAC, setPackPreloaderAC,
-    setPageCountAC, setWhosePackAC
+  changeNumberPageAC, getPacksAC, searchPackAC, setMaxMinNumberCardsAC, setPackPreloaderAC, setPageCountAC, setWhosePackAC
 } from "./reducers/packs-reducer";
-import {addPacksAC, deletePackAC, updatePackAC} from "./reducers/myPacks-reducer";
+import { addPacksAC, deletePackAC, updatePackAC } from "./reducers/myPacks-reducer";
 import {
-    changeNumberPageCardsAC,
-    getPackItemAC,
-    setCardsCountAC,
-    setCardsGradeAC,
-    setMaxMinGradeAC
+  changeNumberPageCardsAC, getPackItemAC, setCardsCountAC, setCardsGradeAC, setMaxMinGradeAC
 } from "./reducers/packItem-reducer";
-import {savePackItemIdAC} from "./reducers/packId-reducer";
-import {addNewCardAC, deleteCardAC, errorAC, sortCardAC, updateCardAC} from "./reducers/myCard-reducer";
-import {addPackModalAC, deletePackModalAC, setActiveModalAC, updatePackModalAC} from "./reducers/modal-reducer";
+import { addNewCardAC, deleteCardAC, errorAC, sortCardAC, updateCardAC } from "./reducers/myCard-reducer";
+import { addPackModalAC, deletePackModalAC, setActiveModalAC, updatePackModalAC } from "./reducers/modal-reducer";
 import {
-    addCardModalAC,
-    deleteCardModalAC,
-    setActiveModalCardAC,
-    updateCardModalAC
+  addCardModalAC, deleteCardModalAC, setActiveModalCardAC, updateCardModalAC
 } from "./reducers/modalCard-reducer";
-import {singInAC} from "./reducers/sing-in-reducer";
+import { singInAC } from "./reducers/sing-in-reducer";
 
 
 export type ActionType =
-    ToggleIsFetchingACType
-    | authMeACType
-    | signOutACType
-    | changeProfileACType
-    | setAppInitializeAT
-    | signUpAT
-    | getPacksAT
-    | changeNumberPageAT
-    | setMaxMinNumberCardsAT
-    | setPageCountAT
-    | setAppErrorAT
-    | setTokenIsSentAT
-    | deletePackAT
-    | addPacksAT
-    | updatePackAT
-    | searchPackAT
-    | setPassIsSentAT
-    | setPasswordIsCreatedAT
+  ToggleIsFetchingACType
+  | authMeACType
+  | signOutACType
+  | changeProfileACType
+  | setAppInitializeAT
+  | signUpAT
+  | getPacksAT
+  | changeNumberPageAT
+  | setMaxMinNumberCardsAT
+  | setPageCountAT
+  | setAppErrorAT
+  | setTokenIsSentAT
+  | deletePackAT
+  | addPacksAT
+  | updatePackAT
+  | searchPackAT
+  | setPassIsSentAT
+  | setPasswordIsCreatedAT
 
-    | GetPackItemAT
-    | SetMinMaxGradeAT
-    | SetCardsCountAT
-    | ChangeNumberPageCardsAT
-    | SavePackItemIdAT
-    | setWhosePackAT
-    | setPackPreloaderAT
-    | setCardsGradeAT
+  | GetPackItemAT
+  | SetMinMaxGradeAT
+  | SetCardsCountAT
+  | ChangeNumberPageCardsAT
+  | setWhosePackAT
+  | setPackPreloaderAT
+  | setCardsGradeAT
 
 
-    | AddNewCardAT
-    | DeleteCardAT
-    | UpdateCardAT
-    | SortCardAT
+  | AddNewCardAT
+  | DeleteCardAT
+  | UpdateCardAT
+  | SortCardAT
 
-    | setActiveModalAT
-    | deletePackModalAT
-    | updatePackModalAT
-    | addPackModalAT
-    | ErrorAT
+  | setActiveModalAT
+  | deletePackModalAT
+  | updatePackModalAT
+  | addPackModalAT
+  | ErrorAT
 
-    | SetActiveModalCardAT
-    | AddPackModalCardAT
-    | DeletePackModalCardAT
-    | UpdatePackModalCardAT
+  | SetActiveModalCardAT
+  | AddPackModalCardAT
+  | DeletePackModalCardAT
+  | UpdatePackModalCardAT
 
-    | SingInAT
+  | SingInAT
 
 export type ToggleIsFetchingACType = ReturnType<typeof toggleIsFetchingAC>;
 export type authMeACType = ReturnType<typeof authMeAC>;
@@ -110,7 +92,7 @@ export type GetPackItemAT = ReturnType<typeof getPackItemAC>
 export type SetMinMaxGradeAT = ReturnType<typeof setMaxMinGradeAC>
 export type SetCardsCountAT = ReturnType<typeof setCardsCountAC>
 export type ChangeNumberPageCardsAT = ReturnType<typeof changeNumberPageCardsAC>
-export type SavePackItemIdAT = ReturnType<typeof savePackItemIdAC>
+
 export type setWhosePackAT = ReturnType<typeof setWhosePackAC>
 export type setPackPreloaderAT = ReturnType<typeof setPackPreloaderAC>
 export type setCardsGradeAT = ReturnType<typeof setCardsGradeAC>

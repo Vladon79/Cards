@@ -4,6 +4,7 @@ import s from '../TablePackItem/TablePackItem.module.scss'
 import RefactorMyCard from "../TablePackItem/RefactorMyCard/refactorMyCard";
 
 import {useAppSelector} from "../../../../bll/store";
+import { selectorMyUserId } from "../../../../bll/selectors/selectors";
 
 
 type CardType = {
@@ -18,7 +19,7 @@ type CardType = {
 
 const Card = ({id, userId, question, answer, updated, create, grade}: CardType) => {
 
-    const myUserID = useAppSelector<string>(state => state.auth.user._id)
+    const myUserID = useAppSelector(selectorMyUserId)
 
     return (
         <div className={s.pack}>
