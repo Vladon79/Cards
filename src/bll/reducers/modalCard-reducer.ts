@@ -3,10 +3,10 @@ import {ModalType} from "./modal-reducer";
 
 export type modalCardReducerType = {
     activeModalCard: ModalType
-    packId:string,
-    cardId: string,
+    packId:string | undefined
+    cardId: string
     question: string
-    answer: string,
+    answer: string
     title:string
 }
 
@@ -26,9 +26,9 @@ export const modalCardReducer = (state: modalCardReducerType = initialState, act
         case "MODAL-CARD/ADD-CARD":
             return {...state, activeModalCard: 'addPack', question: action.newQuestion, answer:action.newAnswer,  title:'Add new pack'}
         case "MODAL-CARD/DELETE-CARD":
-             return {...state, activeModalCard: 'deletePack', packId: action.packId, cardId: action.cardId, title:'Delete card'}
+             return {...state, activeModalCard: 'deletePack',  cardId: action.cardId, title:'Delete card'}
          case "MODAL-CARD/UPDATE-CARD":
-           return {...state, activeModalCard: 'updatePack', packId: action.packId, question:action.newQuestion,answer:action.newAnswer,cardId:action.cardId, title:'Update card'}
+           return {...state, activeModalCard: 'updatePack', cardId:action.cardId, question:action.newQuestion,answer:action.newAnswer,  title:'Update card'}
 
         default:
             return state
@@ -50,17 +50,17 @@ export const addCardModalAC = (packId: string, newQuestion:string, newAnswer:str
     } as const
 }
 
-export const deleteCardModalAC = (packId: string, cardId: string) => {
+export const deleteCardModalAC = ( cardId: string) => {
     return {
         type: "MODAL-CARD/DELETE-CARD",
-        packId, cardId
+         cardId
     } as const
 }
 
-export const updateCardModalAC = (packId: string, newQuestion:string, newAnswer:string,  cardId: string) => {
+export const updateCardModalAC = ( newQuestion:string, newAnswer:string, cardId: string ) => {
     return {
         type: "MODAL-CARD/UPDATE-CARD",
-        packId, newQuestion,newAnswer, cardId
+         newQuestion,newAnswer, cardId
     } as const
 }
 

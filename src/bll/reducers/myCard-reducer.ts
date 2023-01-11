@@ -93,13 +93,12 @@ export const errorAC = (error: string) => {
     } as const
 }
 
-export const addNewCardTC = (packItemId: string, question: string, answer: string):
+export const addNewCardTC = (packItemId: string | undefined, question: string, answer: string):
     ThunkAction<void, AppRootStateType, unknown, ActionType> =>
     (dispatch) => {
         dispatch(toggleIsFetchingAC(true))
         packItemApi.postCard(packItemId, question, answer)
             .then((res) => {
-                console.log(res)
                 dispatch(getPackItemTC(packItemId))
                 dispatch(setActiveModalCardAC(false))
             })
@@ -111,7 +110,7 @@ export const addNewCardTC = (packItemId: string, question: string, answer: strin
             })
     }
 
-export const deleteCardTC = (cardId: string, packItemId: string):
+export const deleteCardTC = (packItemId: string | undefined, cardId: string, ):
     ThunkAction<void, AppRootStateType, unknown, ActionType> =>
     (dispatch) => {
         dispatch(toggleIsFetchingAC(true))
@@ -128,14 +127,14 @@ export const deleteCardTC = (cardId: string, packItemId: string):
             })
     }
 
-export const updateCardTC = (cardId: string, newQuestion: string, newAnswer: string, packItemId: string):
+export const updateCardTC = (packItemId: string | undefined, newQuestion: string, newAnswer: string, cardId: string):
     ThunkAction<void, AppRootStateType, unknown, ActionType> =>
     (dispatch) => {
         dispatch(toggleIsFetchingAC(true))
         packItemApi.updateCard(cardId, newQuestion, newAnswer)
             .then(() => {
                 dispatch(getPackItemTC(packItemId))
-                dispatch(updateCardModalAC(cardId, newQuestion, newAnswer, packItemId))
+                dispatch(updateCardModalAC(newQuestion, newAnswer, cardId))
                 dispatch(setActiveModalCardAC(false))
             })
             .catch((error) => {
