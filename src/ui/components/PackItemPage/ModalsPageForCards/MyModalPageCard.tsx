@@ -2,21 +2,20 @@ import AddCard from "./AddCard/AddCard";
 import UpdateCard from "./UpdateCard/UpdateCard";
 import DeleteCard from "./DeleteCard/DeleteCard";
 import {useAppSelector} from "../../../../bll/store";
-import {ModalType} from "../../../../bll/reducers/modal-reducer";
+import {selectorActiveModalCard, selectorTitleModalCard } from "../../../../bll/selectors/selectors";
 import MyModalCard from "../../../common/ModalCard/MyModalCard";
-
 
 type MyModalPageCardPropsType = {
     addNewCard: (question: string, answer: string) => void
-    deleteCard: (id: string) => void
+    deleteCard: () => void
     updateCard: (cardId:string, newQuestion: string, newAnswer: string) => void
 }
 
 const MyModalPageCard = ({addNewCard, deleteCard, updateCard}: MyModalPageCardPropsType) => {
 
-    const activeModalCard = useAppSelector<ModalType>(state => state.modalCard.activeModalCard)
-    const title = useAppSelector<string>(state => state.modalCard.title)
-
+    const activeModalCard = useAppSelector(selectorActiveModalCard)
+    const title = useAppSelector(selectorTitleModalCard)
+    
     return (
         <MyModalCard activeModal={activeModalCard} title={title}>
             {activeModalCard === 'addPack' && <AddCard addNewCard={addNewCard}/>}
@@ -25,5 +24,4 @@ const MyModalPageCard = ({addNewCard, deleteCard, updateCard}: MyModalPageCardPr
         </MyModalCard>
     )
 }
-
 export default MyModalPageCard

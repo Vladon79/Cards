@@ -1,5 +1,5 @@
 import React, {useCallback, useEffect, useState} from 'react';
-import {useNavigate} from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 import {useDispatch} from "react-redux";
 
 import {
@@ -14,43 +14,42 @@ import {
 import {modalCardReducerType, setActiveModalCardAC} from "../../../bll/reducers/modalCard-reducer";
 import {addNewCardTC, deleteCardTC, sortCardsType, updateCardTC} from "../../../bll/reducers/myCard-reducer";
 import {useAppSelector} from "../../../bll/store";
+import { selectorModalCard, selectorMyUserId } from '../../../bll/selectors/selectors';
 
 import s from "../PacksListPage/PacksListPage.module.scss";
 
 import Card from './Card/Card';
 import TablePackItem from './TablePackItem/TablePackItem';
-import MyModalPageCard from "./ModalsPageForCards/MyModalPageCard";
 
+import MyModalPageCard from "./ModalsPageForCards/MyModalPageCard";
 import SuperButton from "../../common/c2-SuperButton/SuperButton";
 import SuperDoubleRange from "../../common/SuperComponents/SuperDoubleRange";
 import SuperSelect from "../../common/SuperComponents/SuperSelect";
 import Preloader from "../../common/Preloader/Preloader";
-import Paginator from "../../common/Paginator/Paginator";
 
+import Paginator from "../../common/Paginator/Paginator";
 import {useDebounce} from "../../../hooks/useDebounce";
 import Search from "../PacksListPage/Search/SearchInput";
 import {useInput} from "../../../hooks/useInput";
-import { packItemApi } from '../../../dal/api/packItem-api';
+import {packItemApi} from '../../../dal/api/packItem-api';
 
 
 const PackItem = () => {
-
+    console.log('render PackItem')
     const arrayNumbers = [4, 5, 6, 7, 8, 9, 10]
 
-        // const isFetching = useAppSelector<boolean>(state => state.app.isFetching)
     const packItem = useAppSelector<PackItemResponseType>(state => state.packItem)
     const cards = useAppSelector<PackItemType[]>(state => state.packItem.cards)
-    const packItemId = useAppSelector<string>(state => state.packItemId.packItemId)
     const pageCount = useAppSelector<number>(state => state.packItem.pageCount)
     const page = useAppSelector<number>(state => state.packItem.page)
-    const myUserID = useAppSelector<string>(state => state.auth.user._id)
-    const modalCard = useAppSelector<modalCardReducerType>(state => state.modalCard)
+    const myUserID = useAppSelector(selectorMyUserId)
+    const modalCard = useAppSelector(selectorModalCard)
 
     const dispatch = useDispatch()
     const navigate = useNavigate()
-
+    const {id} = useParams()
+    
     const [sortCards, setSortCards] = useState<sortCardsType>('')
-
     const search = useInput('', [])
 
     const searchDebounce = useDebounce(search.value, 1500)
@@ -64,7 +63,7 @@ const PackItem = () => {
     const START_CARDS_COUNT = 4
 
     useEffect(() => {
-        dispatch(getPackItemTC(packItemId,
+        dispatch(getPackItemTC(id,
             page,
             pageCount,
             packItem.minGrade,
@@ -73,7 +72,7 @@ const PackItem = () => {
             String(searchDebounce),
             sortCards))
 
-    }, [page, pageCount, minGradeDebounce, maxGradeDebounce, searchDebounce, sortCards, dispatch, packItemId, modalCard.question])
+    }, [page, pageCount, minGradeDebounce, maxGradeDebounce, searchDebounce, sortCards, dispatch, id, modalCard.question])
 
     const setValuesOnSlider = (value: number[]) => {
         dispatch(setMaxMinGradeAC(value[0], value[1]))
@@ -89,16 +88,16 @@ const PackItem = () => {
     };
 
     const addNewCard = (question: string, answer: string) => {
-        dispatch(addNewCardTC(packItemId, question, answer))
+        dispatch(addNewCardTC(id, question, answer))
     };
 
     const deleteCard = () => {
-        dispatch(deleteCardTC(modalCard.packId, modalCard.cardId))
+        dispatch(deleteCardTC(id, modalCard.cardId))
     };
 
     const updateCard = useCallback((cardId: string, newQuestion: string, newAnswer: string) => {
-        dispatch(updateCardTC(modalCard.packId, newQuestion, newAnswer, packItemId))
-    }, [modalCard.packId, packItemId, dispatch]);
+        dispatch(updateCardTC(id, newQuestion, newAnswer, cardId))
+    }, [modalCard.packId, id, dispatch]);
 
     const handleBackToPackList = () => {
         dispatch(setMaxMinGradeAC(MIN_RANGE_COUNT, MAX_RANGE_COUNT))
@@ -118,10 +117,10 @@ const PackItem = () => {
                         Back to Pack List
                     </SuperButton>
                     {myUserID === packItem.packUserId &&
-                        <SuperButton className={s.doubleButton}
-                                     onClick={() => dispatch(setActiveModalCardAC('addPack'))}>
-                            Add New Card
-                        </SuperButton>}
+                    <SuperButton className={s.doubleButton}
+                                 onClick={() => dispatch(setActiveModalCardAC('addPack'))}>
+                        Add New Card
+                    </SuperButton>}
 
                     <section className={s.show_packs_cards}>
                         <h6>Grade of cards</h6>

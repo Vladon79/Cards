@@ -4,7 +4,7 @@ import {AxiosResponse} from "axios";
 
 
 export const packItemApi = {
-    getCards(cardsPack_id: string,
+    getCards(cardsPack_id: string | undefined,
              page?: number,
              pageCount?: number,
              min?: number,
@@ -25,7 +25,7 @@ export const packItemApi = {
             }
         })
     },
-    postCard(cardsPack_id: string, question?: string, answer?: string, grade?: number, shots?: number, answerImg?: string, questionImg?: string, questionVideo?: string, answerVideo?: string) {
+    postCard(cardsPack_id: string | undefined, question?: string, answer?: string, grade?: number, shots?: number, answerImg?: string, questionImg?: string, questionVideo?: string, answerVideo?: string) {
         return instance.post<PackItemType, AxiosResponse<PackItemType>, PostAndPutCardRequestType>(`/cards/card?id=${cardsPack_id}`, {
             card: {
                 cardsPack_id,
@@ -65,7 +65,7 @@ export type PackItemRequestType = {
 
 export type PostAndPutCardRequestType = {
     card: {
-        cardsPack_id: string
+        cardsPack_id: string | undefined
         question?: string
         answer?: string
         grade?: number
