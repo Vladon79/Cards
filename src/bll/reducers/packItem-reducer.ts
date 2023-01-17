@@ -115,7 +115,7 @@ export const setCardsGradeAC = (grade: number, card_id: string) => {
 }
 
 
-export const getPackItemTC = (cardsPack_id: string,
+export const getPackItemTC = (cardsPack_id: string | undefined,
                               page?: number,
                               pageCount?: number,
                               min?: number,
