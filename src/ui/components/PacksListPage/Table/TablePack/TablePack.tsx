@@ -6,7 +6,6 @@ import SuperInputText from "../../../../common/c1-SuperInputText/SuperInputText"
 import {useInput} from "../../../../../hooks/useInput";
 import {useDispatch} from "react-redux";
 import {useNavigate} from "react-router-dom";
-import {savePackItemIdAC} from "../../../../../bll/reducers/packId-reducer";
 import {getPackItemTC} from "../../../../../bll/reducers/packItem-reducer";
 import DeletePack from "../../ModalsPage/DeletePack/DeletePack";
 import UpdatePack from "../../ModalsPage/UpdatePack/UpdatePack";
@@ -32,7 +31,6 @@ const TablePack = ({
                        user_name,
                        updated,
                        myUserID,
-
                    }: PackType) => {
     const dispatch = useDispatch()
     const navigate = useNavigate()
@@ -41,13 +39,10 @@ const TablePack = ({
 
 
     const handleClickLearn = () => {
-        console.log('learn btn')
-        dispatch(savePackItemIdAC(id))
         navigate(`/learn-pack/${id}`)
     };
 
     const handleClickName = () => {
-        dispatch(savePackItemIdAC(id))
         navigate(`/packItem/${id}`)
     }
 

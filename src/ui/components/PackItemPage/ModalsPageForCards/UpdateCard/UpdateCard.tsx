@@ -3,6 +3,7 @@ import s from './UpdateCard.module.scss';
 import {useInput} from "../../../../../hooks/useInput";
 import {useAppSelector} from "../../../../../bll/store";
 import SearchInput from "../../../PacksListPage/Search/SearchInput";
+import {selectorAnswer, selectorCardId, selectorQuestion } from "../../../../../bll/selectors/selectors";
 
 
 
@@ -12,9 +13,9 @@ type updateCardPropsType = {
 
 const UpdateCard = ({updateCard}: updateCardPropsType) => {
 
-    const cardId = useAppSelector<string>(state => state.modalCard.cardId)
-    const question = useAppSelector<string>(state => state.modalCard.question)
-    const answer = useAppSelector<string>(state => state.modalCard.answer)
+    const cardId = useAppSelector(selectorCardId)
+    const question = useAppSelector(selectorQuestion)
+    const answer = useAppSelector(selectorAnswer)
 
     const newQuestion = useInput(question, [])
     const newAnswer = useInput(answer, [])
